@@ -1,0 +1,249 @@
+/**
+ * Svelte OpenLayers - Component Styles
+ * Component-specific CSS variables and styling patterns
+ */
+
+:root {
+	/* === Map Container === */
+	--ol-map-width: 100%;
+	--ol-map-height: 100%;
+	--ol-map-position: relative;
+
+	/* === Map Controls === */
+	--ol-control-bg: rgba(255, 255, 255, 0.8);
+	--ol-control-border: var(--ol-color-border);
+	--ol-control-border-radius: var(--ol-radius);
+	--ol-control-shadow: var(--ol-shadow);
+	--ol-control-padding: var(--ol-space-2);
+	--ol-control-margin: var(--ol-space-2);
+	--ol-control-z-index: var(--ol-z-100);
+
+	/* Zoom Controls */
+	--ol-zoom-button-width: 1.5rem;
+	--ol-zoom-button-height: 1.5rem;
+	--ol-zoom-button-bg: var(--ol-color-primary);
+	--ol-zoom-button-color: var(--ol-color-primary-foreground);
+	--ol-zoom-button-border: none;
+	--ol-zoom-button-radius: var(--ol-radius);
+	--ol-zoom-button-margin: var(--ol-space-0-5) 0;
+	--ol-zoom-button-font-size: var(--ol-font-size-sm);
+	--ol-zoom-button-font-weight: var(--ol-font-weight-medium);
+
+	/* Mouse Position Control */
+	--ol-mouse-position-bg: rgba(255, 255, 255, 0.9);
+	--ol-mouse-position-color: var(--ol-color-foreground);
+	--ol-mouse-position-padding: var(--ol-space-1-5) var(--ol-space-2-5);
+	--ol-mouse-position-border-radius: var(--ol-radius);
+	--ol-mouse-position-font-family: var(--ol-font-family-mono);
+	--ol-mouse-position-font-size: var(--ol-font-size-xs);
+	--ol-mouse-position-shadow: var(--ol-shadow-sm);
+	--ol-mouse-position-z-index: var(--ol-z-1000);
+
+	/* Attribution */
+	--ol-attribution-bg: rgba(255, 255, 255, 0.7);
+	--ol-attribution-color: var(--ol-color-muted-foreground);
+	--ol-attribution-font-size: var(--ol-font-size-xs);
+	--ol-attribution-padding: var(--ol-space-1) var(--ol-space-2);
+
+	/* === Tooltips === */
+	--ol-tooltip-bg: rgba(255, 255, 255, 0.85);
+	--ol-tooltip-color: #181818;
+	--ol-tooltip-padding: var(--ol-space-2) var(--ol-space-3);
+	--ol-tooltip-border-radius: var(--ol-radius);
+	--ol-tooltip-font-size: var(--ol-font-size-sm);
+	--ol-tooltip-font-weight: var(--ol-font-weight-normal);
+	--ol-tooltip-line-height: var(--ol-line-height-normal);
+	--ol-tooltip-shadow: var(--ol-shadow-lg);
+	--ol-tooltip-max-width: 18.75rem; /* 300px */
+	--ol-tooltip-white-space: normal;
+	--ol-tooltip-word-wrap: break-word;
+	--ol-tooltip-z-index: var(--ol-z-100);
+
+	/* Tooltip Transitions */
+	--ol-tooltip-transition-property: opacity, visibility;
+	--ol-tooltip-transition-duration: var(--ol-transition-duration-fast);
+	--ol-tooltip-transition-timing: var(--ol-transition-timing-ease-in-out);
+
+	/* Hover Tooltips */
+	--ol-tooltip-hover-bg: rgba(255, 255, 255, 0.85);
+	--ol-tooltip-hover-color: #181818;
+	--ol-tooltip-hover-font-size: var(--ol-font-size-xs);
+	--ol-tooltip-hover-padding: var(--ol-space-1-5) var(--ol-space-2-5);
+
+	/* Select Tooltips */
+	--ol-tooltip-select-bg: rgba(255, 255, 255, 0.96);
+	--ol-tooltip-select-color: var(--ol-color-foreground);
+	--ol-tooltip-select-border: 1px solid var(--ol-color-border);
+	--ol-tooltip-select-font-size: var(--ol-font-size-sm);
+	--ol-tooltip-select-padding: var(--ol-space-2-5) var(--ol-space-3-5);
+	--ol-tooltip-select-shadow: var(--ol-shadow-md);
+	--ol-tooltip-select-accent-color: var(--ol-color-primary);
+
+	/* === Overlays === */
+	--ol-overlay-z-index: var(--ol-z-100);
+	--ol-overlay-pointer-events: none;
+
+	/* === Layers === */
+	--ol-layer-opacity: 1;
+	--ol-layer-visible: true;
+	--ol-layer-z-index: auto;
+
+	/* === Features === */
+	--ol-feature-stroke-color: var(--ol-color-primary);
+	--ol-feature-stroke-width: 2;
+	--ol-feature-fill-color: rgba(67, 56, 202, 0.2);
+	--ol-feature-point-radius: 5;
+	--ol-feature-point-fill: var(--ol-color-primary);
+	--ol-feature-point-stroke: var(--ol-color-primary-foreground);
+	--ol-feature-point-stroke-width: 2;
+}
+
+/* === Dark Mode Overrides === */
+@media (prefers-color-scheme: dark) {
+	:root {
+		/* Controls */
+		--ol-control-bg: rgba(31, 41, 55, 0.9);
+		--ol-mouse-position-bg: rgba(31, 41, 55, 0.95);
+		--ol-mouse-position-color: var(--ol-color-foreground);
+		--ol-attribution-bg: rgba(17, 24, 39, 0.8);
+		--ol-attribution-color: var(--ol-color-muted-foreground);
+
+		/* Select Tooltips in Dark Mode */
+		--ol-tooltip-select-bg: rgba(31, 41, 55, 0.96);
+		--ol-tooltip-select-color: var(--ol-color-foreground);
+		--ol-tooltip-select-border: 1px solid var(--ol-color-border);
+	}
+}
+
+.dark {
+	/* Controls */
+	--ol-control-bg: rgba(31, 41, 55, 0.9);
+	--ol-mouse-position-bg: rgba(31, 41, 55, 0.95);
+	--ol-mouse-position-color: var(--ol-color-foreground);
+	--ol-attribution-bg: rgba(17, 24, 39, 0.8);
+	--ol-attribution-color: var(--ol-color-muted-foreground);
+
+	/* Select Tooltips in Dark Mode */
+	--ol-tooltip-select-bg: rgba(31, 41, 55, 0.96);
+	--ol-tooltip-select-color: var(--ol-color-foreground);
+	--ol-tooltip-select-border: 1px solid var(--ol-color-border);
+}
+
+/* === Component Base Styles === */
+
+/* Map Root Container */
+.ol-map-root {
+	width: var(--ol-map-width);
+	height: var(--ol-map-height);
+	position: var(--ol-map-position);
+}
+
+/* OpenLayers Global Overrides */
+:global(.ol-map-root .ol-viewport) {
+	position: absolute !important;
+	width: 100% !important;
+	height: 100% !important;
+}
+
+/* Zoom Controls */
+:global(.ol-zoom) {
+	display: flex;
+	flex-direction: column;
+	margin-top: var(--ol-control-margin);
+	margin-left: var(--ol-control-margin);
+}
+
+:global(.ol-zoom-in, .ol-zoom-out) {
+	background-color: var(--ol-zoom-button-bg);
+	color: var(--ol-zoom-button-color);
+	border: var(--ol-zoom-button-border);
+	border-radius: var(--ol-zoom-button-radius);
+	margin: var(--ol-zoom-button-margin);
+	width: var(--ol-zoom-button-width);
+	height: var(--ol-zoom-button-height);
+	font-size: var(--ol-zoom-button-font-size);
+	font-weight: var(--ol-zoom-button-font-weight);
+	cursor: pointer;
+	transition: background-color var(--ol-transition-duration-fast) var(--ol-transition-timing-ease);
+}
+
+:global(.ol-zoom-in:hover, .ol-zoom-out:hover) {
+	background-color: color-mix(in srgb, var(--ol-zoom-button-bg) 90%, black);
+}
+
+/* Attribution */
+:global(.ol-attribution) {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	background: var(--ol-attribution-bg);
+	color: var(--ol-attribution-color);
+	font-size: var(--ol-attribution-font-size);
+	padding: var(--ol-attribution-padding);
+}
+
+/* Mouse Position Control */
+.ol-mouse-position-control,
+.mouse-position-control {
+	position: absolute;
+	top: var(--ol-space-2-5);
+	right: var(--ol-space-2-5);
+	background: var(--ol-mouse-position-bg);
+	color: var(--ol-mouse-position-color);
+	padding: var(--ol-mouse-position-padding);
+	border-radius: var(--ol-mouse-position-border-radius);
+	font-family: var(--ol-mouse-position-font-family);
+	font-size: var(--ol-mouse-position-font-size);
+	box-shadow: var(--ol-mouse-position-shadow);
+	pointer-events: var(--ol-overlay-pointer-events);
+	z-index: var(--ol-mouse-position-z-index);
+}
+
+/* Tooltip Base */
+.ol-tooltip-base,
+.tooltip-container {
+	background: var(--ol-tooltip-bg);
+	color: var(--ol-tooltip-color);
+	padding: var(--ol-tooltip-padding);
+	border-radius: var(--ol-tooltip-border-radius);
+	font-size: var(--ol-tooltip-font-size);
+	font-weight: var(--ol-tooltip-font-weight);
+	line-height: var(--ol-tooltip-line-height);
+	box-shadow: var(--ol-tooltip-shadow);
+	max-width: var(--ol-tooltip-max-width);
+	white-space: var(--ol-tooltip-white-space);
+	word-wrap: var(--ol-tooltip-word-wrap);
+	pointer-events: var(--ol-overlay-pointer-events);
+	transition: var(--ol-tooltip-transition-property) var(--ol-tooltip-transition-duration)
+		var(--ol-tooltip-transition-timing);
+}
+
+/* Tooltip Global Positioning */
+:global(.ol-tooltip) {
+	position: absolute;
+	z-index: var(--ol-tooltip-z-index);
+}
+
+/* Hover Tooltip Variant */
+:global(.hover-tooltip .tooltip-container) {
+	background: var(--ol-tooltip-hover-bg);
+	color: var(--ol-tooltip-hover-color);
+	font-size: var(--ol-tooltip-hover-font-size);
+	padding: var(--ol-tooltip-hover-padding);
+}
+
+/* Select Tooltip Variant */
+:global(.select-tooltip .tooltip-container) {
+	background: var(--ol-tooltip-select-bg);
+	color: var(--ol-tooltip-select-color);
+	border: var(--ol-tooltip-select-border);
+	font-size: var(--ol-tooltip-select-font-size);
+	padding: var(--ol-tooltip-select-padding);
+	box-shadow: var(--ol-tooltip-select-shadow);
+}
+
+:global(.select-tooltip .tooltip-container strong) {
+	color: var(--ol-tooltip-select-accent-color);
+	font-weight: var(--ol-font-weight-semibold);
+}

@@ -1,0 +1,14 @@
+/**
+ * Svelte OpenLayers - Variables Only
+ * 
+ * Import this file to include only the CSS variables without any component styles.
+ * This is useful if you want to customize all component styles yourself while
+ * maintaining access to the design system variables.
+ * 
+ * @example
+ * // Import variables only
+ * import 'svelte-openlayers/styles/variables-only.css';
+ */
+
+/* Core CSS Variables only */
+@import './variables.css';

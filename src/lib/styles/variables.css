@@ -1,0 +1,176 @@
+/**
+ * Svelte OpenLayers - CSS Variables
+ * Core design system variables for consistent styling across all components
+ */
+
+:root {
+  /* === Core Colors === */
+  --ol-color-primary: #4338ca;
+  --ol-color-primary-foreground: #ffffff;
+  --ol-color-secondary: #6b7280;
+  --ol-color-secondary-foreground: #ffffff;
+  
+  /* Surface Colors */
+  --ol-color-background: #ffffff;
+  --ol-color-foreground: #1f2937;
+  --ol-color-surface: #f9fafb;
+  --ol-color-surface-foreground: #374151;
+  
+  /* Semantic Colors */
+  --ol-color-muted: #f3f4f6;
+  --ol-color-muted-foreground: #6b7280;
+  --ol-color-accent: #e5e7eb;
+  --ol-color-accent-foreground: #1f2937;
+  
+  /* Border & Input */
+  --ol-color-border: #d1d5db;
+  --ol-color-input: #e5e7eb;
+  --ol-color-ring: #6b7280;
+  
+  /* === Spacing Scale === */
+  --ol-space-0: 0;
+  --ol-space-px: 1px;
+  --ol-space-0-5: 0.125rem;  /* 2px */
+  --ol-space-1: 0.25rem;     /* 4px */
+  --ol-space-1-5: 0.375rem;  /* 6px */
+  --ol-space-2: 0.5rem;      /* 8px */
+  --ol-space-2-5: 0.625rem;  /* 10px */
+  --ol-space-3: 0.75rem;     /* 12px */
+  --ol-space-3-5: 0.875rem;  /* 14px */
+  --ol-space-4: 1rem;        /* 16px */
+  --ol-space-5: 1.25rem;     /* 20px */
+  --ol-space-6: 1.5rem;      /* 24px */
+  --ol-space-8: 2rem;        /* 32px */
+  --ol-space-10: 2.5rem;     /* 40px */
+  --ol-space-12: 3rem;       /* 48px */
+  
+  /* === Typography === */
+  --ol-font-size-xs: 0.75rem;      /* 12px */
+  --ol-font-size-sm: 0.875rem;     /* 14px */
+  --ol-font-size-base: 1rem;       /* 16px */
+  --ol-font-size-lg: 1.125rem;     /* 18px */
+  --ol-font-size-xl: 1.25rem;      /* 20px */
+  
+  --ol-line-height-tight: 1.25;
+  --ol-line-height-normal: 1.5;
+  --ol-line-height-relaxed: 1.625;
+  
+  --ol-font-weight-normal: 400;
+  --ol-font-weight-medium: 500;
+  --ol-font-weight-semibold: 600;
+  --ol-font-weight-bold: 700;
+  
+  --ol-font-family-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --ol-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  
+  /* === Border Radius === */
+  --ol-radius-none: 0;
+  --ol-radius-sm: 0.125rem;     /* 2px */
+  --ol-radius: 0.25rem;         /* 4px */
+  --ol-radius-md: 0.375rem;     /* 6px */
+  --ol-radius-lg: 0.5rem;       /* 8px */
+  --ol-radius-xl: 0.75rem;      /* 12px */
+  --ol-radius-2xl: 1rem;        /* 16px */
+  --ol-radius-full: 9999px;
+  
+  /* === Shadows === */
+  --ol-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --ol-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --ol-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --ol-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --ol-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* === Z-Index Scale === */
+  --ol-z-auto: auto;
+  --ol-z-0: 0;
+  --ol-z-10: 10;
+  --ol-z-20: 20;
+  --ol-z-30: 30;
+  --ol-z-40: 40;
+  --ol-z-50: 50;
+  --ol-z-100: 100;
+  --ol-z-200: 200;
+  --ol-z-300: 300;
+  --ol-z-400: 400;
+  --ol-z-500: 500;
+  --ol-z-1000: 1000;
+  
+  /* === Transitions === */
+  --ol-transition-duration-fast: 150ms;
+  --ol-transition-duration-normal: 250ms;
+  --ol-transition-duration-slow: 350ms;
+  
+  --ol-transition-timing-ease: ease;
+  --ol-transition-timing-ease-in: ease-in;
+  --ol-transition-timing-ease-out: ease-out;
+  --ol-transition-timing-ease-in-out: ease-in-out;
+  
+  /* === Opacity Scale === */
+  --ol-opacity-0: 0;
+  --ol-opacity-5: 0.05;
+  --ol-opacity-10: 0.1;
+  --ol-opacity-20: 0.2;
+  --ol-opacity-25: 0.25;
+  --ol-opacity-30: 0.3;
+  --ol-opacity-40: 0.4;
+  --ol-opacity-50: 0.5;
+  --ol-opacity-60: 0.6;
+  --ol-opacity-70: 0.7;
+  --ol-opacity-75: 0.75;
+  --ol-opacity-80: 0.8;
+  --ol-opacity-90: 0.9;
+  --ol-opacity-95: 0.95;
+  --ol-opacity-100: 1;
+}
+
+/* === Dark Mode Support === */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ol-color-primary: #6366f1;
+    --ol-color-primary-foreground: #ffffff;
+    --ol-color-secondary: #6b7280;
+    --ol-color-secondary-foreground: #ffffff;
+    
+    /* Surface Colors */
+    --ol-color-background: #111827;
+    --ol-color-foreground: #f9fafb;
+    --ol-color-surface: #1f2937;
+    --ol-color-surface-foreground: #e5e7eb;
+    
+    /* Semantic Colors */
+    --ol-color-muted: #374151;
+    --ol-color-muted-foreground: #9ca3af;
+    --ol-color-accent: #4b5563;
+    --ol-color-accent-foreground: #f9fafb;
+    
+    /* Border & Input */
+    --ol-color-border: #4b5563;
+    --ol-color-input: #374151;
+    --ol-color-ring: #6b7280;
+  }
+}
+
+/* === Manual Dark Mode Class Support === */
+.dark {
+  --ol-color-primary: #6366f1;
+  --ol-color-primary-foreground: #ffffff;
+  --ol-color-secondary: #6b7280;
+  --ol-color-secondary-foreground: #ffffff;
+  
+  /* Surface Colors */
+  --ol-color-background: #111827;
+  --ol-color-foreground: #f9fafb;
+  --ol-color-surface: #1f2937;
+  --ol-color-surface-foreground: #e5e7eb;
+  
+  /* Semantic Colors */
+  --ol-color-muted: #374151;
+  --ol-color-muted-foreground: #9ca3af;
+  --ol-color-accent: #4b5563;
+  --ol-color-accent-foreground: #f9fafb;
+  
+  /* Border & Input */
+  --ol-color-border: #4b5563;
+  --ol-color-input: #374151;
+  --ol-color-ring: #6b7280;
+}

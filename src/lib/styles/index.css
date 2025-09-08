@@ -1,0 +1,20 @@
+/**
+ * Svelte OpenLayers - Main Stylesheet
+ * 
+ * Import this file to include all OpenLayers component styles and CSS variables.
+ * 
+ * @example
+ * // In your main app file or component
+ * import 'svelte-openlayers/styles';
+ * 
+ * @example
+ * // Or import specific parts
+ * import 'svelte-openlayers/styles/variables.css';
+ * import 'svelte-openlayers/styles/components.css';
+ */
+
+/* Core CSS Variables */
+@import './variables.css';
+
+/* Component-specific styles and variables */
+@import './components.css';

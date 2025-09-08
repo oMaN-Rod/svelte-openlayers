@@ -1,0 +1,108 @@
+{
+	"name": "svelte-openlayers",
+	"version": "0.0.1",
+	"private": false,
+	"workspaces": [
+		"site"
+	],
+	"scripts": {
+		"dev": "vite dev",
+		"dev:site": "cd site && bun run dev",
+		"build": "svelte-kit sync && svelte-package",
+		"build:watch": "svelte-kit sync && svelte-package --watch",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"prepack": "npm run build",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint .",
+		"test:unit": "vitest",
+		"test": "npm run test:unit -- --run"
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./utils": {
+			"types": "./dist/utils/index.d.ts",
+			"default": "./dist/utils/index.js"
+		},
+		"./map": {
+			"types": "./dist/components/map/index.d.ts",
+			"svelte": "./dist/components/map/index.js",
+			"default": "./dist/components/map/index.js"
+		},
+		"./layers": {
+			"types": "./dist/components/layers/index.d.ts",
+			"svelte": "./dist/components/layers/index.js",
+			"default": "./dist/components/layers/index.js"
+		},
+		"./features": {
+			"types": "./dist/components/features/index.d.ts",
+			"svelte": "./dist/components/features/index.js",
+			"default": "./dist/components/features/index.js"
+		},
+		"./interactions": {
+			"types": "./dist/components/interactions/index.d.ts",
+			"svelte": "./dist/components/interactions/index.js",
+			"default": "./dist/components/interactions/index.js"
+		},
+		"./overlays": {
+			"types": "./dist/components/overlays/index.d.ts",
+			"svelte": "./dist/components/overlays/index.js",
+			"default": "./dist/components/overlays/index.js"
+		},
+		"./styles.css": "./dist/styles/index.css",
+		"./styles/variables.css": "./dist/styles/variables.css",
+		"./styles/variables-only.css": "./dist/styles/variables-only.css",
+		"./styles/components.css": "./dist/styles/components.css"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^1.2.5",
+		"@eslint/js": "^9.18.0",
+		"@sveltejs/adapter-auto": "^6.0.0",
+		"@sveltejs/kit": "^2.16.0",
+		"@sveltejs/package": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/svelte": "^5.2.4",
+		"eslint": "^9.18.0",
+		"eslint-config-prettier": "^10.0.1",
+		"eslint-plugin-svelte": "^3.0.0",
+		"globals": "^16.0.0",
+		"jsdom": "^26.0.0",
+		"prettier": "^3.4.2",
+		"prettier-plugin-svelte": "^3.3.3",
+		"publint": "^0.3.2",
+		"rollup-plugin-analyzer": "^4.0.0",
+		"svelte": "^5.0.0",
+		"svelte-check": "^4.0.0",
+		"typescript": "^5.0.0",
+		"typescript-eslint": "^8.20.0",
+		"vite": "^6.2.6",
+		"vitest": "^3.0.0"
+	},
+	"keywords": [
+		"svelte"
+	],
+	"dependencies": {
+		"ol": "^10.6.1"
+	}
+}
