@@ -1,27 +1,10 @@
 <script lang="ts">
-	import { onMount, onDestroy, setContext } from 'svelte';
+	import { LAYER_CONTEXT_KEY, type LayerContext, type LayerVectorProps } from '$lib/types.js';
+	import { getMapContext } from '$lib/utils/context.js';
+	import type { Feature } from 'ol';
 	import VectorLayer from 'ol/layer/Vector.js';
 	import VectorSource from 'ol/source/Vector.js';
-	import { getMapContext } from '$lib/utils/context.js';
-	import type { Snippet } from 'svelte';
-	import type { Feature } from 'ol';
-	import type { StyleLike } from 'ol/style/Style.js';
-	import { LAYER_CONTEXT_KEY, type LayerContext } from '$lib/types.js';
-
-	interface Props {
-		opacity?: number;
-		visible?: boolean;
-		zIndex?: number;
-		minZoom?: number;
-		maxZoom?: number;
-		style?: StyleLike;
-		updateWhileAnimating?: boolean;
-		updateWhileInteracting?: boolean;
-		renderBuffer?: number;
-		layer?: VectorLayer<any> | null;
-		source?: VectorSource | null;
-		children?: Snippet;
-	}
+	import { onMount, setContext } from 'svelte';
 
 	let {
 		opacity = 1,
@@ -36,7 +19,7 @@
 		layer = $bindable(null),
 		source = $bindable(null),
 		children
-	}: Props = $props();
+	}: LayerVectorProps = $props();
 
 	const mapContext = getMapContext();
 	let vectorLayer: VectorLayer<any> | null = null;

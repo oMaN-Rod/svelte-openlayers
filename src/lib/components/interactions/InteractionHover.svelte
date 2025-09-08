@@ -1,18 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import type { InteractionHoverProps } from '$lib/types.js';
 	import { getMapContext } from '$lib/utils/context.js';
-	import { Feature } from 'ol';
-	import type { Coordinate } from 'ol/coordinate.js';
-	import type Layer from 'ol/layer/Layer.js';
 	import type { MapBrowserEvent } from 'ol';
-
-	interface Props {
-		onHover?: (feature: Feature | null, coordinate?: Coordinate) => void;
-		onHoverEnd?: () => void;
-		layers?: Layer[];
-		hitTolerance?: number;
-		interaction?: any | null;
-	}
+	import { Feature } from 'ol';
+	import { onMount } from 'svelte';
 
 	let {
 		onHover,
@@ -20,7 +11,7 @@
 		layers,
 		hitTolerance = 0,
 		interaction = $bindable(null)
-	}: Props = $props();
+	}: InteractionHoverProps = $props();
 
 	const mapContext = getMapContext();
 	let isDestroyed = false;

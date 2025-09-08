@@ -1,42 +1,20 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { Overlay } from 'ol';
+	import type { OverlayTooltipProps } from '$lib/types.js';
 	import { getMapContext } from '$lib/utils/context.js';
-	import type { Coordinate } from 'ol/coordinate.js';
-	import type { Snippet } from 'svelte';
-
-	interface Props {
-		position?: Coordinate;
-		content?: string;
-		visible?: boolean;
-		offset?: [number, number];
-		positioning?:
-			| 'bottom-left'
-			| 'bottom-center'
-			| 'bottom-right'
-			| 'center-left'
-			| 'center-center'
-			| 'center-right'
-			| 'top-left'
-			| 'top-center'
-			| 'top-right';
-		className?: string;
-		autoPan?: boolean;
-		overlay?: Overlay | null;
-		children?: Snippet;
-	}
+	import { Overlay } from 'ol';
+	import { onMount } from 'svelte';
 
 	let {
 		position = $bindable(),
 		content = '',
 		visible = $bindable(false),
 		offset = [15, 0],
-		positioning = 'center-left' as Props['positioning'],
-		className = '',
+		positioning = 'center-left' as OverlayTooltipProps['positioning'],
+		class: className = '',
 		autoPan = false,
 		overlay = $bindable(null),
 		children
-	}: Props = $props();
+	}: OverlayTooltipProps = $props();
 
 	const mapContext = getMapContext();
 	let tooltipElement: HTMLDivElement;

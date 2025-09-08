@@ -1,19 +1,10 @@
 <script lang="ts">
-	import { onMount, onDestroy, getContext } from 'svelte';
+	import { LAYER_CONTEXT_KEY, type FeatureLineStringProps, type LayerContext } from '$lib/types.js';
 	import { Feature } from 'ol';
+	import type { Coordinate } from 'ol/coordinate.js';
 	import { LineString } from 'ol/geom.js';
 	import { fromLonLat } from 'ol/proj.js';
-	import type { Coordinate } from 'ol/coordinate.js';
-	import type { StyleLike } from 'ol/style/Style.js';
-	import { LAYER_CONTEXT_KEY, type LayerContext } from '$lib/types.js';
-
-	interface Props {
-		coordinates: Coordinate[];
-		projection?: string;
-		style?: StyleLike;
-		properties?: Record<string, any>;
-		feature?: Feature | null;
-	}
+	import { getContext, onMount } from 'svelte';
 
 	let {
 		coordinates = $bindable([]),
@@ -21,7 +12,7 @@
 		style,
 		properties = {},
 		feature = $bindable(null)
-	}: Props = $props();
+	}: FeatureLineStringProps = $props();
 
 	const layerContext = getContext<LayerContext>(LAYER_CONTEXT_KEY);
 

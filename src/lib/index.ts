@@ -19,5 +19,17 @@ export {
 	type MapContext,
 	type ViewProps,
 	type MapProps,
-	type LayerContext
+	type LayerContext,
+	// Component Props Types
+	type MapRootProps,
+	type MapViewProps,
+	type LayerTileProps,
+	type LayerVectorProps,
+	type FeaturePointProps,
+	type FeatureLineStringProps,
+	type FeaturePolygonProps,
+	type InteractionSelectProps,
+	type InteractionHoverProps,
+	type OverlayTooltipProps,
+	type TooltipManagerProps
 } from './types.js';

@@ -1,27 +1,16 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import type { MapContext, MapRootProps } from '$lib/types.js';
+	import { setMapContext } from '$lib/utils/context.js';
+	import type { Overlay, View } from 'ol';
 	import { Map } from 'ol';
 	import { defaults as defaultControls, MousePosition } from 'ol/control.js';
-	import { defaults as defaultInteractions } from 'ol/interaction.js';
-	import { setMapContext } from '$lib/utils/context.js';
-	import type { MapProps, MapContext } from '$lib/types.js';
-	import type { Snippet } from 'svelte';
-	import type { View, Overlay } from 'ol';
-	import type Layer from 'ol/layer/Layer.js';
-	import type Interaction from 'ol/interaction/Interaction.js';
 	import type Control from 'ol/control/Control.js';
 	import { createStringXY } from 'ol/coordinate.js';
+	import { defaults as defaultInteractions } from 'ol/interaction.js';
+	import type Interaction from 'ol/interaction/Interaction.js';
+	import type Layer from 'ol/layer/Layer.js';
 	import type { MapOptions } from 'ol/Map.js';
-
-	interface Props extends MapProps {
-		children?: Snippet;
-		map?: Map | null;
-		view?: View | null;
-		zoomControl?: boolean;
-		attributionControl?: boolean;
-		rotateControl?: boolean;
-		mousePositionControl?: boolean;
-	}
+	import { onMount } from 'svelte';
 
 	let {
 		class: className = '',
@@ -38,7 +27,7 @@
 		children,
 		map = $bindable(null),
 		view = $bindable(null)
-	}: Props = $props();
+	}: MapRootProps = $props();
 
 	let mapContainer: HTMLDivElement;
 	let mousePositionControlContainer: HTMLDivElement;

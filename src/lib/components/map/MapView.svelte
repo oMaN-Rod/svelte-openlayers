@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { View } from 'ol';
-	import { fromLonLat, transformExtent } from 'ol/proj.js';
+	import type { MapViewProps } from '$lib/types.js';
 	import { getMapContext } from '$lib/utils/context.js';
-	import type { ViewProps } from '$lib/types.js';
+	import { View } from 'ol';
 	import type { Coordinate } from 'ol/coordinate.js';
-
-	interface Props extends ViewProps {}
+	import { fromLonLat, transformExtent } from 'ol/proj.js';
+	import { onMount } from 'svelte';
 
 	let {
 		center = $bindable([0, 0]),
@@ -22,7 +20,7 @@
 		onZoomChange,
 		onRotationChange,
 		onMoveEnd
-	}: Props = $props();
+	}: MapViewProps = $props();
 
 	const mapContext = getMapContext();
 	let view: View | null = null;

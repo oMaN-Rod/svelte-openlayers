@@ -1,26 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { Select } from 'ol/interaction.js';
+	import type { InteractionSelectProps } from '$lib/types.js';
 	import { getMapContext } from '$lib/utils/context.js';
-	import type { Feature } from 'ol';
-	import type { StyleLike } from 'ol/style/Style.js';
-	import type { FilterFunction, Options } from 'ol/interaction/Select.js';
-	import type Layer from 'ol/layer/Layer.js';
-	import type Collection from 'ol/Collection.js';
-
-	interface Props {
-		style?: StyleLike;
-		layers?: Layer[];
-		filter?: FilterFunction;
-		multi?: boolean;
-		hitTolerance?: number;
-		addCondition?: any;
-		removeCondition?: any;
-		toggleCondition?: any;
-		onSelect?: (features: Feature[]) => void;
-		interaction?: Select | null;
-		selectedFeatures?: Collection<Feature> | null;
-	}
+	import { Select } from 'ol/interaction.js';
+	import type { Options } from 'ol/interaction/Select.js';
+	import { onMount } from 'svelte';
 
 	let {
 		style,
@@ -34,7 +17,7 @@
 		onSelect,
 		interaction = $bindable(null),
 		selectedFeatures = $bindable(null)
-	}: Props = $props();
+	}: InteractionSelectProps = $props();
 
 	const mapContext = getMapContext();
 	let selectInteraction: Select | null = null;

@@ -1,24 +1,11 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import type { LayerTileProps } from '$lib/types.js';
+	import { getMapContext } from '$lib/utils/context.js';
 	import TileLayer from 'ol/layer/Tile.js';
 	import OSM from 'ol/source/OSM.js';
-	import XYZ from 'ol/source/XYZ.js';
-	import { getMapContext } from '$lib/utils/context.js';
 	import type Source from 'ol/source/Source.js';
-
-	interface Props {
-		source?: 'osm' | 'xyz' | Source;
-		url?: string;
-		opacity?: number;
-		visible?: boolean;
-		zIndex?: number;
-		minZoom?: number;
-		maxZoom?: number;
-		preload?: number;
-		layer?: TileLayer<any> | null;
-		attributions?: string | string[];
-		crossOrigin?: string | null;
-	}
+	import XYZ from 'ol/source/XYZ.js';
+	import { onMount } from 'svelte';
 
 	let {
 		source = 'osm',
@@ -32,7 +19,7 @@
 		layer = $bindable(null),
 		attributions,
 		crossOrigin
-	}: Props = $props();
+	}: LayerTileProps = $props();
 
 	const mapContext = getMapContext();
 	let tileLayer: TileLayer<any> | null = null;

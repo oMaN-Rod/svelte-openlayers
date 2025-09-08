@@ -1,41 +1,11 @@
 <script lang="ts">
-	import OverlayTooltip from './OverlayTooltip.svelte';
-	import InteractionHover from '../interactions/InteractionHover.svelte';
-	import InteractionSelect from '../interactions/InteractionSelect.svelte';
+	import InteractionHover from '$lib/components/interactions/InteractionHover.svelte';
+	import InteractionSelect from '$lib/components/interactions/InteractionSelect.svelte';
+	import OverlayTooltip from '$lib/components/overlays/OverlayTooltip.svelte';
+	import type { TooltipManagerProps } from '$lib/types.js';
 	import type { Feature } from 'ol';
 	import type { Coordinate } from 'ol/coordinate.js';
-	import type Layer from 'ol/layer/Layer.js';
-	import type { StyleLike } from 'ol/style/Style.js';
-	import type { Snippet } from 'svelte';
 	import { getCenter } from 'ol/extent.js';
-
-	type TooltipPositioning =
-		| 'bottom-left'
-		| 'bottom-center'
-		| 'bottom-right'
-		| 'center-left'
-		| 'center-center'
-		| 'center-right'
-		| 'top-left'
-		| 'top-center'
-		| 'top-right';
-
-	interface Props {
-		layers?: Layer[];
-		hitTolerance?: number;
-		hoverTooltip?: boolean;
-		selectTooltip?: boolean;
-		hoverContent?: (feature: Feature) => string;
-		selectContent?: (feature: Feature) => string;
-		hoverSnippet?: Snippet<[Feature]>;
-		selectSnippet?: Snippet<[Feature]>;
-		hoverPositioning?: TooltipPositioning;
-		selectPositioning?: TooltipPositioning;
-		hoverClassName?: string;
-		selectClassName?: string;
-		selectStyle?: StyleLike;
-		children?: Snippet;
-	}
 
 	let {
 		layers,
@@ -48,11 +18,11 @@
 		selectSnippet,
 		hoverPositioning = 'center-left',
 		selectPositioning = 'center-left',
-		hoverClassName = 'hover-tooltip',
-		selectClassName = 'select-tooltip',
+		hoverClass = 'hover-tooltip',
+		selectClass = 'select-tooltip',
 		selectStyle,
 		children
-	}: Props = $props();
+	}: TooltipManagerProps = $props();
 
 	let hoverPosition: Coordinate | undefined = $state();
 	let hoverVisible = $state(false);
@@ -140,7 +110,7 @@
 			bind:position={hoverPosition}
 			bind:visible={hoverVisible}
 			positioning={hoverPositioning}
-			className={hoverClassName}
+			class={hoverClass}
 		>
 			{#snippet children()}
 				{@render hoverSnippet(hoverFeature!)}
@@ -152,7 +122,7 @@
 			bind:visible={hoverVisible}
 			content={hoverText}
 			positioning={hoverPositioning}
-			className={hoverClassName}
+			class={hoverClass}
 		/>
 	{/if}
 {/if}
@@ -164,7 +134,7 @@
 			bind:position={selectPosition}
 			bind:visible={selectVisible}
 			positioning={selectPositioning}
-			className={selectClassName}
+			class={selectClass}
 			autoPan={true}
 		>
 			{#snippet children()}
@@ -177,7 +147,7 @@
 			bind:visible={selectVisible}
 			content={selectText}
 			positioning={selectPositioning}
-			className={selectClassName}
+			class={selectClass}
 			autoPan={true}
 		/>
 	{/if}
