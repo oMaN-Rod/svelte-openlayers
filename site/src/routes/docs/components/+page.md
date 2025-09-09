@@ -119,16 +119,4 @@ const mapProps: MapRootProps = {
 	zoom: 2,
 	projection: 'EPSG:4326'
 };
-
-// Events are typed too
-- **[Map Components](./map)** - Core map setup
-- **[Layers](./layers)** - Data visualization
-- **[Features](./features)** - Vector geometries
-- **[Interactions](./interactions)** - User interactions
-- **[Overlays](./overlays)** - HTML content on maps
-## Performance Considerations {.toc}
-
-- **Tree Shaking**: Import only the components you need
-- **Lazy Loading**: Components can be loaded on-demand
-- **Virtual Scrolling**: Built-in for large datasets
-- **Memory Management**: Automatic cleanup prevents leaks
+```

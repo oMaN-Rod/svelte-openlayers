@@ -101,6 +101,7 @@
 		"vitest": "^3.0.0"
 	},
 	"license": "MIT",
+	"homepage": "https://svelte-openlayers.com",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/oMaN-Rod/svelte-openlayers.git"
