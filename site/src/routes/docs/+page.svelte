@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import { ArrowRight, BookOpen, Code2, Layers, Zap } from 'lucide-svelte';
@@ -26,7 +27,7 @@
 					Get up and running with Svelte OpenLayers in minutes. Learn how to install the library and
 					create your first map.
 				</p>
-				<Button href="/docs/getting-started" variant="outline" size="sm" class="group">
+				<Button href={`${base}/docs/getting-started`} variant="outline" size="sm" class="group">
 					Read Guide
 					<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
 				</Button>
@@ -44,7 +45,7 @@
 				<p class="text-muted-foreground mb-4 text-sm">
 					Understand the core principles and architecture that power Svelte OpenLayers.
 				</p>
-				<Button href="/docs/architecture" variant="outline" size="sm" class="group">
+				<Button href={`${base}/docs/architecture`} variant="outline" size="sm" class="group">
 					Learn More
 					<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
 				</Button>
@@ -62,7 +63,7 @@
 				<p class="text-muted-foreground mb-4 text-sm">
 					Explore the complete set of components available for building your maps.
 				</p>
-				<Button href="/docs/components/map" variant="outline" size="sm" class="group">
+				<Button href={`${base}/docs/components/map`} variant="outline" size="sm" class="group">
 					View Components
 					<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
 				</Button>
@@ -80,7 +81,7 @@
 				<p class="text-muted-foreground mb-4 text-sm">
 					See Svelte OpenLayers in action with live, interactive examples.
 				</p>
-				<Button href="/examples" variant="outline" size="sm" class="group">
+				<Button href={`${base}/examples`} variant="outline" size="sm" class="group">
 					Browse Examples
 					<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
 				</Button>

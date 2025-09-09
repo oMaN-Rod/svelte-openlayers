@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Button } from '$lib/components/ui/button';
 	import { Sun, Moon, Menu } from 'lucide-svelte';
 	import GitHub from '$lib/components/icons/github.svg?raw';
@@ -28,9 +29,9 @@
 	}
 
 	const navItems = [
-		{ href: '/', label: 'Home' },
-		{ href: '/docs', label: 'Documentation' },
-		{ href: '/examples', label: 'Examples' }
+		{ href: `${base}/`, label: 'Home' },
+		{ href: `${base}/docs`, label: 'Documentation' },
+		{ href: `${base}/examples`, label: 'Examples' }
 	];
 </script>
 
@@ -39,7 +40,7 @@
 >
 	<div class="container flex h-16 items-center">
 		<div class="mr-4 hidden md:flex">
-			<a href="/" class="mr-6 flex items-center space-x-2">
+			<a href={`${base}/`} class="mr-6 flex items-center space-x-2">
 				<span
 					class="bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-lg font-bold text-transparent"
 				>

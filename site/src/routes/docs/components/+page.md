@@ -121,24 +121,14 @@ const mapProps: MapRootProps = {
 };
 
 // Events are typed too
-const handleSelect = (event: SelectEvent) => {
-	const features: Feature[] = event.detail.features;
-};
-```
-
+- **[Map Components](./map)** - Core map setup
+- **[Layers](./layers)** - Data visualization
+- **[Features](./features)** - Vector geometries
+- **[Interactions](./interactions)** - User interactions
+- **[Overlays](./overlays)** - HTML content on maps
 ## Performance Considerations {.toc}
 
 - **Tree Shaking**: Import only the components you need
 - **Lazy Loading**: Components can be loaded on-demand
 - **Virtual Scrolling**: Built-in for large datasets
 - **Memory Management**: Automatic cleanup prevents leaks
-
-## Next Steps
-
-Explore specific component categories:
-
-- **[Map Components](/docs/components/map)** - Core map setup
-- **[Layers](/docs/components/layers)** - Data visualization
-- **[Features](/docs/components/features)** - Vector geometries
-- **[Interactions](/docs/components/interactions)** - User interactions
-- **[Overlays](/docs/components/overlays)** - HTML content on maps

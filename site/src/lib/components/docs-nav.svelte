@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
 
@@ -12,33 +13,33 @@
 		{
 			title: 'Getting Started',
 			items: [
-				{ title: 'Introduction', href: '/docs' },
-				{ title: 'Installation', href: '/docs/getting-started' },
-				{ title: 'Quick Start', href: '/docs/getting-started#quick-start' }
+				{ title: 'Introduction', href: `${base}/docs` },
+				{ title: 'Installation', href: `${base}/docs/getting-started` },
+				{ title: 'Quick Start', href: `${base}/docs/getting-started#quick-start` }
 			]
 		},
 		{
 			title: 'Core Concepts',
 			items: [
-				{ title: 'Architecture', href: '/docs/architecture' },
-				{ title: 'Component Hierarchy', href: '/docs/architecture#component-hierarchy' },
-				{ title: 'Styling System', href: '/docs/styling' }
+				{ title: 'Architecture', href: `${base}/docs/architecture` },
+				{ title: 'Component Hierarchy', href: `${base}/docs/architecture#component-hierarchy` },
+				{ title: 'Styling System', href: `${base}/docs/styling` }
 			]
 		},
 		{
 			title: 'Components',
 			items: [
-				{ title: 'Overview', href: '/docs/components' },
-				{ title: 'Map', href: '/docs/components/map' },
-				{ title: 'Layers', href: '/docs/components/layers' },
-				{ title: 'Features', href: '/docs/components/features' },
-				{ title: 'Interactions', href: '/docs/components/interactions' },
-				{ title: 'Overlays', href: '/docs/components/overlays' }
+				{ title: 'Overview', href: `${base}/docs/components` },
+				{ title: 'Map', href: `${base}/docs/components/map` },
+				{ title: 'Layers', href: `${base}/docs/components/layers` },
+				{ title: 'Features', href: `${base}/docs/components/features` },
+				{ title: 'Interactions', href: `${base}/docs/components/interactions` },
+				{ title: 'Overlays', href: `${base}/docs/components/overlays` }
 			]
 		},
 		{
 			title: 'API Reference',
-			items: [{ title: 'Complete API', href: '/docs/api-reference' }]
+			items: [{ title: 'Complete API', href: `${base}/docs/api-reference` }]
 		}
 	];
 

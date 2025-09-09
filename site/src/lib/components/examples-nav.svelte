@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
 	import { getSortedCategoriesWithExamples } from '$lib/examples/sources';
@@ -14,10 +15,10 @@
 			<h4 class="text-foreground/70 mb-2 text-sm font-semibold">Overview</h4>
 			<nav class="grid gap-1">
 				<a
-					href="/examples"
+					href={`${base}/examples`}
 					class={cn(
 						'group hover:bg-accent hover:text-accent-foreground flex w-full items-start gap-2 rounded-md px-2 py-2 text-sm transition-colors',
-						currentPath === '/examples'
+						currentPath === `${base}/examples`
 							? 'bg-accent text-accent-foreground font-medium'
 							: 'text-muted-foreground'
 					)}
@@ -38,10 +39,10 @@
 					<nav class="grid gap-1">
 						{#each category.examples as example}
 							<a
-								href={`/examples/${example.id}`}
+								href={`${base}/examples/${example.id}`}
 								class={cn(
 									'group hover:bg-accent hover:text-accent-foreground flex w-full items-start gap-2 rounded-md px-2 py-2 text-sm transition-colors',
-									currentPath === `/examples/${example.id}`
+									currentPath === `${base}/examples/${example.id}`
 										? 'bg-accent text-accent-foreground font-medium'
 										: 'text-muted-foreground'
 								)}

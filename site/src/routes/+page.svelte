@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { CodeBlock } from '$lib/components/docs';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
@@ -88,11 +89,11 @@
 				</p>
 
 				<div class="mt-10 flex items-center justify-center gap-4">
-					<Button size="lg" href="/docs/getting-started" class="group">
+					<Button size="lg" href={`${base}/docs/getting-started`} class="group">
 						Get Started
 						<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
 					</Button>
-					<Button size="lg" variant="outline" href="/examples">View Examples</Button>
+					<Button size="lg" variant="outline" href={`${base}/examples`}>View Examples</Button>
 				</div>
 			</div>
 
@@ -222,7 +223,7 @@
 					Join developers building amazing map experiences with Svelte OpenLayers
 				</p>
 				<div class="mt-10 flex items-center justify-center gap-4">
-					<Button size="lg" href="/docs/getting-started">Read the Documentation</Button>
+					<Button size="lg" href={`${base}/docs/getting-started`}>Read the Documentation</Button>
 					<Button
 						size="lg"
 						variant="outline"
