@@ -11,19 +11,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: 20
 
-      - name: Install dependencies
-        run: bun install
+      - name: Clean workspace
+        run: |
+          rm -rf node_modules package-lock.json
+          rm -rf site/node_modules site/package-lock.json site/bun.lockb
+
+      - name: Install root dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Install site dependencies
+        run: npm install --legacy-peer-deps
         working-directory: site
 
       - name: Build site
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
-        run: bun run build
+        run: npm run build
         working-directory: site
 
       - name: Upload Artifacts
