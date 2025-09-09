@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Geometry } from 'ol/geom';
 	import { Feature as OLFeature } from 'ol';
-	import { Map, Layer, Feature, TooltipManager } from 'svelte-openlayers';
+	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
 	import { createCircleStyle } from 'svelte-openlayers/utils';
 
 	let {
@@ -111,7 +111,7 @@
 			{/each}
 		</Layer.Vector>
 
-		<TooltipManager
+		<Overlay.TooltipManager
 			hoverTooltip={true}
 			selectTooltip={true}
 			selectStyle={selectedStyle}
@@ -120,8 +120,8 @@
 				return hoverContent(props.name, props.type || 'Feature');
 			}}
 			selectContent={(feature) => selectContent(feature)}
-			hoverClassName="!bg-white"
-			selectClassName="!bg-white"
+			hoverClass="!bg-white"
+			selectClass="!bg-white"
 		/>
 	</Map.Root>
 </div>

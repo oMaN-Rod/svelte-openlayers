@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Map, Layer, Feature, TooltipManager } from 'svelte-openlayers';
+	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
 	import { createCircleStyle, createStyle } from 'svelte-openlayers/utils';
 	import ToolTipHover from '$lib/examples/tooltip-hover.svelte';
 	import TooltipSelect from '$lib/examples/tooltip-select.svelte';
@@ -118,12 +118,12 @@
 				/>
 			{/each}
 		</Layer.Vector>
-		<TooltipManager
+		<Overlay.TooltipManager
 			hoverTooltip={true}
 			selectTooltip={true}
 			selectStyle={selectedStyle}
-			hoverClassName="!bg-transparent !shadow-none"
-			selectClassName="!bg-transparent !shadow-none"
+			hoverClass="!bg-transparent !shadow-none"
+			selectClass="!bg-transparent !shadow-none"
 		>
 			{#snippet hoverSnippet(feature)}
 				{@const props = feature.getProperties()}
@@ -133,7 +133,7 @@
 				{@const props = feature.getProperties()}
 				<TooltipSelect {...props} />
 			{/snippet}
-		</TooltipManager>
+		</Overlay.TooltipManager>
 	</Map.Root>
 </div>
 {#if selectedFeature}

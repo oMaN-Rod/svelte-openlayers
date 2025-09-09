@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Map, Layer, Feature, TooltipManager } from 'svelte-openlayers';
+	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
 	import { createCircleStyle } from 'svelte-openlayers/utils';
 
 	let {
@@ -75,7 +75,7 @@
 			{/each}
 		</Layer.Vector>
 
-		<TooltipManager hoverTooltip={true} selectTooltip={true} selectStyle={selectedStyle} />
+		<Overlay.TooltipManager hoverTooltip={true} selectTooltip={true} selectStyle={selectedStyle} />
 	</Map.Root>
 </div>
 <div class="text-muted-foreground mt-4 text-sm">
