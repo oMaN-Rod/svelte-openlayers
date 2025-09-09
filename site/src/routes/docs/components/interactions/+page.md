@@ -44,19 +44,19 @@ Allows users to select features by clicking or other methods.
 
 ### Props {.toc}
 
-| Prop                | Type                     | Default     | Description                         |
-| ------------------- | ------------------------ | ----------- | ----------------------------------- |
-| `style`             | `StyleLike`              | `undefined` | Style for selected features         |
-| `layers`            | `Layer[]`                | `undefined` | Layers to select from               |
-| `filter`            | `any`                    | `undefined` | Feature filter function             |
-| `multi`             | `boolean`                | `false`     | Allow multiple selection            |
-| `hitTolerance`      | `number`                 | `undefined` | Hit detection tolerance in pixels   |
-| `addCondition`      | `any`                    | `undefined` | Condition for adding to selection   |
-| `removeCondition`   | `any`                    | `undefined` | Condition for removing from selection |
-| `toggleCondition`   | `any`                    | `undefined` | Condition for toggling selection    |
-| `onSelect`          | `(features: Feature[]) => void` | `undefined` | Selection callback           |
-| `interaction`       | `any`                    | `undefined` | Bindable interaction instance (read-only) |
-| `selectedFeatures`  | `any`                    | `undefined` | Bindable selected features collection |
+| Prop               | Type                            | Default     | Description                               |
+| ------------------ | ------------------------------- | ----------- | ----------------------------------------- |
+| `style`            | `StyleLike`                     | `undefined` | Style for selected features               |
+| `layers`           | `Layer[]`                       | `undefined` | Layers to select from                     |
+| `filter`           | `any`                           | `undefined` | Feature filter function                   |
+| `multi`            | `boolean`                       | `false`     | Allow multiple selection                  |
+| `hitTolerance`     | `number`                        | `undefined` | Hit detection tolerance in pixels         |
+| `addCondition`     | `any`                           | `undefined` | Condition for adding to selection         |
+| `removeCondition`  | `any`                           | `undefined` | Condition for removing from selection     |
+| `toggleCondition`  | `any`                           | `undefined` | Condition for toggling selection          |
+| `onSelect`         | `(features: Feature[]) => void` | `undefined` | Selection callback                        |
+| `interaction`      | `any`                           | `undefined` | Bindable interaction instance (read-only) |
+| `selectedFeatures` | `any`                           | `undefined` | Bindable selected features collection     |
 
 ### Advanced Selection {.toc}
 
@@ -141,13 +141,13 @@ Detects when the pointer hovers over features and provides callbacks for hover e
 
 ### Props {.toc}
 
-| Prop            | Type                                              | Default     | Description                               |
-| --------------- | ------------------------------------------------- | ----------- | ----------------------------------------- |
-| `onHover`       | `(feature: Feature \| null, coordinate?: Coordinate) => void` | `undefined` | Hover event callback       |
-| `onHoverEnd`    | `() => void`                                      | `undefined` | Hover end callback                        |
-| `layers`        | `Layer[]`                                         | `undefined` | Layers to detect hover on                 |
-| `hitTolerance`  | `number`                                          | `undefined` | Hit detection tolerance in pixels         |
-| `interaction`   | `any \| null`                                     | `null`      | Bindable interaction instance (read-only) |
+| Prop           | Type                                                              | Default     | Description                               |
+| -------------- | ----------------------------------------------------------------- | ----------- | ----------------------------------------- |
+| `onHover`      | `(feature: Feature &#124; null, coordinate?: Coordinate) => void` | `undefined` | Hover event callback                      |
+| `onHoverEnd`   | `() => void`                                                      | `undefined` | Hover end callback                        |
+| `layers`       | `Layer[]`                                                         | `undefined` | Layers to detect hover on                 |
+| `hitTolerance` | `number`                                                          | `undefined` | Hit detection tolerance in pixels         |
+| `interaction`  | `any &#124; null`                                                 | `null`      | Bindable interaction instance (read-only) |
 
 > **Coming Soon:** Additional interaction types including Interaction.Draw, Interaction.Modify, and Interaction.Translate are planned for future releases.
 
@@ -182,7 +182,7 @@ Detects when the pointer hovers over features and provides callbacks for hover e
 
 	const getFeatureStyle = (city) => {
 		const isHovered = hoveredFeature && hoveredFeature.get('name') === city.name;
-		const isSelected = selectedFeatures.some(f => f.get('name') === city.name);
+		const isSelected = selectedFeatures.some((f) => f.get('name') === city.name);
 
 		return {
 			circle: {
@@ -205,11 +205,7 @@ Detects when the pointer hovers over features and provides callbacks for hover e
 
 	<Layer.Vector>
 		{#each cities as city}
-			<Feature.Point
-				coordinates={city.coords}
-				properties={city}
-				style={getFeatureStyle(city)}
-			/>
+			<Feature.Point coordinates={city.coords} properties={city} style={getFeatureStyle(city)} />
 		{/each}
 	</Layer.Vector>
 
@@ -222,7 +218,7 @@ Detects when the pointer hovers over features and provides callbacks for hover e
 		<p>Hovering: {hoveredFeature.get('name')}</p>
 	{/if}
 	{#if selectedFeatures.length > 0}
-		<p>Selected: {selectedFeatures.map(f => f.get('name')).join(', ')}</p>
+		<p>Selected: {selectedFeatures.map((f) => f.get('name')).join(', ')}</p>
 	{/if}
 </div>
 ```

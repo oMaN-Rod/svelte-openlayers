@@ -20,21 +20,21 @@ The main map container that creates the OpenLayers map instance and provides con
 
 ### Props {.toc}
 
-| Prop                   | Type                      | Default     | Description                          |
-| ---------------------- | ------------------------- | ----------- | ------------------------------------ |
-| `class`                | `string`                  | `undefined` | CSS classes for the map container    |
-| `style`                | `string`                  | `undefined` | Inline styles for the map container  |
-| `target`               | `HTMLElement`             | `undefined` | Target element for the map           |
-| `pixelRatio`           | `number`                  | `undefined` | Device pixel ratio                   |
-| `keyboardEventTarget`  | `HTMLElement \| Document` | `undefined` | Keyboard event target                |
-| `maxTilesLoading`      | `number`                  | `undefined` | Maximum tiles loading simultaneously |
-| `moveTolerance`        | `number`                  | `undefined` | Move tolerance in pixels             |
-| `zoomControl`          | `boolean`                 | `true`      | Show zoom control                    |
-| `attributionControl`   | `boolean`                 | `true`      | Show attribution control             |
-| `rotateControl`        | `boolean`                 | `false`     | Show rotate control                  |
-| `mousePositionControl` | `boolean`                 | `false`     | Show mouse position control          |
-| `map`                  | `Map \| null`             | `null`      | Bindable OpenLayers Map instance     |
-| `view`                 | `View \| null`            | `null`      | Bindable OpenLayers View instance    |
+| Prop                   | Type                          | Default     | Description                          |
+| ---------------------- | ----------------------------- | ----------- | ------------------------------------ |
+| `class`                | `string`                      | `undefined` | CSS classes for the map container    |
+| `style`                | `string`                      | `undefined` | Inline styles for the map container  |
+| `target`               | `HTMLElement`                 | `undefined` | Target element for the map           |
+| `pixelRatio`           | `number`                      | `undefined` | Device pixel ratio                   |
+| `keyboardEventTarget`  | `HTMLElement &#124; Document` | `undefined` | Keyboard event target                |
+| `maxTilesLoading`      | `number`                      | `undefined` | Maximum tiles loading simultaneously |
+| `moveTolerance`        | `number`                      | `undefined` | Move tolerance in pixels             |
+| `zoomControl`          | `boolean`                     | `true`      | Show zoom control                    |
+| `attributionControl`   | `boolean`                     | `true`      | Show attribution control             |
+| `rotateControl`        | `boolean`                     | `false`     | Show rotate control                  |
+| `mousePositionControl` | `boolean`                     | `false`     | Show mouse position control          |
+| `map`                  | `Map &#124; null`             | `null`      | Bindable OpenLayers Map instance     |
+| `view`                 | `View &#124; null`            | `null`      | Bindable OpenLayers View instance    |
 
 ### Events {.toc}
 
@@ -54,21 +54,21 @@ Controls the map's viewport including center, zoom, rotation, and projection.
 
 ### Props {.toc}
 
-| Prop                | Type                                  | Default       | Description                         |
-| ------------------- | ------------------------------------- | ------------- | ----------------------------------- |
-| `center`            | `[number, number]`                    | `[0, 0]`      | View center coordinates (bindable)  |
-| `zoom`              | `number`                              | `2`           | Zoom level (bindable)               |
-| `projection`        | `ProjectionLike`                      | `'EPSG:3857'` | Map projection                      |
-| `minZoom`           | `number`                              | `0`           | Minimum zoom level                  |
-| `maxZoom`           | `number`                              | `28`          | Maximum zoom level                  |
-| `rotation`          | `number`                              | `0`           | View rotation in radians (bindable) |
-| `extent`            | `number[]`                            | `undefined`   | Constraining extent                 |
-| `constrainRotation` | `boolean \| number`                   | `true`        | Constrain rotation                  |
-| `enableRotation`    | `boolean`                             | `true`        | Enable rotation                     |
-| `onCenterChange`    | `(center: Coordinate) => void`        | `undefined`   | Center change callback              |
-| `onZoomChange`      | `(zoom: number \| undefined) => void` | `undefined`   | Zoom change callback                |
-| `onRotationChange`  | `(rotation: number) => void`          | `undefined`   | Rotation change callback            |
-| `onMoveEnd`         | `(evt: any) => void`                  | `undefined`   | Move end event callback             |
+| Prop                | Type                                      | Default       | Description                         |
+| ------------------- | ----------------------------------------- | ------------- | ----------------------------------- |
+| `center`            | `[number, number]`                        | `[0, 0]`      | View center coordinates (bindable)  |
+| `zoom`              | `number`                                  | `2`           | Zoom level (bindable)               |
+| `projection`        | `ProjectionLike`                          | `'EPSG:3857'` | Map projection                      |
+| `minZoom`           | `number`                                  | `0`           | Minimum zoom level                  |
+| `maxZoom`           | `number`                                  | `28`          | Maximum zoom level                  |
+| `rotation`          | `number`                                  | `0`           | View rotation in radians (bindable) |
+| `extent`            | `number[]`                                | `undefined`   | Constraining extent                 |
+| `constrainRotation` | `boolean &#124; number`                   | `true`        | Constrain rotation                  |
+| `enableRotation`    | `boolean`                                 | `true`        | Enable rotation                     |
+| `onCenterChange`    | `(center: Coordinate) => void`            | `undefined`   | Center change callback              |
+| `onZoomChange`      | `(zoom: number &#124; undefined) => void` | `undefined`   | Zoom change callback                |
+| `onRotationChange`  | `(rotation: number) => void`              | `undefined`   | Rotation change callback            |
+| `onMoveEnd`         | `(evt: any) => void`                      | `undefined`   | Move end event callback             |
 
 ### Reactive Updates {.toc}
 

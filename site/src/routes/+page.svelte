@@ -10,8 +10,8 @@
   import { Map, Layer, Feature } from 'svelte-openlayers';
 <\/script>
 
-<Map.Root center={[longitude, latitude]} zoom={10}>
-  <Map.View />
+<Map.Root>
+  <Map.View center={[longitude, latitude]} zoom={10}/>
   <Layer.Tile source="osm" />
   <Layer.Vector>
     <Feature.Point coordinates={[0, 0]} />

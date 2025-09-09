@@ -46,17 +46,17 @@ Displays tooltips anchored to map coordinates with HTML content.
 
 ### Props {.toc}
 
-| Prop          | Type                                                                                                                                                    | Default           | Description                                 |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------- |
-| `position`    | `[number, number]`                                                                                                                                      | `[0, 0]`          | Tooltip anchor coordinates                  |
-| `content`     | `string`                                                                                                                                                | `undefined`       | Tooltip text content                        |
-| `visible`     | `boolean`                                                                                                                                               | `true`            | Tooltip visibility                          |
-| `offset`      | `[number, number]`                                                                                                                                      | `[0, 0]`          | Offset in pixels                            |
-| `positioning` | `'bottom-left' \| 'bottom-center' \| 'bottom-right' \| 'center-left' \| 'center-center' \| 'center-right' \| 'top-left' \| 'top-center' \| 'top-right'` | `'bottom-center'` | Tooltip positioning relative to anchor      |
-| `class`       | `string`                                                                                                                                                | `undefined`       | CSS class for tooltip container             |
-| `autoPan`     | `boolean`                                                                                                                                               | `false`           | Auto-pan map to show tooltip                |
-| `overlay`     | `Overlay \| null`                                                                                                                                       | `null`            | Bindable overlay instance (read-only)       |
-| `children`    | `Snippet`                                                                                                                                               | `undefined`       | Child content (alternative to content prop) |
+| Prop          | Type                                                                                                                                                                                    | Default           | Description                                 |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------- |
+| `position`    | `[number, number]`                                                                                                                                                                      | `[0, 0]`          | Tooltip anchor coordinates                  |
+| `content`     | `string`                                                                                                                                                                                | `undefined`       | Tooltip text content                        |
+| `visible`     | `boolean`                                                                                                                                                                               | `true`            | Tooltip visibility                          |
+| `offset`      | `[number, number]`                                                                                                                                                                      | `[0, 0]`          | Offset in pixels                            |
+| `positioning` | `'bottom-left' &#124; 'bottom-center' &#124; 'bottom-right' &#124; 'center-left' &#124; 'center-center' &#124; 'center-right' &#124; 'top-left' &#124; 'top-center' &#124; 'top-right'` | `'bottom-center'` | Tooltip positioning relative to anchor      |
+| `class`       | `string`                                                                                                                                                                                | `undefined`       | CSS class for tooltip container             |
+| `autoPan`     | `boolean`                                                                                                                                                                               | `false`           | Auto-pan map to show tooltip                |
+| `overlay`     | `Overlay &#124; null`                                                                                                                                                                   | `null`            | Bindable overlay instance (read-only)       |
+| `children`    | `Snippet`                                                                                                                                                                               | `undefined`       | Child content (alternative to content prop) |
 
 ### Feature Tooltips with Interaction {.toc}
 

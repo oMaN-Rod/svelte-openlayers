@@ -46,5 +46,5 @@ Map.Root                     # Main container, provides MapContext
 │   └── Feature.Polygon      # Polygon geometries
 ├── Interaction.Select       # Feature selection
 ├── Interaction.Hover        # Feature hover
-└── TooltipManager           # Helper component that manages selection and hover interactions automatically
+└── Overlay.TooltipManager           # Helper component that manages selection and hover interactions automatically
 ```

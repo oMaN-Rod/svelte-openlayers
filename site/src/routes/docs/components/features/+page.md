@@ -30,7 +30,7 @@ Displays point locations on the map.
 | `projection`  | `string`              | `undefined` | Coordinate projection                   |
 | `style`       | `StyleLike`           | `undefined` | Point styling                           |
 | `properties`  | `Record<string, any>` | `{}`        | Feature properties/attributes           |
-| `feature`     | `Feature \| null`     | `null`      | Bindable feature instance (read-only)   |
+| `feature`     | `Feature &#124; null` | `null`      | Bindable feature instance (read-only)   |
 
 > **Note:** Feature events are not currently implemented. Use interaction components like Interaction.Select and Interaction.Hover for feature interaction handling.
 
@@ -90,7 +90,7 @@ Displays lines and paths on the map.
 | `projection`  | `string`                  | `undefined` | Coordinate projection                 |
 | `style`       | `StyleLike`               | `undefined` | Line styling                          |
 | `properties`  | `Record<string, any>`     | `{}`        | Feature properties/attributes         |
-| `feature`     | `Feature \| null`         | `null`      | Bindable feature instance (read-only) |
+| `feature`     | `Feature &#124; null`     | `null`      | Bindable feature instance (read-only) |
 
 ### Route Example {.toc}
 
@@ -153,7 +153,7 @@ Displays areas and boundaries on the map.
 | `projection`  | `string`                         | `undefined` | Coordinate projection                       |
 | `style`       | `StyleLike`                      | `undefined` | Polygon styling                             |
 | `properties`  | `Record<string, any>`            | `{}`        | Feature properties/attributes               |
-| `feature`     | `Feature \| null`                | `null`      | Bindable feature instance (read-only)       |
+| `feature`     | `Feature &#124; null`            | `null`      | Bindable feature instance (read-only)       |
 
 ### Polygon with Hole {.toc}
 

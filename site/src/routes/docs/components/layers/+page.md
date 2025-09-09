@@ -21,19 +21,19 @@ Displays raster tile data from various sources like OpenStreetMap, satellite ima
 
 ### Props {.toc}
 
-| Prop           | Type                       | Default     | Description                         |
-| -------------- | -------------------------- | ----------- | ----------------------------------- |
-| `source`       | `'osm' \| 'xyz' \| Source` | `'osm'`     | Tile source configuration           |
-| `url`          | `string`                   | `undefined` | URL for XYZ source                  |
-| `opacity`      | `number`                   | `1`         | Layer opacity (0-1)                 |
-| `visible`      | `boolean`                  | `true`      | Layer visibility                    |
-| `zIndex`       | `number`                   | `undefined` | Layer stacking order                |
-| `minZoom`      | `number`                   | `undefined` | Minimum zoom level                  |
-| `maxZoom`      | `number`                   | `undefined` | Maximum zoom level                  |
-| `preload`      | `number`                   | `0`         | Preload tiles                       |
-| `layer`        | `TileLayer \| null`        | `null`      | Bindable layer instance (read-only) |
-| `attributions` | `string \| string[]`       | `undefined` | Layer attributions                  |
-| `crossOrigin`  | `string \| null`           | `undefined` | Cross-origin setting                |
+| Prop           | Type                               | Default     | Description                         |
+| -------------- | ---------------------------------- | ----------- | ----------------------------------- |
+| `source`       | `'osm' &#124; 'xyz' &#124; Source` | `'osm'`     | Tile source configuration           |
+| `url`          | `string`                           | `undefined` | URL for XYZ source                  |
+| `opacity`      | `number`                           | `1`         | Layer opacity (0-1)                 |
+| `visible`      | `boolean`                          | `true`      | Layer visibility                    |
+| `zIndex`       | `number`                           | `undefined` | Layer stacking order                |
+| `minZoom`      | `number`                           | `undefined` | Minimum zoom level                  |
+| `maxZoom`      | `number`                           | `undefined` | Maximum zoom level                  |
+| `preload`      | `number`                           | `0`         | Preload tiles                       |
+| `layer`        | `TileLayer &#124; null`            | `null`      | Bindable layer instance (read-only) |
+| `attributions` | `string &#124; string[]`           | `undefined` | Layer attributions                  |
+| `crossOrigin`  | `string &#124; null`               | `undefined` | Cross-origin setting                |
 
 ### Built-in Sources {.toc}
 
@@ -108,19 +108,19 @@ Displays vector data like points, lines, and polygons. Container for Feature com
 
 ### Props {.toc}
 
-| Prop                     | Type                   | Default     | Description                          |
-| ------------------------ | ---------------------- | ----------- | ------------------------------------ |
-| `opacity`                | `number`               | `1`         | Layer opacity (0-1)                  |
-| `visible`                | `boolean`              | `true`      | Layer visibility                     |
-| `zIndex`                 | `number`               | `undefined` | Layer stacking order                 |
-| `minZoom`                | `number`               | `undefined` | Minimum zoom level                   |
-| `maxZoom`                | `number`               | `undefined` | Maximum zoom level                   |
-| `style`                  | `StyleLike`            | `undefined` | Default style for features           |
-| `updateWhileAnimating`   | `boolean`              | `false`     | Update during animations             |
-| `updateWhileInteracting` | `boolean`              | `false`     | Update during interactions           |
-| `renderBuffer`           | `number`               | `100`       | Render buffer in pixels              |
-| `layer`                  | `VectorLayer \| null`  | `null`      | Bindable layer instance (read-only)  |
-| `source`                 | `VectorSource \| null` | `null`      | Bindable source instance (read-only) |
+| Prop                     | Type                       | Default     | Description                          |
+| ------------------------ | -------------------------- | ----------- | ------------------------------------ |
+| `opacity`                | `number`                   | `1`         | Layer opacity (0-1)                  |
+| `visible`                | `boolean`                  | `true`      | Layer visibility                     |
+| `zIndex`                 | `number`                   | `undefined` | Layer stacking order                 |
+| `minZoom`                | `number`                   | `undefined` | Minimum zoom level                   |
+| `maxZoom`                | `number`                   | `undefined` | Maximum zoom level                   |
+| `style`                  | `StyleLike`                | `undefined` | Default style for features           |
+| `updateWhileAnimating`   | `boolean`                  | `false`     | Update during animations             |
+| `updateWhileInteracting` | `boolean`                  | `false`     | Update during interactions           |
+| `renderBuffer`           | `number`                   | `100`       | Render buffer in pixels              |
+| `layer`                  | `VectorLayer &#124; null`  | `null`      | Bindable layer instance (read-only)  |
+| `source`                 | `VectorSource &#124; null` | `null`      | Bindable source instance (read-only) |
 
 ### Vector Layer with Styling {.toc}
 
