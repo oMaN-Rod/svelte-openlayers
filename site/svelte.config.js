@@ -32,9 +32,15 @@ const mdsvexOptions = {
 
 const config = {
 	preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
-	kit: { adapter: adapter() },
-	extensions: ['.svelte', '.svx', '.md'],
-	base: 'oMaN-Rod.github.io'
+	kit: {
+		adapter: adapter({
+			fallback: '404.html'
+		}),
+		paths: {
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
+		}
+	},
+	extensions: ['.svelte', '.svx', '.md']
 };
 
 export default config;
