@@ -139,15 +139,15 @@
 	});
 </script>
 
-<div class="flex gap-4">
+<div class="flex flex-col gap-4 lg:flex-row">
 	<!-- Table -->
-	<div class="w-1/3">
+	<div class="w-full lg:w-1/3">
 		<div class="rounded-lg border">
 			<div class="flex items-center justify-between border-b p-3">
 				<h3 class="font-semibold">NYC Landmarks</h3>
 				<Input type="text" placeholder="Search..." class="w-1/2" bind:value={search} />
 			</div>
-			<div class="max-h-96 overflow-y-auto">
+			<div class="max-h-64 overflow-y-auto lg:max-h-96">
 				<table class="w-full text-sm">
 					<thead class="sticky top-0">
 						<tr>
