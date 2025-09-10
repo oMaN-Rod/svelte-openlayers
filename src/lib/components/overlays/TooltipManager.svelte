@@ -21,6 +21,10 @@
 		hoverClass = 'hover-tooltip',
 		selectClass = 'select-tooltip',
 		selectStyle,
+		hoverInteraction = $bindable(null),
+		selectInteraction = $bindable(null),
+		selectedFeatures = $bindable(null),
+		multi = false,
 		children
 	}: TooltipManagerProps = $props();
 
@@ -104,7 +108,13 @@
 </script>
 
 {#if hoverTooltip}
-	<InteractionHover {layers} {hitTolerance} onHover={handleHover} onHoverEnd={handleHoverEnd} />
+	<InteractionHover
+		{layers}
+		{hitTolerance}
+		onHover={handleHover}
+		onHoverEnd={handleHoverEnd}
+		bind:interaction={hoverInteraction}
+	/>
 	{#if hoverSnippet && hoverFeature}
 		<OverlayTooltip
 			bind:position={hoverPosition}
@@ -128,7 +138,15 @@
 {/if}
 
 {#if selectTooltip}
-	<InteractionSelect {layers} {hitTolerance} style={selectStyle} onSelect={handleSelect} />
+	<InteractionSelect
+		{layers}
+		{hitTolerance}
+		{multi}
+		style={selectStyle}
+		onSelect={handleSelect}
+		bind:interaction={selectInteraction}
+		bind:selectedFeatures
+	/>
 	{#if selectSnippet && selectFeature}
 		<OverlayTooltip
 			bind:position={selectPosition}

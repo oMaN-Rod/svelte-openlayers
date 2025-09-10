@@ -1,6 +1,7 @@
-import type { Feature, Map, Overlay, View } from 'ol';
+import type { Collection, Feature, Map, Overlay, View } from 'ol';
 import type Control from 'ol/control/Control.js';
 import type { Coordinate } from 'ol/coordinate.js';
+import type { Geometry } from 'ol/geom.js';
 import type Interaction from 'ol/interaction/Interaction.js';
 import type Layer from 'ol/layer/Layer.js';
 import type TileLayer from 'ol/layer/Tile.js';
@@ -142,9 +143,9 @@ export interface InteractionSelectProps {
 	addCondition?: any;
 	removeCondition?: any;
 	toggleCondition?: any;
-	onSelect?: (features: Feature[]) => void;
-	interaction?: any; // Select from ol/interaction
-	selectedFeatures?: any; // Collection<Feature> from ol
+	onSelect?: (features: Feature<Geometry>[]) => void;
+	interaction?: Interaction | null;
+	selectedFeatures?: Collection<Feature<Geometry>> | null;
 }
 
 export interface InteractionHoverProps {
@@ -209,5 +210,9 @@ export interface TooltipManagerProps {
 	hoverClass?: string;
 	selectClass?: string;
 	selectStyle?: StyleLike;
+	selectInteraction?: Interaction | null;
+	hoverInteraction?: Interaction | null;
+	selectedFeatures?: Collection<Feature> | null;
+	multi?: boolean;
 	children?: Snippet;
 }

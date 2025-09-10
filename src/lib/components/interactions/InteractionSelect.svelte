@@ -21,7 +21,6 @@
 
 	const mapContext = getMapContext();
 	let selectInteraction: Select | null = null;
-	let isDestroyed = false;
 
 	onMount(() => {
 		const selectOptions: Options = {
@@ -36,9 +35,16 @@
 		if (removeCondition) selectOptions.removeCondition = removeCondition;
 		if (toggleCondition) selectOptions.toggleCondition = toggleCondition;
 
+		if (selectedFeatures) {
+			selectOptions.features = selectedFeatures;
+		}
+
 		selectInteraction = new Select(selectOptions);
 		interaction = selectInteraction;
-		selectedFeatures = selectInteraction.getFeatures();
+
+		if (!selectedFeatures) {
+			selectedFeatures = selectInteraction.getFeatures();
+		}
 
 		if (onSelect) {
 			selectInteraction.on('select', (evt: any) => {
@@ -49,7 +55,6 @@
 		mapContext.addInteraction(selectInteraction);
 
 		return () => {
-			isDestroyed = true;
 			if (selectInteraction) {
 				mapContext.removeInteraction(selectInteraction);
 				selectInteraction.getFeatures().clear();

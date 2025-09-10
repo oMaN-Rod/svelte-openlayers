@@ -16,12 +16,7 @@ export {
 } from './styles.js';
 
 // Context utilities
-export {
-	setMapContext,
-	getMapContext,
-	setLayerContext,
-	getLayerContext
-} from './context.js';
+export { setMapContext, getMapContext, setLayerContext, getLayerContext } from './context.js';
 
 // CSS utilities
 export {
@@ -32,3 +27,6 @@ export {
 	hasCSSVariable,
 	getOpenLayersTheme
 } from './css.js';
+
+// Collection utilities
+export { createReactiveCollection } from './collections.js';
