@@ -475,6 +475,61 @@ Many component properties are reactive and bindable:
 </Map.Root>
 ```
 
+## Utility Functions {.toc}
+
+### createReactiveCollection {.toc}
+
+Creates a reactive wrapper around an OpenLayers `Collection` to enable Svelte 5 reactivity when the collection changes.
+
+```typescript
+function createReactiveCollection<T extends Feature>(
+	collection: Collection<T>,
+	idField?: string
+): ReactiveCollection<T>
+```
+
+#### Parameters {.toc}
+
+| Parameter    | Type                | Default | Description                                                    |
+| ------------ | ------------------- | ------- | -------------------------------------------------------------- |
+| `collection` | `Collection<T>`     | -       | OpenLayers Collection instance to wrap                        |
+| `idField`    | `string`            | `'id'`  | Property field name to use for ID-based operations            |
+
+#### Return Type {.toc}
+
+```typescript
+interface ReactiveCollection<T extends Feature> {
+	// Reactive getter that returns the original collection
+	get collection(): Collection<T>;
+	
+	// Reactive getter that returns the current length
+	get length(): number;
+	
+	// Reactive getter that returns the array of features
+	get array(): T[];
+	
+	// Check if collection contains a specific feature
+	has(feature: T): boolean;
+	
+	// Check if collection contains a feature with specific ID
+	hasId(id: string): boolean;
+}
+```
+
+#### Usage Notes {.toc}
+
+- This utility uses Svelte 5's `createSubscriber` API to listen for Collection events (`add`, `remove`, `clear`)
+- All getters and methods trigger reactivity when accessed in reactive contexts
+- The wrapper automatically cleans up event listeners when no longer referenced
+- Essential for bidirectional binding between OpenLayers Collections and Svelte components
+- Commonly used with `Interaction.Select`'s `selectedFeatures` prop for reactive selection state
+
+#### Import {.toc}
+
+```typescript
+import { createReactiveCollection } from 'svelte-openlayers/utils';
+```
+
 ## Common Projections {.toc}
 
 - `'EPSG:4326'` - WGS84 Geographic (longitude/latitude)

@@ -44,19 +44,19 @@ Allows users to select features by clicking or other methods.
 
 ### Props {.toc}
 
-| Prop               | Type                            | Default     | Description                               |
-| ------------------ | ------------------------------- | ----------- | ----------------------------------------- |
-| `style`            | `StyleLike`                     | `undefined` | Style for selected features               |
-| `layers`           | `Layer[]`                       | `undefined` | Layers to select from                     |
-| `filter`           | `any`                           | `undefined` | Feature filter function                   |
-| `multi`            | `boolean`                       | `false`     | Allow multiple selection                  |
-| `hitTolerance`     | `number`                        | `undefined` | Hit detection tolerance in pixels         |
-| `addCondition`     | `any`                           | `undefined` | Condition for adding to selection         |
-| `removeCondition`  | `any`                           | `undefined` | Condition for removing from selection     |
-| `toggleCondition`  | `any`                           | `undefined` | Condition for toggling selection          |
-| `onSelect`         | `(features: Feature[]) => void` | `undefined` | Selection callback                        |
-| `interaction`      | `any`                           | `undefined` | Bindable interaction instance (read-only) |
-| `selectedFeatures` | `any`                           | `undefined` | Bindable selected features collection     |
+| Prop               | Type                            | Default     | Description                                                   |
+| ------------------ | ------------------------------- | ----------- | ------------------------------------------------------------- |
+| `style`            | `StyleLike`                     | `undefined` | Style for selected features                                   |
+| `layers`           | `Layer[]`                       | `undefined` | Layers to select from                                         |
+| `filter`           | `any`                           | `undefined` | Feature filter function                                       |
+| `multi`            | `boolean`                       | `false`     | Allow multiple selection                                      |
+| `hitTolerance`     | `number`                        | `undefined` | Hit detection tolerance in pixels                             |
+| `addCondition`     | `any`                           | `undefined` | Condition for adding to selection                             |
+| `removeCondition`  | `any`                           | `undefined` | Condition for removing from selection                         |
+| `toggleCondition`  | `any`                           | `undefined` | Condition for toggling selection                              |
+| `onSelect`         | `(features: Feature[]) => void` | `undefined` | Selection callback                                            |
+| `interaction`      | `any`                           | `undefined` | Bindable interaction instance (read-only)                     |
+| `selectedFeatures` | `Collection<Feature>`           | `undefined` | Bindable selected features collection (supports external control) |
 
 ### Advanced Selection {.toc}
 

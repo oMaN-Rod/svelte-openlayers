@@ -182,14 +182,29 @@ A higher-level component that automatically manages tooltips for hover and selec
 | ------------------- | --------------------------------------------- | ----------------- | ------------------------------------------- |
 | `layers`            | `Layer[]`                                     | `undefined`       | Layers to show tooltips for                 |
 | `hitTolerance`      | `number`                                      | `undefined`       | Hit detection tolerance                     |
-| `hoverTooltip`      | `boolean`                                     | `false`           | Enable hover tooltips                       |
-| `selectTooltip`     | `boolean`                                     | `false`           | Enable selection tooltips                   |
+| `hoverTooltip`      | `boolean`                                     | `true`            | Enable hover tooltips                       |
+| `selectTooltip`     | `boolean`                                     | `true`            | Enable selection tooltips                   |
 | `hoverContent`      | `(feature: Feature) => string`                | `undefined`       | Function to generate hover tooltip content  |
 | `selectContent`     | `(feature: Feature) => string`                | `undefined`       | Function to generate select tooltip content |
 | `hoverSnippet`      | `Snippet<[Feature]>`                          | `undefined`       | Svelte snippet for hover tooltip content    |
 | `selectSnippet`     | `Snippet<[Feature]>`                          | `undefined`       | Svelte snippet for select tooltip content   |
-| `hoverPositioning`  | Positioning options (same as Overlay.Tooltip) | `'top-center'`    | Hover tooltip positioning                   |
-| `selectPositioning` | Positioning options (same as Overlay.Tooltip) | `'bottom-center'` | Select tooltip positioning                  |
-| `hoverClass`        | `string`                                      | `undefined`       | CSS class for hover tooltips                |
-| `selectClass`       | `string`                                      | `undefined`       | CSS class for select tooltips               |
+| `hoverPositioning`  | Positioning options (same as Overlay.Tooltip) | `'center-left'`   | Hover tooltip positioning                   |
+| `selectPositioning` | Positioning options (same as Overlay.Tooltip) | `'center-left'`   | Select tooltip positioning                  |
+| `hoverClass`        | `string`                                      | `'hover-tooltip'` | CSS class for hover tooltips                |
+| `selectClass`       | `string`                                      | `'select-tooltip'`| CSS class for select tooltips               |
 | `selectStyle`       | `StyleLike`                                   | `undefined`       | Style for selected features                 |
+| `selectInteraction` | `Interaction`                                 | `null`            | Bindable select interaction instance        |
+| `hoverInteraction`  | `Interaction`                                 | `null`            | Bindable hover interaction instance         |
+| `selectedFeatures`  | `Collection<Feature>`                         | `null`            | Bindable selected features collection. When provided externally, allows programmatic control of selection. |
+| `multi`             | `boolean`                                     | `false`           | Allow multiple selection                    |
+
+### Programmatic Selection Notes {.toc}
+
+When using `TooltipManager` with programmatic selection through the `selectedFeatures` prop:
+
+- The `selectedFeatures` prop accepts an OpenLayers `Collection<Feature>` instance that can be manipulated externally
+- When programmatically adding/removing features from the collection, the internal select interaction needs to be notified
+- To ensure select tooltips appear when selecting programmatically, dispatch a synthetic `select` event on the bound `selectInteraction`:
+  - Event structure: `{ type: 'select', selected: Feature[], deselected: Feature[] }`
+- The `selectInteraction` and `hoverInteraction` props are bindable, providing access to the internal interaction instances
+- Both hover and select tooltips will automatically position themselves based on feature geometry extent centers

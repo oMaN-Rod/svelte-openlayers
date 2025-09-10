@@ -1,4 +1,4 @@
-import { Map, MapPin, MousePointer, Layers, Palette, Image } from 'lucide-svelte';
+import { Map, MapPin, MousePointer, Layers, Palette, Image, ArrowLeftRight } from 'lucide-svelte';
 import type { ComponentType } from 'svelte';
 
 // Map source configurations
@@ -94,6 +94,16 @@ export const examplesMeta: Record<string, ExampleMeta> = {
 		tags: ['Advanced', 'Styling', 'UI'],
 		concepts: ['Dynamic Themes', 'Dark Mode', 'CSS Variables', 'Scoped Styles', 'Runtime Theming'],
 		order: 6
+	},
+	'bidirectional-selection-demo': {
+		id: 'bidirectional-selection',
+		title: 'Bidirectional Selection',
+		description: 'Synchronized selection between table and map features with programmatic control',
+		category: 'interaction',
+		icon: ArrowLeftRight,
+		tags: ['Interaction', 'Selection', 'Advanced'],
+		concepts: ['Interaction.Select', 'bind:selectedFeatures', 'Programmatic selection', 'Feature collections', 'State synchronization'],
+		order: 5
 	}
 };
 

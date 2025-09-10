@@ -96,7 +96,7 @@
 </script>
 
 {#if tocItems.length > 0}
-	<nav class="sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto">
+	<nav class="top-20 overflow-y-auto">
 		<div class="space-y-2">
 			<h5 class="mb-3 text-sm font-semibold">On This Page</h5>
 			<ul class="space-y-1 text-sm">
