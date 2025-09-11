@@ -89,7 +89,7 @@
 	function selectFromTable(locationId: string) {
 		selectedFeatures.clear();
 
-		const location = locations.find((l) => l.id === locationId);
+		const location = filteredLocations.find((l) => l.id === locationId);
 		if (location && location.feature) {
 			selectedFeatures.push(location.feature);
 
