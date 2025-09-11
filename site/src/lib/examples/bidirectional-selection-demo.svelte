@@ -9,7 +9,7 @@
 
 	const DEFAULT_CENTER: [number, number] = [-73.98513, 40.758896]; // Times Square, NYC
 	let center: number[] = $state(DEFAULT_CENTER);
-	let zoom = $state(13);
+	let zoom = $state(11);
 	let search = $state('');
 	let filteredLocations = $state<(typeof locations)[0][]>([]);
 
@@ -208,7 +208,7 @@
 				/>
 
 				<Layer.Vector style={pointStyle}>
-					{#each locations as location}
+					{#each filteredLocations as location}
 						<Feature.Point
 							coordinates={location.coords}
 							style={getFeatureStyle(location)}
