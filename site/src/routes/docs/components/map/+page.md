@@ -38,7 +38,112 @@ The main map container that creates the OpenLayers map instance and provides con
 
 ### Events {.toc}
 
-_Note: Map events are not currently implemented in Map.Root. Use interactions or map instance directly for event handling._
+Map.Root supports comprehensive event handling for map interactions. All events receive the appropriate OpenLayers event object.
+
+#### MapBrowserEvent Handlers {.toc}
+
+Handle pointer and mouse interactions with the map:
+
+```svelte
+<Map.Root
+	onSingleclick={handleSingleClick}
+	onPointermove={handlePointerMove}
+	onPointerdown={handlePointerDown}
+>
+	<Map.View />
+</Map.Root>
+```
+
+| Event Handler      | Type                              | Description                    |
+| ------------------ | --------------------------------- | ------------------------------ |
+| `onSingleclick`    | `(evt: MapBrowserEvent) => void`  | Single click event             |
+| `onClick`          | `(evt: MapBrowserEvent) => void`  | Click event                    |
+| `onDblclick`       | `(evt: MapBrowserEvent) => void`  | Double click event             |
+| `onPointerdrag`    | `(evt: MapBrowserEvent) => void`  | Pointer drag event             |
+| `onPointermove`    | `(evt: MapBrowserEvent) => void`  | Pointer move event             |
+| `onPointerdown`    | `(evt: MapBrowserEvent) => void`  | Pointer down event             |
+| `onPointerup`      | `(evt: MapBrowserEvent) => void`  | Pointer up event               |
+| `onPointerover`    | `(evt: MapBrowserEvent) => void`  | Pointer over event             |
+| `onPointerout`     | `(evt: MapBrowserEvent) => void`  | Pointer out event              |
+| `onPointerenter`   | `(evt: MapBrowserEvent) => void`  | Pointer enter event            |
+| `onPointerleave`   | `(evt: MapBrowserEvent) => void`  | Pointer leave event            |
+| `onPointercancel`  | `(evt: MapBrowserEvent) => void`  | Pointer cancel event           |
+
+#### MapEvent Handlers {.toc}
+
+Handle map lifecycle and navigation events:
+
+```svelte
+<Map.Root
+	onMovestart={handleMoveStart}
+	onMoveend={handleMoveEnd}
+	onLoadend={handleLoadEnd}
+>
+	<Map.View />
+</Map.Root>
+```
+
+| Event Handler   | Type                         | Description                    |
+| --------------- | ---------------------------- | ------------------------------ |
+| `onPostrender`  | `(evt: MapEvent) => void`    | After map rendering            |
+| `onMovestart`   | `(evt: MapEvent) => void`    | Map movement starts            |
+| `onMoveend`     | `(evt: MapEvent) => void`    | Map movement ends              |
+| `onLoadstart`   | `(evt: MapEvent) => void`    | Map loading starts             |
+| `onLoadend`     | `(evt: MapEvent) => void`    | Map loading ends               |
+
+#### RenderEvent Handlers {.toc}
+
+Handle rendering lifecycle events:
+
+```svelte
+<Map.Root
+	onPrecompose={handlePreCompose}
+	onPostcompose={handlePostCompose}
+	onRendercomplete={handleRenderComplete}
+>
+	<Map.View />
+</Map.Root>
+```
+
+| Event Handler       | Type                           | Description                    |
+| ------------------- | ------------------------------ | ------------------------------ |
+| `onPrecompose`      | `(evt: RenderEvent) => void`   | Before layer composition       |
+| `onPostcompose`     | `(evt: RenderEvent) => void`   | After layer composition        |
+| `onRendercomplete`  | `(evt: RenderEvent) => void`   | Rendering complete             |
+
+#### Event Usage Examples {.toc}
+
+```svelte
+<script>
+	function handleClick(evt) {
+		const coordinate = evt.coordinate;
+		console.log('Clicked at:', coordinate);
+	}
+
+	function handlePointerMove(evt) {
+		// Update cursor or highlight features
+		const pixel = evt.pixel;
+		// Check for features at pixel
+	}
+
+	function handleMoveEnd(evt) {
+		const map = evt.target;
+		const view = map.getView();
+		const center = view.getCenter();
+		const zoom = view.getZoom();
+		console.log('New view:', { center, zoom });
+	}
+</script>
+
+<Map.Root
+	onSingleclick={handleClick}
+	onPointermove={handlePointerMove}
+	onMoveend={handleMoveEnd}
+>
+	<Map.View />
+	<!-- layers and other components -->
+</Map.Root>
+```
 
 ## Map.View {.toc}
 

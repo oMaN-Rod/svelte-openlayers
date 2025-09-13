@@ -31,6 +31,32 @@ interface MapRootProps extends MapProps {
 	map?: Map | null; // bindable
 	view?: View | null; // bindable
 
+	// MapBrowserEvent handlers
+	onSingleclick?: (evt: MapBrowserEvent) => void;
+	onClick?: (evt: MapBrowserEvent) => void;
+	onDblclick?: (evt: MapBrowserEvent) => void;
+	onPointerdrag?: (evt: MapBrowserEvent) => void;
+	onPointermove?: (evt: MapBrowserEvent) => void;
+	onPointerdown?: (evt: MapBrowserEvent) => void;
+	onPointerup?: (evt: MapBrowserEvent) => void;
+	onPointerover?: (evt: MapBrowserEvent) => void;
+	onPointerout?: (evt: MapBrowserEvent) => void;
+	onPointerenter?: (evt: MapBrowserEvent) => void;
+	onPointerleave?: (evt: MapBrowserEvent) => void;
+	onPointercancel?: (evt: MapBrowserEvent) => void;
+
+	// MapEvent handlers
+	onPostrender?: (evt: MapEvent) => void;
+	onMovestart?: (evt: MapEvent) => void;
+	onMoveend?: (evt: MapEvent) => void;
+	onLoadstart?: (evt: MapEvent) => void;
+	onLoadend?: (evt: MapEvent) => void;
+
+	// RenderEvent handlers
+	onPrecompose?: (evt: RenderEvent) => void;
+	onPostcompose?: (evt: RenderEvent) => void;
+	onRendercomplete?: (evt: RenderEvent) => void;
+
 	// Children
 	children?: Snippet;
 }
@@ -129,6 +155,83 @@ interface LayerVectorProps {
 	children?: Snippet; // Feature components
 }
 ```
+
+### Layer.WebGL {.toc}
+
+High-performance WebGL vector layer for rendering large point datasets with hardware acceleration.
+
+```typescript
+interface LayerWebGLProps {
+	// Layer properties
+	opacity?: number; // default: 1 (0-1 range)
+	visible?: boolean; // default: true
+	zIndex?: number;
+	minZoom?: number;
+	maxZoom?: number;
+
+	// WebGL-specific styling
+	style?: FlatStyleLike; // Expression-based style definition
+	variables?: StyleVariables; // Dynamic style variables
+
+	// Performance options
+	disableHitDetection?: boolean; // default: false
+
+	// Bindable instances (read-only)
+	layer?: WebGLVectorLayer<any> | null; // bindable
+	source?: VectorSource | null; // bindable
+
+	// Children
+	children?: Snippet; // For programmatic feature addition
+}
+```
+
+**Key Differences from Layer.Vector**:
+
+- Uses `FlatStyleLike` instead of `StyleLike` for expression-based styling
+- Supports `variables` prop for dynamic style parameters
+- Includes `disableHitDetection` for performance optimization
+- Optimized for large point datasets (thousands of features)
+- Hardware-accelerated rendering via WebGL
+
+**Expression-Based Styling**:
+
+LayerWebGL uses OpenLayers' flat style expressions for dynamic styling:
+
+```typescript
+// Example style with expressions
+const webglStyle: FlatStyleLike = {
+	// Data-driven circle radius
+	'circle-radius': [
+		'interpolate',
+		['linear'],
+		['get', 'population'],
+		0, 4,
+		1000000, 20
+	],
+	// Conditional fill color
+	'circle-fill-color': [
+		'case',
+		['>', ['get', 'temperature'], 25], '#ff4444',
+		['>', ['get', 'temperature'], 15], '#ffaa00',
+		'#4444ff'
+	],
+	// Zoom-based opacity
+	'circle-opacity': [
+		'interpolate',
+		['linear'],
+		['zoom'],
+		5, 0.3,
+		15, 0.9
+	]
+};
+```
+
+**Supported Style Properties**:
+
+- Circle: `circle-radius`, `circle-fill-color`, `circle-stroke-color`, `circle-opacity`
+- Icon: `icon-src`, `icon-width`, `icon-height`, `icon-color`, `icon-opacity`
+- Shape: `shape-points`, `shape-radius`, `shape-fill-color`, `shape-rotation`
+- Common: `filter`, `z-index`
 
 ### Coming Soon {.toc}
 
@@ -426,10 +529,10 @@ type MapContext = {
 // Layer context (available to feature components)
 interface LayerContext {
 	getSource: () => VectorSource | null;
-	getLayer: () => VectorLayer<any> | null;
+	getLayer: () => VectorLayer<any> | WebGLVectorLayer<any> | null;
 	addFeature: (feature: Feature) => void;
 	removeFeature: (feature: Feature) => void;
-	setStyle: (style: StyleLike) => void;
+	setStyle: (style: StyleLike | FlatStyleLike) => void;
 }
 ```
 

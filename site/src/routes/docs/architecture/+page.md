@@ -14,11 +14,14 @@ Components follow consistent patterns with independently importable, tree-shakea
 
 ```svelte
 <Map.Root>
-	<Map.View />
+	<Map.View center={[0, 0]} zoom={2} />
+	<Layer.Tile source="osm" />
 	<Layer.Vector>
-		<Feature.Point />
+		<Feature.Point coordinates={[0, 0]} />
 	</Layer.Vector>
-	<Interaction.Select />
+	<!-- High-performance WebGL layer for large datasets -->
+	<Layer.WebGL style={{ 'circle-radius': 8, 'circle-fill-color': '#ff0000' }} />
+	<Overlay.TooltipManager />
 </Map.Root>
 ```
 

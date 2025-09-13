@@ -17,7 +17,8 @@ The foundation of every map application:
 Display different types of data on your map:
 
 - **Layer.Tile** - Raster tile layers (OSM, XYZ, WMS)
-- **Layer.Vector** - Vector data layers
+- **Layer.Vector** - Vector data layers with Canvas rendering
+- **Layer.WebGL** - High-performance WebGL vector layers for large datasets
 - **Layer.VectorTile** - Vector tile layers for performance
 - **Layer.Image** - Static image layers
 
@@ -54,13 +55,15 @@ Display HTML content positioned on the map:
 All components follow a consistent, nestable structure:
 
 ```svelte
-<Map.Root center={[0, 0]} zoom={2}>
-	<Map.View />
+<Map.Root>
+	<Map.View center={[0, 0]} zoom={2} />
 	<Layer.Tile source="osm" />
 	<Layer.Vector>
 		<Feature.Point coordinates={[0, 0]} />
 	</Layer.Vector>
-	<Interaction.Select />
+	<!-- High-performance WebGL layer for large datasets -->
+	<Layer.WebGL style={{ 'circle-radius': 8, 'circle-fill-color': '#ff0000' }} />
+	<Overlay.TooltipManager />
 </Map.Root>
 ```
 
@@ -86,8 +89,6 @@ Component properties are reactive and bindable:
 Components emit standard events with OpenLayers data:
 
 ```svelte
-<Feature.Point coordinates={[0, 0]} onClick={handleClick} onPointerMove={handleHover} />
-
 <Interaction.Select onSelect={(event) => console.log('Selected:', event.detail.features)} />
 ```
 

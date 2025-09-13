@@ -121,7 +121,9 @@
 	<div class="relative overflow-x-auto">
 		{#if mounted && highlightedCode}
 			<ScrollArea class="{height} rounded-b-lg">
-				<div class="[&>pre]:!m-0 [&>pre]:!border-0 [&>pre]:!p-4 [&>pre]:overflow-x-auto [&>pre]:min-w-0">
+				<div
+					class="[&>pre]:!m-0 [&>pre]:min-w-0 [&>pre]:overflow-x-auto [&>pre]:!border-0 [&>pre]:!p-4"
+				>
 					{@html highlightedCode}
 				</div>
 			</ScrollArea>
@@ -163,22 +165,22 @@
 		background: #f5f5f5 !important;
 		overflow-x: auto !important;
 	}
-	
+
 	:global(.shiki pre) {
 		overflow-x: auto !important;
 		white-space: pre !important;
 	}
-	
+
 	:global(.shiki code) {
 		display: block !important;
 		width: max-content !important;
 		min-width: 100% !important;
 	}
-	
+
 	:global(.dark .shiki) {
 		background: #181818 !important;
 	}
-	
+
 	:global(.dark .shiki span) {
 		color: var(--shiki-dark) !important;
 	}

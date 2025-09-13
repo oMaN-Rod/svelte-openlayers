@@ -1,4 +1,14 @@
-import { Map, MapPin, MousePointer, Layers, Palette, Image, ArrowLeftRight, Globe } from 'lucide-svelte';
+import {
+	Map,
+	MapPin,
+	MousePointer,
+	Layers,
+	Palette,
+	Image,
+	ArrowLeftRight,
+	Globe,
+	Zap
+} from 'lucide-svelte';
 import type { ComponentType } from 'svelte';
 
 const buildAttributions = (append: string) => {
@@ -132,7 +142,7 @@ export const examplesMeta: Record<string, ExampleMeta> = {
 	},
 	'custom-source-geojson-demo': {
 		id: 'custom-source-geojson',
-		title: 'Custom GeoJSON Source',
+		title: 'GeoJSON Vector Source',
 		description: 'Load GeoJSON data from remote URLs or inline objects with custom VectorSource',
 		category: 'advanced',
 		icon: Globe,
@@ -145,6 +155,24 @@ export const examplesMeta: Record<string, ExampleMeta> = {
 			'Feature styling'
 		],
 		order: 7
+	},
+	'webgl-points-demo': {
+		id: 'webgl-points',
+		title: 'WebGL Rendering',
+		description:
+			'High-performance rendering of large point datasets using WebGL with dynamic styling',
+		category: 'advanced',
+		icon: Zap,
+		tags: ['Advanced', 'WebGL', 'Performance'],
+		concepts: [
+			'LayerWebGL',
+			'WebGL rendering',
+			'Expression-based styles',
+			'Dynamic variables',
+			'Large datasets',
+			'Performance optimization'
+		],
+		order: 8
 	}
 };
 
