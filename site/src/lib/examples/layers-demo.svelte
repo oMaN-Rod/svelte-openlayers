@@ -3,7 +3,6 @@
 	import { createCircleStyle } from 'svelte-openlayers/utils';
 	import { mapSources } from '$lib/examples/sources';
 	import type TileLayer from 'ol/layer/Tile';
-	import { XYZ } from 'ol/source.js';
 
 	type LayersVisible = { airports: boolean; railways: boolean; regions: boolean };
 

@@ -38,7 +38,7 @@
 					<h4 class="text-foreground/70 mb-2 text-sm font-semibold">{category.title}</h4>
 					<nav class="grid gap-1">
 						{#each category.examples as example}
-							{@const path = resolve('/examples') + `/${example.id}`}
+							{@const path = `${resolve('/examples')}/${example.id}`}
 							<a
 								href={path}
 								class={cn(

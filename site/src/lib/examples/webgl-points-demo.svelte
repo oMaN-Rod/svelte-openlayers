@@ -182,7 +182,7 @@
 	}
 
 	const predefinedStyles = $derived(generateStyles(selectedTheme));
-	let currentStyle = $state(predefinedStyles[selectedStyle]);
+	let currentStyle = $derived(predefinedStyles[selectedStyle]);
 
 	onMount(() => {
 		updateStyleEditor();
@@ -206,13 +206,11 @@
 	}
 
 	function handleStyleChange() {
-		currentStyle = predefinedStyles[selectedStyle];
 		updateStyleEditor();
 		styleError = null;
 	}
 
 	function handleThemeChange() {
-		currentStyle = predefinedStyles[selectedStyle];
 		updateStyleEditor();
 		styleError = null;
 	}
@@ -299,9 +297,7 @@
 			attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 		/>
 		<Layer.WebGL bind:layer={webglLayer} style={currentStyle}>
-			{#await getGeoJSONFeatures()}
-				<span>...Loading</span>
-			{:then features}
+			{#await getGeoJSONFeatures() then features}
 				{#each features as feature}
 					{#snippet children()}
 						{(() => {

@@ -75,7 +75,7 @@
 								{/each}
 							</div>
 						</div>
-						<Button href={resolve('/examples/') + `/${example.id}`} class="w-full">
+						<Button href={`${resolve('/examples')}/${example.id}`} class="w-full">
 							View Example
 						</Button>
 					</div>
