@@ -1,4 +1,4 @@
-import { Map, MapPin, MousePointer, Layers, Palette, Image, ArrowLeftRight } from 'lucide-svelte';
+import { Map, MapPin, MousePointer, Layers, Palette, Image, ArrowLeftRight, Globe } from 'lucide-svelte';
 import type { ComponentType } from 'svelte';
 
 const buildAttributions = (append: string) => {
@@ -129,6 +129,22 @@ export const examplesMeta: Record<string, ExampleMeta> = {
 			'State synchronization'
 		],
 		order: 5
+	},
+	'custom-source-geojson-demo': {
+		id: 'custom-source-geojson',
+		title: 'Custom GeoJSON Source',
+		description: 'Load GeoJSON data from remote URLs or inline objects with custom VectorSource',
+		category: 'advanced',
+		icon: Globe,
+		tags: ['Advanced', 'Data', 'GeoJSON'],
+		concepts: [
+			'VectorSource',
+			'GeoJSON format',
+			'Remote data loading',
+			'Custom layer binding',
+			'Feature styling'
+		],
+		order: 7
 	}
 };
 
