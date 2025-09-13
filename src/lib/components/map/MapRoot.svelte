@@ -26,7 +26,30 @@
 		mousePositionControl = false,
 		children,
 		map = $bindable(null),
-		view = $bindable(null)
+		view = $bindable(null),
+		// MapBrowserEvent events
+		onSingleclick,
+		onClick,
+		onDblclick,
+		onPointerdrag,
+		onPointermove,
+		onPointerdown,
+		onPointerup,
+		onPointerover,
+		onPointerout,
+		onPointerenter,
+		onPointerleave,
+		onPointercancel,
+		// MapEvent events
+		onPostrender,
+		onMovestart,
+		onMoveend,
+		onLoadstart,
+		onLoadend,
+		// RenderEvent events
+		onPrecompose,
+		onPostcompose,
+		onRendercomplete
 	}: MapRootProps = $props();
 
 	let mapContainer: HTMLDivElement;
@@ -122,6 +145,32 @@
 			}
 		});
 
+		// Register MapBrowserEvent handlers
+		if (onSingleclick) olMap.on('singleclick', onSingleclick);
+		if (onClick) olMap.on('click', onClick);
+		if (onDblclick) olMap.on('dblclick', onDblclick);
+		if (onPointerdrag) olMap.on('pointerdrag', onPointerdrag);
+		if (onPointermove) olMap.on('pointermove', onPointermove);
+		if (onPointerdown) olMap.on('pointerdown', onPointerdown);
+		if (onPointerup) olMap.on('pointerup', onPointerup);
+		if (onPointerover) olMap.on('pointerover', onPointerover);
+		if (onPointerout) olMap.on('pointerout', onPointerout);
+		if (onPointerenter) olMap.on('pointerenter', onPointerenter);
+		if (onPointerleave) olMap.on('pointerleave', onPointerleave);
+		if (onPointercancel) olMap.on('pointercancel', onPointercancel);
+
+		// Register MapEvent handlers
+		if (onPostrender) olMap.on('postrender', onPostrender);
+		if (onMovestart) olMap.on('movestart', onMovestart);
+		if (onMoveend) olMap.on('moveend', onMoveend);
+		if (onLoadstart) olMap.on('loadstart', onLoadstart);
+		if (onLoadend) olMap.on('loadend', onLoadend);
+
+		// Register RenderEvent handlers
+		if (onPrecompose) olMap.on('precompose', onPrecompose);
+		if (onPostcompose) olMap.on('postcompose', onPostcompose);
+		if (onRendercomplete) olMap.on('rendercomplete', onRendercomplete);
+
 		return () => {
 			isDestroyed = true;
 
@@ -136,6 +185,28 @@
 			overlays.clear();
 
 			if (olMap) {
+				// Unregister all event handlers
+				if (onSingleclick) olMap.un('singleclick', onSingleclick);
+				if (onClick) olMap.un('click', onClick);
+				if (onDblclick) olMap.un('dblclick', onDblclick);
+				if (onPointerdrag) olMap.un('pointerdrag', onPointerdrag);
+				if (onPointermove) olMap.un('pointermove', onPointermove);
+				if (onPointerdown) olMap.un('pointerdown', onPointerdown);
+				if (onPointerup) olMap.un('pointerup', onPointerup);
+				if (onPointerover) olMap.un('pointerover', onPointerover);
+				if (onPointerout) olMap.un('pointerout', onPointerout);
+				if (onPointerenter) olMap.un('pointerenter', onPointerenter);
+				if (onPointerleave) olMap.un('pointerleave', onPointerleave);
+				if (onPointercancel) olMap.un('pointercancel', onPointercancel);
+				if (onPostrender) olMap.un('postrender', onPostrender);
+				if (onMovestart) olMap.un('movestart', onMovestart);
+				if (onMoveend) olMap.un('moveend', onMoveend);
+				if (onLoadstart) olMap.un('loadstart', onLoadstart);
+				if (onLoadend) olMap.un('loadend', onLoadend);
+				if (onPrecompose) olMap.un('precompose', onPrecompose);
+				if (onPostcompose) olMap.un('postcompose', onPostcompose);
+				if (onRendercomplete) olMap.un('rendercomplete', onRendercomplete);
+
 				olMap.setTarget(undefined);
 				olMap.dispose();
 				olMap = null;

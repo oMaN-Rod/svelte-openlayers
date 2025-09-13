@@ -4,6 +4,7 @@
 	import type { Feature } from 'ol';
 	import VectorLayer from 'ol/layer/Vector.js';
 	import VectorSource from 'ol/source/Vector.js';
+	import type { FlatStyleLike } from 'ol/style/flat.js';
 	import type { StyleLike } from 'ol/style/Style.js';
 	import { onMount, setContext } from 'svelte';
 
@@ -40,9 +41,9 @@
 				vectorSource.removeFeature(feature);
 			}
 		},
-		setStyle: (newStyle: StyleLike) => {
+		setStyle: (newStyle: StyleLike | FlatStyleLike) => {
 			if (vectorLayer && !isDestroyed) {
-				vectorLayer.setStyle(newStyle);
+				vectorLayer.setStyle(newStyle as StyleLike);
 			}
 		}
 	};

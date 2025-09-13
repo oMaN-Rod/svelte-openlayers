@@ -6,10 +6,14 @@ import type Interaction from 'ol/interaction/Interaction.js';
 import type Layer from 'ol/layer/Layer.js';
 import type TileLayer from 'ol/layer/Tile.js';
 import type VectorLayer from 'ol/layer/Vector.js';
+import type WebGLVectorLayer from 'ol/layer/WebGLVector.js';
+import type MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import type MapEvent from 'ol/MapEvent.js';
 import type { ProjectionLike } from 'ol/proj.js';
+import type RenderEvent from 'ol/render/Event.js';
 import type Source from 'ol/source/Source.js';
 import type VectorSource from 'ol/source/Vector.js';
-import type { FlatStyleLike } from 'ol/style/flat.js';
+import type { FlatStyleLike, StyleVariables } from 'ol/style/flat.js';
 import type { StyleLike } from 'ol/style/Style.js';
 import type { Snippet } from 'svelte';
 
@@ -54,14 +58,37 @@ export type MapProps = {
 	maxTilesLoading?: number;
 	moveTolerance?: number;
 	view?: View | null;
+	// MapBrowserEvent events
+	onSingleclick?: (evt: MapBrowserEvent) => void;
+	onClick?: (evt: MapBrowserEvent) => void;
+	onDblclick?: (evt: MapBrowserEvent) => void;
+	onPointerdrag?: (evt: MapBrowserEvent) => void;
+	onPointermove?: (evt: MapBrowserEvent) => void;
+	onPointerdown?: (evt: MapBrowserEvent) => void;
+	onPointerup?: (evt: MapBrowserEvent) => void;
+	onPointerover?: (evt: MapBrowserEvent) => void;
+	onPointerout?: (evt: MapBrowserEvent) => void;
+	onPointerenter?: (evt: MapBrowserEvent) => void;
+	onPointerleave?: (evt: MapBrowserEvent) => void;
+	onPointercancel?: (evt: MapBrowserEvent) => void;
+	// MapEvent events
+	onPostrender?: (evt: MapEvent) => void;
+	onMovestart?: (evt: MapEvent) => void;
+	onMoveend?: (evt: MapEvent) => void;
+	onLoadstart?: (evt: MapEvent) => void;
+	onLoadend?: (evt: MapEvent) => void;
+	// RenderEvent events
+	onPrecompose?: (evt: RenderEvent) => void;
+	onPostcompose?: (evt: RenderEvent) => void;
+	onRendercomplete?: (evt: RenderEvent) => void;
 };
 
 export interface LayerContext {
 	getSource: () => VectorSource | null;
-	getLayer: () => VectorLayer<any> | null;
+	getLayer: () => VectorLayer<any> | WebGLVectorLayer<any> | null;
 	addFeature: (feature: Feature) => void;
 	removeFeature: (feature: Feature) => void;
-	setStyle: (style: StyleLike) => void;
+	setStyle: (style: StyleLike | FlatStyleLike) => void;
 }
 
 // Component Props Types
@@ -107,6 +134,20 @@ export interface LayerVectorProps {
 	layer?: VectorLayer<any> | null;
 	source?: VectorSource | null;
 	children?: Snippet;
+}
+
+export interface LayerWebGLProps {
+	opacity?: number;
+	visible?: boolean;
+	zIndex?: number;
+	minZoom?: number;
+	maxZoom?: number;
+	style?: FlatStyleLike;
+	variables?: StyleVariables;
+	layer?: WebGLVectorLayer<any> | null;
+	source?: VectorSource | null;
+	children?: Snippet;
+	disableHitDetection?: boolean;
 }
 
 // Feature Component Props
