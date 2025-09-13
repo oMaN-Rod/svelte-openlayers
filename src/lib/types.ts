@@ -99,7 +99,7 @@ export interface LayerVectorProps {
 	zIndex?: number;
 	minZoom?: number;
 	maxZoom?: number;
-	style?: StyleLike;
+	style?: StyleLike | StyleLike[] | Record<string, any>;
 	updateWhileAnimating?: boolean;
 	updateWhileInteracting?: boolean;
 	renderBuffer?: number;

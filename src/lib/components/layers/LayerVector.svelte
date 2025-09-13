@@ -50,8 +50,12 @@
 	setContext(LAYER_CONTEXT_KEY, layerContext);
 
 	onMount(() => {
-		vectorSource = new VectorSource();
-		source = vectorSource;
+		if (source instanceof VectorSource) {
+			vectorSource = source;
+		} else {
+			vectorSource = new VectorSource();
+			source = vectorSource;
+		}
 
 		const layerOptions: any = {
 			source: vectorSource,
