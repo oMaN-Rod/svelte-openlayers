@@ -7,7 +7,7 @@
 	import { getContext, onMount } from 'svelte';
 
 	let {
-		coordinates = $bindable([0, 0]),
+		coordinates = $bindable([]),
 		projection = 'EPSG:3857',
 		style,
 		properties = {},

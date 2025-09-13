@@ -30,3 +30,4 @@ export {
 
 // Collection utilities
 export { createReactiveCollection } from './collections.js';
+export { ReactiveCollection, type ReactiveCollectionOptions } from './reactive-collection.js';

@@ -4,6 +4,7 @@
 	import type { Feature } from 'ol';
 	import VectorLayer from 'ol/layer/Vector.js';
 	import VectorSource from 'ol/source/Vector.js';
+	import type { StyleLike } from 'ol/style/Style.js';
 	import { onMount, setContext } from 'svelte';
 
 	let {

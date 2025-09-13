@@ -25,6 +25,7 @@
 		selectInteraction = $bindable(null),
 		selectedFeatures = $bindable(null),
 		multi = false,
+		reactive = true,
 		children
 	}: TooltipManagerProps = $props();
 
@@ -142,6 +143,7 @@
 		{layers}
 		{hitTolerance}
 		{multi}
+		{reactive}
 		style={selectStyle}
 		onSelect={handleSelect}
 		bind:interaction={selectInteraction}

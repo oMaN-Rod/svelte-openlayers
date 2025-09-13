@@ -146,6 +146,7 @@ export interface InteractionSelectProps {
 	onSelect?: (features: Feature<Geometry>[]) => void;
 	interaction?: Interaction | null;
 	selectedFeatures?: Collection<Feature<Geometry>> | null;
+	reactive?: boolean;
 }
 
 export interface InteractionHoverProps {
@@ -214,5 +215,17 @@ export interface TooltipManagerProps {
 	hoverInteraction?: Interaction | null;
 	selectedFeatures?: Collection<Feature> | null;
 	multi?: boolean;
+	reactive?: boolean;
 	children?: Snippet;
+}
+
+// Built in Icons
+export interface IconProps {
+	width?: number;
+	height?: number;
+	fill?: string;
+	stroke?: string;
+	strokeWidth?: number;
+	class?: string;
+	style?: string;
 }

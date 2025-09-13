@@ -3,6 +3,7 @@
 	import { getMapContext } from '$lib/utils/context.js';
 	import type { MapBrowserEvent } from 'ol';
 	import { Feature } from 'ol';
+	import type Layer from 'ol/layer/Layer.js';
 	import { onMount } from 'svelte';
 
 	let {
