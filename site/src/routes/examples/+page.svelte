@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import { base, resolve } from '$app/paths';
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Badge } from '$lib/components/ui/badge/index.js';
@@ -75,7 +75,9 @@
 								{/each}
 							</div>
 						</div>
-						<Button href={`${base}/examples/${example.id}`} class="w-full">View Example</Button>
+						<Button href={resolve('/examples/') + `/${example.id}`} class="w-full">
+							View Example
+						</Button>
 					</div>
 				</Card.Content>
 			</Card.Root>

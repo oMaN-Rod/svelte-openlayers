@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
 
 	interface NavItem {
@@ -13,37 +13,40 @@
 		{
 			title: 'Getting Started',
 			items: [
-				{ title: 'Introduction', href: `${base}/docs` },
-				{ title: 'Installation', href: `${base}/docs/getting-started` },
-				{ title: 'Quick Start', href: `${base}/docs/getting-started#quick-start` }
+				{ title: 'Introduction', href: resolve('/docs') },
+				{ title: 'Installation', href: resolve('/docs/getting-started') },
+				{ title: 'Quick Start', href: resolve('/docs/getting-started') + '#quick-start' }
 			]
 		},
 		{
 			title: 'Core Concepts',
 			items: [
-				{ title: 'Architecture', href: `${base}/docs/architecture` },
-				{ title: 'Component Hierarchy', href: `${base}/docs/architecture#component-hierarchy` },
-				{ title: 'Styling System', href: `${base}/docs/styling` }
+				{ title: 'Architecture', href: resolve('/docs/architecture') },
+				{
+					title: 'Component Hierarchy',
+					href: resolve('/docs/architecture') + '#component-hierarchy'
+				},
+				{ title: 'Styling System', href: resolve('/docs/styling') }
 			]
 		},
 		{
 			title: 'Components',
 			items: [
-				{ title: 'Overview', href: `${base}/docs/components` },
-				{ title: 'Map', href: `${base}/docs/components/map` },
-				{ title: 'Layers', href: `${base}/docs/components/layers` },
-				{ title: 'Features', href: `${base}/docs/components/features` },
-				{ title: 'Interactions', href: `${base}/docs/components/interactions` },
-				{ title: 'Overlays', href: `${base}/docs/components/overlays` }
+				{ title: 'Overview', href: resolve('/docs/components') },
+				{ title: 'Map', href: resolve('/docs/components/map') },
+				{ title: 'Layers', href: resolve('/docs/components/layers') },
+				{ title: 'Features', href: resolve('/docs/components/features') },
+				{ title: 'Interactions', href: resolve('/docs/components/interactions') },
+				{ title: 'Overlays', href: resolve('/docs/components/overlays') }
 			]
 		},
 		{
 			title: 'API Reference',
-			items: [{ title: 'Complete API', href: `${base}/docs/api-reference` }]
+			items: [{ title: 'Complete API', href: resolve('/docs/api-reference') }]
 		}
 	];
 
-	let currentPath = $derived($page.url.pathname);
+	let currentPath = $derived(page.url.pathname);
 </script>
 
 <div class="h-full overflow-auto py-6 pr-6 pl-8 lg:py-8">

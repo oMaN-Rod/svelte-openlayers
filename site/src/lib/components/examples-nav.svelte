@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
 	import { getSortedCategoriesWithExamples } from '$lib/examples/sources';
 
 	const categoriesWithExamples = getSortedCategoriesWithExamples();
-	let currentPath = $derived($page.url.pathname);
+	let currentPath = $derived(page.url.pathname);
 </script>
 
 <div class="h-full overflow-auto py-6 pr-6 pl-8 lg:py-8">
@@ -15,10 +15,10 @@
 			<h4 class="text-foreground/70 mb-2 text-sm font-semibold">Overview</h4>
 			<nav class="grid gap-1">
 				<a
-					href={`${base}/examples`}
+					href={resolve('/examples')}
 					class={cn(
 						'group hover:bg-accent hover:text-accent-foreground flex w-full items-start gap-2 rounded-md px-2 py-2 text-sm transition-colors',
-						currentPath === `${base}/examples`
+						currentPath === resolve('/examples')
 							? 'bg-accent text-accent-foreground font-medium'
 							: 'text-muted-foreground'
 					)}
@@ -38,11 +38,12 @@
 					<h4 class="text-foreground/70 mb-2 text-sm font-semibold">{category.title}</h4>
 					<nav class="grid gap-1">
 						{#each category.examples as example}
+							{@const path = resolve('/examples') + `/${example.id}`}
 							<a
-								href={`${base}/examples/${example.id}`}
+								href={path}
 								class={cn(
 									'group hover:bg-accent hover:text-accent-foreground flex w-full items-start gap-2 rounded-md px-2 py-2 text-sm transition-colors',
-									currentPath === `${base}/examples/${example.id}`
+									currentPath === path
 										? 'bg-accent text-accent-foreground font-medium'
 										: 'text-muted-foreground'
 								)}
