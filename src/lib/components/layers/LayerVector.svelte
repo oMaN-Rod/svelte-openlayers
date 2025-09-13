@@ -49,7 +49,7 @@
 
 	setContext(LAYER_CONTEXT_KEY, layerContext);
 
-	onMount(() => {
+	function initLayer() {
 		if (source instanceof VectorSource) {
 			vectorSource = source;
 		} else {
@@ -71,8 +71,17 @@
 		if (minZoom !== undefined) layerOptions.minZoom = minZoom;
 		if (maxZoom !== undefined) layerOptions.maxZoom = maxZoom;
 
-		vectorLayer = new VectorLayer(layerOptions);
-		layer = vectorLayer;
+		return new VectorLayer(layerOptions);
+	}
+
+	onMount(() => {
+		if (layer && layer instanceof VectorLayer) {
+			vectorLayer = layer;
+		} else {
+			vectorLayer = initLayer();
+			layer = vectorLayer;
+		}
+
 		mapContext.addLayer(vectorLayer);
 
 		return () => {
