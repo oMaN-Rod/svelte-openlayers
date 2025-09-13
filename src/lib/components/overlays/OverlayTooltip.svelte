@@ -22,14 +22,18 @@
 	let isDestroyed = false;
 
 	onMount(() => {
-		olOverlay = new Overlay({
-			element: tooltipElement,
-			offset,
-			positioning,
-			autoPan: autoPan ? { animation: { duration: 250 } } : false,
-			className: `ol-tooltip ${className}`
-		});
-		overlay = olOverlay;
+		if (overlay instanceof Overlay) {
+			olOverlay = overlay;
+		} else {
+			olOverlay = new Overlay({
+				element: tooltipElement,
+				offset,
+				positioning,
+				autoPan: autoPan ? { animation: { duration: 250 } } : false,
+				className: `ol-tooltip ${className}`
+			});
+			overlay = olOverlay;
+		}
 
 		mapContext.addOverlay(olOverlay);
 
