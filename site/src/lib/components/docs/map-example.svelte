@@ -19,7 +19,7 @@
 </script>
 
 {#if Component && source}
-	<div class="component-example">
+	<div class="component-example mb-4">
 		{#if title}
 			<h2 class="mb-4 text-2xl font-bold">{title}</h2>
 		{/if}

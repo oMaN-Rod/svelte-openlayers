@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
 	import { createCircleStyle } from 'svelte-openlayers/utils';
+	import { mapSources } from './sources';
 
 	let theme: keyof typeof themes = $state('default');
 	let activeCssVariablesCode = $state('');
@@ -122,8 +123,8 @@
 			<Map.View center={[2, 48]} zoom={5} />
 			<Layer.Tile
 				source="xyz"
-				url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-				attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 			/>
 
 			<Layer.Vector style={getFeatureStyle(theme)}>

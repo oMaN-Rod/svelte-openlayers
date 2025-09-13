@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Map, Layer, Feature } from 'svelte-openlayers';
 	import { createCircleStyle } from 'svelte-openlayers/utils';
+	import { mapSources } from './sources';
 
 	const pointStyle = createCircleStyle({
 		radius: 6,
@@ -15,8 +16,8 @@
 		<Map.View center={[0, 0]} zoom={2} />
 		<Layer.Tile
 			source="xyz"
-			url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-			attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+			url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+			attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 		/>
 
 		<Layer.Vector style={pointStyle}>

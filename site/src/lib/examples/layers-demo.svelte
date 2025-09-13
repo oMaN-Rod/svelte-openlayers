@@ -67,11 +67,11 @@
 	$effect(() => {
 		if (tileLayer) {
 			const url = mapSources.find((s) => s.id === activeBaseLayer)?.url;
-			const attribution = mapSources.find((provider) => provider.url === url)?.name;
+			const attributions = mapSources.find((provider) => provider.url === url)?.attributions;
 			tileLayer.setSource(
 				new XYZ({
 					url: url,
-					attributions: attribution ? [attribution] : []
+					attributions: attributions ? attributions : []
 				})
 			);
 		}
@@ -89,6 +89,7 @@
 			<Layer.Tile
 				source="xyz"
 				url={mapSources.find((s) => s.id === activeBaseLayer)?.url}
+				attributions={mapSources.find((s) => s.id === activeBaseLayer)?.attributions}
 				bind:layer={tileLayer}
 			/>
 		{/if}

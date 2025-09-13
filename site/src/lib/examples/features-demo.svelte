@@ -3,6 +3,7 @@
 	import { createCircleStyle, createStyle } from 'svelte-openlayers/utils';
 	import ToolTipHover from '$lib/examples/tooltip-hover.svelte';
 	import TooltipSelect from '$lib/examples/tooltip-select.svelte';
+	import { mapSources } from './sources';
 
 	let center = $state([-73.98513, 40.758896]);
 	let zoom = $state(11);
@@ -77,8 +78,8 @@
 		<Map.View bind:center bind:zoom />
 		<Layer.Tile
 			source="xyz"
-			url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-			attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+			url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+			attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 		/>
 
 		<!-- Vector layer containing all Markers -->

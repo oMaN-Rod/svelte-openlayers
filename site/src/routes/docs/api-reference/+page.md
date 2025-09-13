@@ -485,15 +485,15 @@ Creates a reactive wrapper around an OpenLayers `Collection` to enable Svelte 5 
 function createReactiveCollection<T extends Feature>(
 	collection: Collection<T>,
 	idField?: string
-): ReactiveCollection<T>
+): ReactiveCollection<T>;
 ```
 
 #### Parameters {.toc}
 
-| Parameter    | Type                | Default | Description                                                    |
-| ------------ | ------------------- | ------- | -------------------------------------------------------------- |
-| `collection` | `Collection<T>`     | -       | OpenLayers Collection instance to wrap                        |
-| `idField`    | `string`            | `'id'`  | Property field name to use for ID-based operations            |
+| Parameter    | Type            | Default | Description                                        |
+| ------------ | --------------- | ------- | -------------------------------------------------- |
+| `collection` | `Collection<T>` | -       | OpenLayers Collection instance to wrap             |
+| `idField`    | `string`        | `'id'`  | Property field name to use for ID-based operations |
 
 #### Return Type {.toc}
 
@@ -501,16 +501,16 @@ function createReactiveCollection<T extends Feature>(
 interface ReactiveCollection<T extends Feature> {
 	// Reactive getter that returns the original collection
 	get collection(): Collection<T>;
-	
+
 	// Reactive getter that returns the current length
 	get length(): number;
-	
+
 	// Reactive getter that returns the array of features
 	get array(): T[];
-	
+
 	// Check if collection contains a specific feature
 	has(feature: T): boolean;
-	
+
 	// Check if collection contains a feature with specific ID
 	hasId(id: string): boolean;
 }
@@ -528,6 +528,65 @@ interface ReactiveCollection<T extends Feature> {
 
 ```typescript
 import { createReactiveCollection } from 'svelte-openlayers/utils';
+```
+
+### ReactiveCollection {.toc}
+
+A reactive wrapper around OpenLayers `Collection` that automatically triggers Svelte reactivity. Used by default in all interaction components to provide seamless bidirectional updates.
+
+```typescript
+class ReactiveCollection<T extends Feature = Feature> extends Collection<T> {
+	constructor(array?: T[], options?: ReactiveCollectionOptions);
+
+	// Reactive getters
+	getLength(): number; // Reactive
+	getArray(): T[]; // Reactive
+
+	// Convenience methods (all reactive)
+	hasFeature(feature: T): boolean;
+	hasId(id: string | number): boolean;
+	getById(id: string | number): T | undefined;
+	toggle(feature: T): boolean;
+	replaceAll(items: T[]): void;
+
+	// Interaction binding
+	bindInteraction(interaction: any): void;
+	unbindInteraction(): void;
+
+	// Static factory methods
+	static from<T extends Feature>(
+		collection: Collection<T>,
+		options?: ReactiveCollectionOptions
+	): ReactiveCollection<T>;
+
+	static isReactiveCollection(obj: any): obj is ReactiveCollection;
+}
+```
+
+#### ReactiveCollectionOptions {.toc}
+
+```typescript
+interface ReactiveCollectionOptions {
+	// Whether to make the collection reactive (default: true)
+	reactive?: boolean;
+
+	// Field to use for ID-based operations (default: 'id')
+	idField?: string;
+}
+```
+
+#### Key Features {.toc}
+
+- **Automatic Reactivity**: All getters trigger Svelte reactivity when accessed
+- **Bidirectional Updates**: Changes to the collection automatically dispatch events on bound interactions
+- **Performance Optimization**: Can be disabled with `reactive: false` for large datasets
+- **OpenLayers Compatibility**: Fully compatible with all OpenLayers Collection methods
+- **Smart Event Handling**: Prevents infinite loops by detecting internal vs external changes
+
+#### Import {.toc}
+
+```typescript
+import { ReactiveCollection } from 'svelte-openlayers/utils';
 ```
 
 ## Common Projections {.toc}

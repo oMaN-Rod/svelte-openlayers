@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Map, Layer, Feature, Interaction, Overlay } from 'svelte-openlayers';
-	import { createCircleStyle, createReactiveCollection } from 'svelte-openlayers/utils';
+	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
+	import { createCircleStyle, ReactiveCollection } from 'svelte-openlayers/utils';
 	import type { Feature as OlFeature } from 'ol';
-	import { Collection } from 'ol';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import ToolTipHover from '$lib/examples/tooltip-hover.svelte';
 	import TooltipSelect from '$lib/examples/tooltip-select.svelte';
+	import { mapSources } from './sources';
 
 	const DEFAULT_CENTER: [number, number] = [-73.98513, 40.758896]; // Times Square, NYC
 	let center: number[] = $state(DEFAULT_CENTER);
@@ -13,12 +13,8 @@
 	let search = $state('');
 	let filteredLocations = $state<(typeof locations)[0][]>([]);
 
-	let selectInteraction = $state<any>(null);
-	let selectedFeatures = $state<Collection<OlFeature>>(new Collection());
+	let selectedFeatures: ReactiveCollection | null = $state(null);
 	let hoveredId = $state<string | null>(null);
-
-	// Create reactive wrapper
-	const reactiveSelection = $derived(createReactiveCollection(selectedFeatures));
 
 	const pointStyle = createCircleStyle({
 		radius: 6,
@@ -87,40 +83,29 @@
 	];
 
 	function selectFromTable(locationId: string) {
-		selectedFeatures.clear();
+		if (!selectedFeatures) return;
 
 		const location = filteredLocations.find((l) => l.id === locationId);
-		if (location && location.feature) {
-			selectedFeatures.push(location.feature);
+		if (!location || !location.feature) return;
 
-			// Trigger the select event to notify TooltipManager
-			if (selectInteraction) {
-				selectInteraction.dispatchEvent({
-					type: 'select',
-					selected: [location.feature],
-					deselected: []
-				});
-			}
+		if (selectedFeatures.hasId(locationId)) {
+			selectedFeatures.remove(location.feature);
+		} else {
+			selectedFeatures.push(location.feature);
 			// center = location.coords; // Set center if desired when using Interaction.Select
 		}
 	}
 
 	function clearSelection() {
+		if (!selectedFeatures) return;
+
 		selectedFeatures.clear();
 		center = DEFAULT_CENTER;
-
-		// Trigger the select event to notify TooltipManager of clearing
-		if (selectInteraction) {
-			selectInteraction.dispatchEvent({
-				type: 'select',
-				selected: [],
-				deselected: []
-			});
-		}
 	}
 
 	function isSelected(locationId: string): boolean {
-		return reactiveSelection.hasId(locationId);
+		if (!selectedFeatures) return false;
+		return selectedFeatures.hasId(locationId);
 	}
 
 	function getFeatureStyle(location: (typeof locations)[0]) {
@@ -203,8 +188,8 @@
 				<Map.View bind:center bind:zoom />
 				<Layer.Tile
 					source="xyz"
-					url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-					attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+					url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+					attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 				/>
 
 				<Layer.Vector style={pointStyle}>
@@ -225,7 +210,6 @@
 				<!-- Using Interaction.Select
 
 				<Interaction.Select
-					bind:interaction={selectInteraction}
 					bind:selectedFeatures
 					style={selectedStyle}
 					multi={false}
@@ -235,7 +219,6 @@
 
 				<!-- Using TooltipManager -->
 				<Overlay.TooltipManager
-					bind:selectInteraction
 					bind:selectedFeatures
 					selectStyle={selectedStyle}
 					hoverClass="!bg-transparent !shadow-none"
@@ -254,8 +237,8 @@
 			</Map.Root>
 		</div>
 		<div class="text-muted-foreground mt-4 text-sm">
-			{#if reactiveSelection.length > 0}
-				{@const selected = reactiveSelection.array[0]}
+			{#if selectedFeatures && selectedFeatures.getLength() > 0}
+				{@const selected = selectedFeatures.getArray()[0]}
 				Selected: {selected.get('name')} ({selected.get('visitors')})
 			{:else}
 				Click on map markers or table rows to select

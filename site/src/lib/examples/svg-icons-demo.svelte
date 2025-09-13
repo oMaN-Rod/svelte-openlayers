@@ -2,6 +2,7 @@
 	import { Map, Layer, Feature } from 'svelte-openlayers';
 	import { createIconStyle } from 'svelte-openlayers/utils';
 	import { Icon, Style } from 'ol/style';
+	import { mapSources } from './sources';
 
 	// Load SVG icons using Vite's glob import
 	const icons = import.meta.glob('/src/lib/components/icons/*.svg', {
@@ -128,8 +129,8 @@
 			<Map.View center={[20, 30]} zoom={3} />
 			<Layer.Tile
 				source="xyz"
-				url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-				attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 			/>
 
 			<Layer.Vector>

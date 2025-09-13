@@ -1,23 +1,42 @@
 import { Map, MapPin, MousePointer, Layers, Palette, Image, ArrowLeftRight } from 'lucide-svelte';
 import type { ComponentType } from 'svelte';
 
+const buildAttributions = (append: string) => {
+	let parts = [
+		'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	];
+	if (append) {
+		parts.push(append);
+	}
+	return parts.join(' & ');
+};
+
 // Map source configurations
 export const mapSources = [
 	{ id: 'osm', name: 'OpenStreetMap', url: 'osm' },
 	{
 		id: 'carto-light',
 		name: 'Carto Light',
-		url: 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
+		url: 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+		attributions: buildAttributions('<a href="https://carto.com/">CARTO</a>')
 	},
 	{
 		id: 'carto-dark',
 		name: 'Carto Dark',
-		url: 'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
+		url: 'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+		attributions: buildAttributions('<a href="https://carto.com/">CARTO</a>')
+	},
+	{
+		id: 'carto-voyager',
+		name: 'Carto Voyager',
+		url: 'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+		attributions: buildAttributions('<a href="https://carto.com/">CARTO</a>')
 	},
 	{
 		id: 'satellite',
 		name: 'Satellite',
-		url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+		url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+		attributions: buildAttributions('&copy; <a href="https://www.esri.com/">Esri</a>')
 	}
 ];
 
@@ -102,7 +121,13 @@ export const examplesMeta: Record<string, ExampleMeta> = {
 		category: 'interaction',
 		icon: ArrowLeftRight,
 		tags: ['Interaction', 'Selection', 'Advanced'],
-		concepts: ['Interaction.Select', 'bind:selectedFeatures', 'Programmatic selection', 'Feature collections', 'State synchronization'],
+		concepts: [
+			'Interaction.Select',
+			'bind:selectedFeatures',
+			'Programmatic selection',
+			'Feature collections',
+			'State synchronization'
+		],
 		order: 5
 	}
 };

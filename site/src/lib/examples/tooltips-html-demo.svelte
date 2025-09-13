@@ -3,6 +3,7 @@
 	import { Feature as OLFeature } from 'ol';
 	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
 	import { createCircleStyle } from 'svelte-openlayers/utils';
+	import { mapSources } from './sources';
 
 	let {
 		tooltipMode = $bindable<'hover' | 'select'>('hover'),
@@ -100,8 +101,8 @@
 		<Map.View center={[5, 50]} zoom={5} />
 		<Layer.Tile
 			source="xyz"
-			url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-			attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+			url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+			attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 		/>
 
 		<Layer.Vector style={pointStyle}>

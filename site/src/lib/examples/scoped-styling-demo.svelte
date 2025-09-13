@@ -3,6 +3,7 @@
 	import { createCircleStyle, getCSSVariable } from 'svelte-openlayers/utils';
 	import { onMount } from 'svelte';
 	import type { Style } from 'ol/style';
+	import { mapSources } from './sources';
 
 	let oceanContainer: HTMLDivElement;
 	let sunsetContainer: HTMLDivElement;
@@ -42,8 +43,8 @@
 			<Map.View center={[0, 0]} zoom={2} />
 			<Layer.Tile
 				source="xyz"
-				url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-				attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 			/>
 			<Layer.Vector>
 				{#if oceanPointStyle}
@@ -65,8 +66,8 @@
 			<Map.View center={[-100, 40]} zoom={3} />
 			<Layer.Tile
 				source="xyz"
-				url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-				attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 			/>
 			<Layer.Vector>
 				{#if sunsetPointStyle}
@@ -88,8 +89,8 @@
 			<Map.View center={[10, 50]} zoom={4} />
 			<Layer.Tile
 				source="xyz"
-				url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`}
-				attributions="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 			/>
 			<Layer.Vector>
 				{#if forestPointStyle}
