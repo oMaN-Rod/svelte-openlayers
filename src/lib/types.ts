@@ -9,6 +9,7 @@ import type VectorLayer from 'ol/layer/Vector.js';
 import type { ProjectionLike } from 'ol/proj.js';
 import type Source from 'ol/source/Source.js';
 import type VectorSource from 'ol/source/Vector.js';
+import type { FlatStyleLike } from 'ol/style/flat.js';
 import type { StyleLike } from 'ol/style/Style.js';
 import type { Snippet } from 'svelte';
 
@@ -99,7 +100,7 @@ export interface LayerVectorProps {
 	zIndex?: number;
 	minZoom?: number;
 	maxZoom?: number;
-	style?: StyleLike | StyleLike[] | Record<string, any>;
+	style?: StyleLike | FlatStyleLike;
 	updateWhileAnimating?: boolean;
 	updateWhileInteracting?: boolean;
 	renderBuffer?: number;
