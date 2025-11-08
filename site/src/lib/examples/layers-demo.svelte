@@ -84,19 +84,20 @@
 
 		<!-- Base Layer -->
 		{#if activeBaseLayer === 'osm'}
-			<Layer.Tile source="osm" />
+			<Layer.Tile source="osm" zIndex={0} />
 		{:else}
 			<Layer.Tile
 				source="xyz"
 				url={mapSources.find((s) => s.id === activeBaseLayer)?.url}
 				attributions={mapSources.find((s) => s.id === activeBaseLayer)?.attributions}
 				bind:layer={tileLayer}
+				zIndex={0}
 			/>
 		{/if}
 
 		<!-- Airports Layer -->
 		{#if layersVisible.airports}
-			<Layer.Vector style={pointStyle}>
+			<Layer.Vector style={pointStyle} zIndex={1}>
 				{#each sampleData.airports as airport}
 					<Feature.Point coordinates={airport.coordinates} />
 				{/each}
@@ -105,7 +106,7 @@
 
 		<!-- Railways Layer -->
 		{#if layersVisible.railways}
-			<Layer.Vector>
+			<Layer.Vector zIndex={1}>
 				{#each sampleData.railways as railway}
 					<Feature.LineString coordinates={railway.coordinates} />
 				{/each}
@@ -114,7 +115,7 @@
 
 		<!-- Regions Layer -->
 		{#if layersVisible.regions}
-			<Layer.Vector>
+			<Layer.Vector zIndex={1}>
 				{#each sampleData.regions as region}
 					<Feature.Polygon coordinates={region.coordinates} />
 				{/each}
