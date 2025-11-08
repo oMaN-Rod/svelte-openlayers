@@ -9,7 +9,7 @@ import type VectorLayer from 'ol/layer/Vector.js';
 import type WebGLVectorLayer from 'ol/layer/WebGLVector.js';
 import type MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import type MapEvent from 'ol/MapEvent.js';
-import type { ProjectionLike } from 'ol/proj.js';
+import type { Projection, ProjectionLike } from 'ol/proj.js';
 import type RenderEvent from 'ol/render/Event.js';
 import type Source from 'ol/source/Source.js';
 import type VectorSource from 'ol/source/Vector.js';
@@ -119,6 +119,20 @@ export interface LayerTileProps {
 	layer?: TileLayer<any> | null;
 	attributions?: string | string[];
 	crossOrigin?: string | null;
+}
+
+export interface LayerStaticProps {
+	url?: string;
+	opacity?: number;
+	visible?: boolean;
+	zIndex?: number;
+	minZoom?: number;
+	maxZoom?: number;
+	preload?: number;
+	layer?: TileLayer<any> | null;
+	attributions?: string | string[];
+	extent: [number, number, number, number];
+	projection: Projection;
 }
 
 export interface LayerVectorProps {
