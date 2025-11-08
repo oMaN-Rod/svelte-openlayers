@@ -37,7 +37,7 @@
 		if (minZoom !== undefined) layerOptions.minZoom = minZoom;
 		if (maxZoom !== undefined) layerOptions.maxZoom = maxZoom;
 
-		let layer: any = new ImageLayer({
+		layer = new ImageLayer({
 			source: new Static(layerOptions)
 		});
 

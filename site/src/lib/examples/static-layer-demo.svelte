@@ -1,7 +1,5 @@
 <script lang="ts">
-	import FeaturePoint from '$lib/components/features/FeaturePoint.svelte';
-	import LayerVector from '$lib/components/layers/LayerVector.svelte';
-	import { Map, Layer } from '$lib/index.ts';
+	import { Map, Layer } from 'svelte-openlayers';
 	import { Projection } from 'ol/proj.js';
 
 	let mapCenter = $state([512, 484]);
@@ -15,7 +13,7 @@
 	});
 </script>
 
-<div class="h-96 w-full overflow-hidden rounded-lg border">
+<div class="h-[60dvh] w-full overflow-hidden rounded-lg border">
 	<Map.Root class="h-full w-full">
 		<Map.View bind:center={mapCenter} bind:zoom={mapZoom} {projection} />
 		<Layer.Static
@@ -27,13 +25,7 @@
 </div>
 <div class="text-muted-foreground mt-4 flex gap-4 text-sm">
 	<div>
-		Center: [{mapCenter[0]}, {mapCenter[1]}]
+		Center: [{mapCenter[0].toFixed(2)}, {mapCenter[1].toFixed(2)}]
 	</div>
 	<div>Zoom: {mapZoom.toFixed(1)}</div>
 </div>
-
-<style>
-	.h-96 {
-		height: 90vh;
-	}
-</style>

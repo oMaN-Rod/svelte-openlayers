@@ -126,6 +126,67 @@ interface LayerTileProps {
 - `'xyz'`: Custom XYZ tile server (requires `url` prop)
 - OpenLayers Source instance: For advanced use cases
 
+### Layer.Static {.toc}
+
+Displays a single static image as a map layer with custom projection and extent. Ideal for non-geographic imagery like floor plans, diagrams, or historical maps.
+
+```typescript
+interface LayerStaticProps {
+	// Image source (required)
+	url: string; // URL of the static image
+
+	// Image extent (required)
+	extent: number[]; // [minX, minY, maxX, maxY]
+
+	// Projection
+	projection?: ProjectionLike; // Custom projection for the image
+
+	// Layer properties
+	opacity?: number; // default: 1 (0-1 range)
+	visible?: boolean; // default: true
+	zIndex?: number;
+	minZoom?: number;
+	maxZoom?: number;
+
+	// Loading
+	preload?: number; // default: 0
+
+	// Attribution
+	attributions?: string | string[];
+
+	// Bindable instance (read-only)
+	layer?: ImageLayer<any> | null; // bindable
+}
+```
+
+**Usage Example**:
+
+```svelte
+<script>
+	import { Map, Layer } from 'svelte-openlayers';
+	import { Projection } from 'ol/proj.js';
+
+	const extent = [0, 0, 1024, 768];
+	const projection = new Projection({
+		code: 'pixel-projection',
+		units: 'pixels',
+		extent
+	});
+</script>
+
+<Map.Root>
+	<Map.View center={[512, 384]} zoom={2} {projection} {extent} />
+	<Layer.Static url="/path/to/image.png" {extent} attributions="© Attribution" />
+</Map.Root>
+```
+
+**Key Points**:
+
+- Requires `extent` prop to define image boundaries
+- Typically used with custom pixel-based projections
+- View projection must match the layer's coordinate system
+- Perfect for non-geographic imagery that needs pan/zoom interaction
+
 ### Layer.Vector {.toc}
 
 Container for vector features with styling and interaction support.
@@ -238,7 +299,6 @@ const webglStyle: FlatStyleLike = {
 The following layer types are planned for future releases:
 
 - `Layer.VectorTile` - High-performance vector tiles
-- `Layer.Image` - Static georeferenced images
 - `Layer.WMS` - Web Map Service layers
 
 ## Feature Components {.toc}
