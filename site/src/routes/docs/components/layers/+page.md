@@ -54,6 +54,87 @@ Displays raster tile data from various sources like OpenStreetMap, satellite ima
 
 > **Note:** Currently only 'osm' and 'xyz' string sources are supported. For other sources like satellite imagery, you'll need to create OpenLayers source instances directly.
 
+## Layer.Static {.toc}
+
+Displays a single static image as a map layer with a custom projection and extent. Perfect for annotated maps, diagrams, floor plans, or historical imagery that doesn't use standard geographic coordinates.
+
+### Basic Usage {.toc}
+
+```svelte
+<script>
+	import { Map, Layer } from 'svelte-openlayers';
+	import { Projection } from 'ol/proj.js';
+
+	const extent = [0, 0, 1024, 968];
+	const projection = new Projection({
+		code: 'custom-image',
+		units: 'pixels',
+		extent
+	});
+</script>
+
+<Map.Root>
+	<Map.View center={[512, 484]} zoom={2} {projection} />
+	<Layer.Static url="https://example.com/image.png" {extent} attributions="© Example" />
+</Map.Root>
+```
+
+### Props {.toc}
+
+| Prop           | Type                     | Default     | Description                           |
+| -------------- | ------------------------ | ----------- | ------------------------------------- |
+| `url`          | `string`                 | required    | URL of the static image               |
+| `extent`       | `number[]`               | required    | Image extent [minX, minY, maxX, maxY] |
+| `projection`   | `ProjectionLike`         | `undefined` | Custom projection for the image       |
+| `opacity`      | `number`                 | `1`         | Layer opacity (0-1)                   |
+| `visible`      | `boolean`                | `true`      | Layer visibility                      |
+| `zIndex`       | `number`                 | `undefined` | Layer stacking order                  |
+| `minZoom`      | `number`                 | `undefined` | Minimum zoom level                    |
+| `maxZoom`      | `number`                 | `undefined` | Maximum zoom level                    |
+| `preload`      | `number`                 | `0`         | Preload the image                     |
+| `layer`        | `ImageLayer &#124; null` | `null`      | Bindable layer instance (read-only)   |
+| `attributions` | `string &#124; string[]` | `undefined` | Layer attributions                    |
+
+### Use Cases {.toc}
+
+- **Historical Maps**: Display georeferenced historical maps or documents
+- **Floor Plans**: Show indoor maps with pixel-based coordinates
+- **Diagrams**: Visualize network diagrams, infographics, or annotated images
+- **Game Maps**: Display game world maps or level layouts
+- **Custom Graphics**: Show any static image that needs pan/zoom interaction
+
+### Custom Projections {.toc}
+
+Static layers typically use custom pixel-based projections:
+
+```svelte
+<script>
+	import { Projection } from 'ol/proj.js';
+
+	// Define the image dimensions and create projection
+	const extent = [0, 0, 1024, 768]; // [left, bottom, right, top]
+	const projection = new Projection({
+		code: 'pixel-projection',
+		units: 'pixels',
+		extent: extent
+	});
+</script>
+
+<Map.Root>
+	<Map.View
+		center={[512, 384]} <!-- Center of the image -->
+		zoom={2}
+		{projection}
+		{extent} <!-- Constrain view to image bounds -->
+	/>
+	<Layer.Static
+		url="/path/to/image.png"
+		{extent}
+		attributions="© Your Attribution"
+	/>
+</Map.Root>
+```
+
 ## Layer.Vector {.toc}
 
 Displays vector data like points, lines, and polygons using Canvas rendering. Container for Feature components. For high-performance rendering of large datasets, consider using LayerWebGL.
@@ -117,18 +198,18 @@ High-performance WebGL vector layer for rendering large datasets with hardware a
 
 ### Props {.toc}
 
-| Prop                  | Type                           | Default     | Description                           |
-| --------------------- | ------------------------------ | ----------- | ------------------------------------- |
-| `opacity`             | `number`                       | `1`         | Layer opacity (0-1)                   |
-| `visible`             | `boolean`                      | `true`      | Layer visibility                      |
-| `zIndex`              | `number`                       | `undefined` | Layer stacking order                  |
-| `minZoom`             | `number`                       | `undefined` | Minimum zoom level                    |
-| `maxZoom`             | `number`                       | `undefined` | Maximum zoom level                    |
-| `style`               | `FlatStyleLike`                | `undefined` | WebGL-compatible style definition     |
-| `variables`           | `StyleVariables`               | `undefined` | Variables for dynamic styling         |
-| `disableHitDetection` | `boolean`                      | `false`     | Disable feature hit detection         |
-| `layer`               | `WebGLVectorLayer &#124; null` | `null`      | Bindable layer instance (read-only)   |
-| `source`              | `VectorSource &#124; null`     | `null`      | Bindable source instance (read-only)  |
+| Prop                  | Type                           | Default     | Description                          |
+| --------------------- | ------------------------------ | ----------- | ------------------------------------ |
+| `opacity`             | `number`                       | `1`         | Layer opacity (0-1)                  |
+| `visible`             | `boolean`                      | `true`      | Layer visibility                     |
+| `zIndex`              | `number`                       | `undefined` | Layer stacking order                 |
+| `minZoom`             | `number`                       | `undefined` | Minimum zoom level                   |
+| `maxZoom`             | `number`                       | `undefined` | Maximum zoom level                   |
+| `style`               | `FlatStyleLike`                | `undefined` | WebGL-compatible style definition    |
+| `variables`           | `StyleVariables`               | `undefined` | Variables for dynamic styling        |
+| `disableHitDetection` | `boolean`                      | `false`     | Disable feature hit detection        |
+| `layer`               | `WebGLVectorLayer &#124; null` | `null`      | Bindable layer instance (read-only)  |
+| `source`              | `VectorSource &#124; null`     | `null`      | Bindable source instance (read-only) |
 
 ### WebGL Styling {.toc}
 
@@ -175,28 +256,18 @@ WebGL styles support expressions for data-driven visualization:
 <LayerWebGL
 	style={{
 		// Size based on feature property
-		'circle-radius': [
-			'interpolate',
-			['linear'],
-			['get', 'population'],
-			0, 4,
-			1000000, 20
-		],
+		'circle-radius': ['interpolate', ['linear'], ['get', 'population'], 0, 4, 1000000, 20],
 		// Color based on feature property
 		'circle-fill-color': [
 			'case',
-			['>', ['get', 'temperature'], 30], '#ff4444',
-			['>', ['get', 'temperature'], 20], '#ffaa00',
+			['>', ['get', 'temperature'], 30],
+			'#ff4444',
+			['>', ['get', 'temperature'], 20],
+			'#ffaa00',
 			'#4444ff'
 		],
 		// Opacity based on zoom level
-		'circle-opacity': [
-			'interpolate',
-			['linear'],
-			['zoom'],
-			5, 0.3,
-			15, 0.9
-		]
+		'circle-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.3, 15, 0.9]
 	}}
 />
 ```
@@ -229,7 +300,7 @@ WebGL layers support time-based animations:
 <LayerWebGL
 	bind:layer={webglLayer}
 	style={{
-		'shape-rotation': ['*', ['time'], 0.01],  // Rotate over time
+		'shape-rotation': ['*', ['time'], 0.01], // Rotate over time
 		'shape-points': 4,
 		'shape-radius': 8,
 		'shape-fill-color': '#ff6600'
@@ -246,14 +317,14 @@ WebGL layers support time-based animations:
 
 ### Common Expression Functions {.toc}
 
-| Function      | Description                           | Example                                 |
-| ------------- | ------------------------------------- | --------------------------------------- |
-| `get`         | Get feature property                  | `['get', 'population']`                 |
-| `interpolate` | Interpolate between values            | `['interpolate', ['linear'], input, ...]` |
-| `case`        | Conditional styling                   | `['case', condition, value1, value2]`   |
-| `match`       | Match specific values                 | `['match', input, value1, result1, ...]` |
-| `zoom`        | Current zoom level                    | `['zoom']`                              |
-| `time`        | Current time for animations           | `['time']`                              |
-| `*`, `+`, `-` | Mathematical operations               | `['*', ['get', 'size'], 2]`             |
+| Function      | Description                 | Example                                   |
+| ------------- | --------------------------- | ----------------------------------------- |
+| `get`         | Get feature property        | `['get', 'population']`                   |
+| `interpolate` | Interpolate between values  | `['interpolate', ['linear'], input, ...]` |
+| `case`        | Conditional styling         | `['case', condition, value1, value2]`     |
+| `match`       | Match specific values       | `['match', input, value1, result1, ...]`  |
+| `zoom`        | Current zoom level          | `['zoom']`                                |
+| `time`        | Current time for animations | `['time']`                                |
+| `*`, `+`, `-` | Mathematical operations     | `['*', ['get', 'size'], 2]`               |
 
-> **Coming Soon:** Additional layer types including Layer.VectorTile and Layer.Image are planned for future releases.
+> **Coming Soon:** Additional layer types including `Layer.VectorTile` and `Layer.WMS` are planned for future releases.

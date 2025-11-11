@@ -10,7 +10,7 @@
 	--ol-map-position: relative;
 
 	/* === Map Controls === */
-	--ol-control-bg: rgba(255, 255, 255, 0.8);
+	--ol-control-bg: var(--ol-color-background);
 	--ol-control-border: var(--ol-color-border);
 	--ol-control-border-radius: var(--ol-radius);
 	--ol-control-shadow: var(--ol-shadow);
@@ -98,23 +98,6 @@
 	--ol-feature-point-stroke-width: 2;
 }
 
-/* === Dark Mode Overrides === */
-@media (prefers-color-scheme: dark) {
-	:root {
-		/* Controls */
-		--ol-control-bg: rgba(31, 41, 55, 0.9);
-		--ol-mouse-position-bg: rgba(31, 41, 55, 0.95);
-		--ol-mouse-position-color: var(--ol-color-foreground);
-		--ol-attribution-bg: rgba(17, 24, 39, 0.8);
-		--ol-attribution-color: var(--ol-color-muted-foreground);
-
-		/* Select Tooltips in Dark Mode */
-		--ol-tooltip-select-bg: rgba(31, 41, 55, 0.96);
-		--ol-tooltip-select-color: var(--ol-color-foreground);
-		--ol-tooltip-select-border: 1px solid var(--ol-color-border);
-	}
-}
-
 .dark {
 	/* Controls */
 	--ol-control-bg: rgba(31, 41, 55, 0.9);
@@ -138,24 +121,25 @@
 	position: var(--ol-map-position);
 }
 
-/* OpenLayers Global Overrides */
-:global(.ol-map-root .ol-viewport) {
-	position: absolute !important;
-	width: 100% !important;
-	height: 100% !important;
+/* OpenLayers Overrides */
+.ol-map-root .ol-viewport {
+	position: absolute;
+	width: 100%;
+	height: 100%;
 }
 
 /* Zoom Controls */
-:global(.ol-zoom) {
+.ol-zoom {
 	display: flex;
 	flex-direction: column;
 	margin-top: var(--ol-control-margin);
 	margin-left: var(--ol-control-margin);
 }
 
-:global(.ol-zoom-in) {
-	background-color: var(--ol-zoom-button-bg);
-	color: var(--ol-zoom-button-color);
+.ol-zoom-in,
+.ol-zoom-out {
+	background-color: var(--ol-zoom-button-bg) !important;
+	color: var(--ol-zoom-button-color) !important;
 	border: var(--ol-zoom-button-border);
 	border-radius: var(--ol-zoom-button-radius);
 	margin: var(--ol-zoom-button-margin);
@@ -164,33 +148,20 @@
 	font-size: var(--ol-zoom-button-font-size);
 	font-weight: var(--ol-zoom-button-font-weight);
 	cursor: pointer;
-	transition: background-color var(--ol-transition-duration-fast) var(--ol-transition-timing-ease);
+	transition: background-color var(--ol-transition-duration-fast, 150ms)
+		var(--ol-transition-timing-ease, ease);
 }
 
-:global(.ol-zoom-out) {
-	background-color: var(--ol-zoom-button-bg);
-	color: var(--ol-zoom-button-color);
-	border: var(--ol-zoom-button-border);
-	border-radius: var(--ol-zoom-button-radius);
-	margin: var(--ol-zoom-button-margin);
-	width: var(--ol-zoom-button-width);
-	height: var(--ol-zoom-button-height);
-	font-size: var(--ol-zoom-button-font-size);
-	font-weight: var(--ol-zoom-button-font-weight);
-	cursor: pointer;
-	transition: background-color var(--ol-transition-duration-fast) var(--ol-transition-timing-ease);
-}
-
-:global(.ol-zoom-in:hover) {
+.ol-zoom-in:hover {
 	background-color: color-mix(in srgb, var(--ol-zoom-button-bg) 90%, black);
 }
 
-:global(.ol-zoom-out:hover) {
+.ol-zoom-out:hover {
 	background-color: color-mix(in srgb, var(--ol-zoom-button-bg) 90%, black);
 }
 
 /* Attribution */
-:global(.ol-attribution) {
+.ol-attribution {
 	position: absolute;
 	bottom: 0;
 	right: 0;
@@ -238,13 +209,13 @@
 }
 
 /* Tooltip Global Positioning */
-:global(.ol-tooltip) {
+.ol-tooltip {
 	position: absolute;
 	z-index: var(--ol-tooltip-z-index);
 }
 
 /* Hover Tooltip Variant */
-:global(.hover-tooltip .tooltip-container) {
+.hover-tooltip .tooltip-container {
 	background: var(--ol-tooltip-hover-bg);
 	color: var(--ol-tooltip-hover-color);
 	font-size: var(--ol-tooltip-hover-font-size);
@@ -252,7 +223,7 @@
 }
 
 /* Select Tooltip Variant */
-:global(.select-tooltip .tooltip-container) {
+.select-tooltip .tooltip-container {
 	background: var(--ol-tooltip-select-bg);
 	color: var(--ol-tooltip-select-color);
 	border: var(--ol-tooltip-select-border);
@@ -261,7 +232,7 @@
 	box-shadow: var(--ol-tooltip-select-shadow);
 }
 
-:global(.select-tooltip .tooltip-container strong) {
+.select-tooltip .tooltip-container strong {
 	color: var(--ol-tooltip-select-accent-color);
 	font-weight: var(--ol-font-weight-semibold);
 }

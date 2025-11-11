@@ -1,5 +1,11 @@
 export { Map, MapRoot, MapView } from './components/map/index.js';
-export { Layer, LayerTile, LayerVector, LayerWebGL } from './components/layers/index.js';
+export {
+	Layer,
+	LayerTile,
+	LayerVector,
+	LayerWebGL,
+	LayerStatic
+} from './components/layers/index.js';
 export {
 	Feature,
 	FeaturePoint,
@@ -24,6 +30,7 @@ export {
 	type MapRootProps,
 	type MapViewProps,
 	type LayerTileProps,
+	type LayerStaticProps,
 	type LayerVectorProps,
 	type LayerWebGLProps,
 	type FeaturePointProps,

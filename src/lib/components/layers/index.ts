@@ -1,11 +1,13 @@
 import LayerTile from './LayerTile.svelte';
 import LayerVector from './LayerVector.svelte';
 import LayerWebGL from './LayerWebGL.svelte';
+import LayerStatic from './LayerStatic.svelte';
 
 export const Layer = {
 	Tile: LayerTile,
 	Vector: LayerVector,
-	WebGL: LayerWebGL
+	WebGL: LayerWebGL,
+	Static: LayerStatic,
 };
 
-export { LayerTile, LayerVector, LayerWebGL };
+export { LayerTile, LayerVector, LayerWebGL,LayerStatic };

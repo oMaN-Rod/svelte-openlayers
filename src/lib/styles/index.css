@@ -13,6 +13,9 @@
  * import 'svelte-openlayers/styles/components.css';
  */
 
+/* OpenLayers default styles */
+@import 'ol/ol.css';
+
 /* Core CSS Variables */
 @import './variables.css';
 

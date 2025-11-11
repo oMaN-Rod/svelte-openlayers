@@ -5,6 +5,7 @@ import type { Geometry } from 'ol/geom.js';
 import type Interaction from 'ol/interaction/Interaction.js';
 import type Layer from 'ol/layer/Layer.js';
 import type TileLayer from 'ol/layer/Tile.js';
+import type ImageLayer from 'ol/layer/Image.js';
 import type VectorLayer from 'ol/layer/Vector.js';
 import type WebGLVectorLayer from 'ol/layer/WebGLVector.js';
 import type MapBrowserEvent from 'ol/MapBrowserEvent.js';
@@ -16,6 +17,7 @@ import type VectorSource from 'ol/source/Vector.js';
 import type { FlatStyleLike, StyleVariables } from 'ol/style/flat.js';
 import type { StyleLike } from 'ol/style/Style.js';
 import type { Snippet } from 'svelte';
+import type { Extent } from 'ol/extent.js';
 
 export const MAP_CONTEXT_KEY = Symbol('map-ctx');
 export const LAYER_CONTEXT_KEY = Symbol('layer-ctx');
@@ -40,7 +42,7 @@ export type ViewProps = {
 	minZoom?: number;
 	maxZoom?: number;
 	rotation?: number;
-	extent?: number[];
+	extent?: Extent;
 	constrainRotation?: boolean | number;
 	enableRotation?: boolean;
 	onCenterChange?: (center: Coordinate) => void;
@@ -119,6 +121,20 @@ export interface LayerTileProps {
 	layer?: TileLayer<any> | null;
 	attributions?: string | string[];
 	crossOrigin?: string | null;
+}
+
+export interface LayerStaticProps {
+	url: string;
+	extent: Extent;
+	opacity?: number;
+	visible?: boolean;
+	zIndex?: number;
+	minZoom?: number;
+	maxZoom?: number;
+	preload?: number;
+	layer?: ImageLayer<any> | null;
+	attributions?: string | string[];
+	projection?: ProjectionLike;
 }
 
 export interface LayerVectorProps {
