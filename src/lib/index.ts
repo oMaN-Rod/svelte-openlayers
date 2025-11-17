@@ -15,7 +15,8 @@ export {
 export {
 	Interaction,
 	InteractionSelect,
-	InteractionHover
+	InteractionHover,
+	InteractionDraw
 } from './components/interactions/index.js';
 export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/index.js';
 
@@ -38,6 +39,7 @@ export {
 	type FeaturePolygonProps,
 	type InteractionSelectProps,
 	type InteractionHoverProps,
+	type InteractionDrawProps,
 	type OverlayTooltipProps,
 	type TooltipManagerProps
 } from './types.js';

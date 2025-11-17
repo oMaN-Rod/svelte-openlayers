@@ -215,6 +215,32 @@ export interface InteractionHoverProps {
 	interaction?: any | null;
 }
 
+export interface InteractionDrawProps {
+	type: 'Point' | 'LineString' | 'Polygon' | 'Circle';
+	source: VectorSource | null;
+	features?: Collection<Feature<Geometry>> | null;
+	clickTolerance?: number;
+	snapTolerance?: number;
+	stopClick?: boolean;
+	maxPoints?: number;
+	minPoints?: number;
+	finishCondition?: any;
+	style?: StyleLike | FlatStyleLike;
+	geometryFunction?: any;
+	geometryName?: string;
+	condition?: any;
+	freehand?: boolean;
+	freehandCondition?: any;
+	trace?: boolean | any;
+	traceSource?: VectorSource;
+	wrapX?: boolean;
+	geometryLayout?: 'XY' | 'XYZ' | 'XYM' | 'XYZM';
+	onDrawStart?: (evt: any) => void;
+	onDrawEnd?: (evt: any) => void;
+	onDrawAbort?: (evt: any) => void;
+	interaction?: Interaction | null;
+}
+
 // Overlay Component Props
 export interface OverlayTooltipProps {
 	position?: Coordinate;
