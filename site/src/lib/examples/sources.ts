@@ -7,7 +7,8 @@ import {
 	Image,
 	ArrowLeftRight,
 	Globe,
-	Zap
+	Zap,
+	Pencil
 } from 'lucide-svelte';
 import type { ComponentType } from 'svelte';
 
@@ -139,6 +140,24 @@ export const examplesMeta: Record<string, ExampleMeta> = {
 			'State synchronization'
 		],
 		order: 5
+	},
+	'draw-interaction-demo': {
+		id: 'draw-interaction',
+		title: 'Draw Interaction',
+		description:
+			'Interactive drawing of points, lines, polygons, and circles with real-time feature tracking',
+		category: 'interaction',
+		icon: Pencil,
+		tags: ['Interaction', 'Drawing', 'Geometry'],
+		concepts: [
+			'Interaction.Draw',
+			'Drawing types',
+			'Feature creation',
+			'Vector sources',
+			'Event handling',
+			'Geometry styling'
+		],
+		order: 6
 	},
 	'custom-source-geojson-demo': {
 		id: 'custom-source-geojson',

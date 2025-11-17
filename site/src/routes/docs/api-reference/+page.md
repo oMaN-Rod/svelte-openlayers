@@ -262,28 +262,18 @@ LayerWebGL uses OpenLayers' flat style expressions for dynamic styling:
 // Example style with expressions
 const webglStyle: FlatStyleLike = {
 	// Data-driven circle radius
-	'circle-radius': [
-		'interpolate',
-		['linear'],
-		['get', 'population'],
-		0, 4,
-		1000000, 20
-	],
+	'circle-radius': ['interpolate', ['linear'], ['get', 'population'], 0, 4, 1000000, 20],
 	// Conditional fill color
 	'circle-fill-color': [
 		'case',
-		['>', ['get', 'temperature'], 25], '#ff4444',
-		['>', ['get', 'temperature'], 15], '#ffaa00',
+		['>', ['get', 'temperature'], 25],
+		'#ff4444',
+		['>', ['get', 'temperature'], 15],
+		'#ffaa00',
 		'#4444ff'
 	],
 	// Zoom-based opacity
-	'circle-opacity': [
-		'interpolate',
-		['linear'],
-		['zoom'],
-		5, 0.3,
-		15, 0.9
-	]
+	'circle-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.3, 15, 0.9]
 };
 ```
 
@@ -424,11 +414,80 @@ interface InteractionHoverProps {
 }
 ```
 
+### Interaction.Draw {.toc}
+
+Enables drawing of vector features (points, lines, polygons, and circles) on the map.
+
+```typescript
+interface InteractionDrawProps {
+	// Geometry type
+	type?: 'Point' | 'LineString' | 'Polygon' | 'Circle'; // bindable, default: 'Point'
+
+	// Source configuration
+	source?: VectorSource | null; // bindable, uses layer context if not provided
+
+	// Feature collection
+	features?: Collection<Feature> | null; // bindable
+
+	// Drawing behavior
+	clickTolerance?: number; // default: 6
+	snapTolerance?: number; // default: 12
+	stopClick?: boolean; // default: false
+	maxPoints?: number; // Max points before auto-finish
+	minPoints?: number; // Min points required (default: 3 for polygons, 2 for lines)
+
+	// Drawing conditions
+	finishCondition?: Condition; // Custom finish condition
+	condition?: Condition; // Event handling condition
+
+	// Freehand drawing
+	freehand?: boolean; // default: false
+	freehandCondition?: Condition; // Condition for freehand mode
+
+	// Tracing
+	trace?: boolean | Condition; // default: false
+	traceSource?: VectorSource; // Source for trace features
+
+	// Geometry configuration
+	geometryFunction?: GeometryFunction; // Custom geometry creation
+	geometryName?: string; // Property name for geometry
+	geometryLayout?: 'XY' | 'XYZ' | 'XYM' | 'XYZM'; // default: 'XY'
+
+	// Display options
+	style?: StyleLike | FlatStyleLike; // Style for drawing preview
+	wrapX?: boolean; // default: false
+
+	// Event callbacks
+	onDrawStart?: (evt: DrawEvent) => void;
+	onDrawEnd?: (evt: DrawEvent) => void;
+	onDrawAbort?: (evt: DrawEvent) => void;
+
+	// Bindable instance (read-only)
+	interaction?: Draw | null; // bindable
+}
+```
+
+**Drawing Types**:
+
+- **Point**: Single click to place
+- **LineString**: Click to start, continue clicking, double-click to finish
+- **Polygon**: Click to start, continue clicking, double-click to close
+- **Circle**: Click and drag to create
+
+**DrawEvent Properties**:
+
+```typescript
+interface DrawEvent {
+	type: 'drawstart' | 'drawend' | 'drawabort';
+	feature: Feature; // The drawn feature
+	target: Draw; // The draw interaction instance
+}
+```
+
 ### Coming Soon {.toc}
 
 The following interaction types are planned for future releases:
 
-- `Interaction.Draw` - Drawing new features
 - `Interaction.Modify` - Editing existing features
 - `Interaction.Translate` - Moving features by dragging
 - `Interaction.Snap` - Snapping while drawing/editing
