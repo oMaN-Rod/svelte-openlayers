@@ -18,6 +18,10 @@ import type { FlatStyleLike, StyleVariables } from 'ol/style/flat.js';
 import type { StyleLike } from 'ol/style/Style.js';
 import type { Snippet } from 'svelte';
 import type { Extent } from 'ol/extent.js';
+import type { HTMLAttributes } from 'svelte/elements';
+import type { DefaultsOptions as ControlOptions } from 'ol/control/defaults.js';
+import type { DefaultsOptions as InteractionOptions } from 'ol/interaction/defaults.js';
+
 
 export const MAP_CONTEXT_KEY = Symbol('map-ctx');
 export const LAYER_CONTEXT_KEY = Symbol('layer-ctx');
@@ -35,7 +39,9 @@ export type MapContext = {
 	removeOverlay: (overlay: Overlay) => void;
 };
 
-export type ViewProps = {
+export interface ViewProps {
+	view?: null | View;
+	bbox: null | Extent;
 	center?: Coordinate;
 	zoom?: number;
 	projection?: ProjectionLike;
@@ -49,42 +55,39 @@ export type ViewProps = {
 	onZoomChange?: (zoom: number | undefined) => void;
 	onRotationChange?: (rotation: number) => void;
 	onMoveEnd?: (evt: any) => void;
-};
+	children: Snippet;
+}
 
-export type MapProps = {
-	class?: string;
-	style?: string;
-	target?: HTMLElement;
+export interface MapProps extends HTMLAttributes<HTMLDivElement> {
+	controls?: ControlOptions;
+	interactions?: InteractionOptions;
 	pixelRatio?: number;
-	keyboardEventTarget?: HTMLElement | Document;
+	keyboardEventTarget?: HTMLElement;
 	maxTilesLoading?: number;
 	moveTolerance?: number;
-	view?: View | null;
-	// MapBrowserEvent events
-	onSingleclick?: (evt: MapBrowserEvent) => void;
-	onClick?: (evt: MapBrowserEvent) => void;
-	onDblclick?: (evt: MapBrowserEvent) => void;
-	onPointerdrag?: (evt: MapBrowserEvent) => void;
-	onPointermove?: (evt: MapBrowserEvent) => void;
-	onPointerdown?: (evt: MapBrowserEvent) => void;
-	onPointerup?: (evt: MapBrowserEvent) => void;
-	onPointerover?: (evt: MapBrowserEvent) => void;
-	onPointerout?: (evt: MapBrowserEvent) => void;
-	onPointerenter?: (evt: MapBrowserEvent) => void;
-	onPointerleave?: (evt: MapBrowserEvent) => void;
-	onPointercancel?: (evt: MapBrowserEvent) => void;
-	// MapEvent events
-	onPostrender?: (evt: MapEvent) => void;
-	onMovestart?: (evt: MapEvent) => void;
-	onMoveend?: (evt: MapEvent) => void;
-	onLoadstart?: (evt: MapEvent) => void;
-	onLoadend?: (evt: MapEvent) => void;
-	// RenderEvent events
-	onPrecompose?: (evt: RenderEvent) => void;
-	onPostcompose?: (evt: RenderEvent) => void;
-	onRendercomplete?: (evt: RenderEvent) => void;
-};
-
+	click?: (evt: MapBrowserEvent) => void;
+	dblclick?: (evt: MapBrowserEvent) => void;
+	pointerdrag?: (evt: MapBrowserEvent) => void;
+	pointermove?: (evt: MapBrowserEvent) => void;
+	pointerdown?: (evt: MapBrowserEvent) => void;
+	pointerup?: (evt: MapBrowserEvent) => void;
+	pointerover?: (evt: MapBrowserEvent) => void;
+	pointerout?: (evt: MapBrowserEvent) => void;
+	pointerenter?: (evt: MapBrowserEvent) => void;
+	pointerleave?: (evt: MapBrowserEvent) => void;
+	pointercancel?: (evt: MapBrowserEvent) => void;
+	postrender?: (evt: MapEvent) => void;
+	movestart?: (evt: MapEvent) => void;
+	moveend?: (evt: MapEvent) => void;
+	loadstart?: (evt: MapEvent) => void;
+	loadend?: (evt: MapEvent) => void;
+	precompose?: (evt: RenderEvent) => void;
+	postcompose?: (evt: RenderEvent) => void;
+	rendercomplete?: (evt: RenderEvent) => void;
+	children?: Snippet;
+	map?: Map | null;
+	view?: View|null;
+}
 export interface LayerContext {
 	getSource: () => VectorSource | null;
 	getLayer: () => VectorLayer<any> | WebGLVectorLayer<any> | null;
@@ -94,17 +97,6 @@ export interface LayerContext {
 }
 
 // Component Props Types
-
-// Map Component Props
-export interface MapRootProps extends MapProps {
-	children?: Snippet;
-	map?: Map | null;
-	view?: View | null;
-	zoomControl?: boolean;
-	attributionControl?: boolean;
-	rotateControl?: boolean;
-	mousePositionControl?: boolean;
-}
 
 export interface MapViewProps extends ViewProps {}
 
