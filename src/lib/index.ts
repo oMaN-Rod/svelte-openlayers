@@ -17,9 +17,11 @@ export {
 export {
 	Interaction,
 	InteractionSelect,
-	InteractionHover
+	InteractionHover,
+	InteractionDraw
 } from './components/interactions/index.js';
 export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/index.js';
+export { Control, ControlDraw } from './components/controls/index.js';
 
 export {
 	MAP_CONTEXT_KEY,
@@ -39,6 +41,8 @@ export {
 	type FeaturePolygonProps,
 	type InteractionSelectProps,
 	type InteractionHoverProps,
+	type InteractionDrawProps,
+	type ControlDrawProps,
 	type OverlayTooltipProps,
 	type TooltipManagerProps
 } from './types.js';

@@ -1,0 +1,140 @@
+<script lang="ts">
+	import {
+		LAYER_CONTEXT_KEY,
+		MAP_CONTEXT_KEY,
+		type InteractionDrawProps,
+		type LayerContext,
+		type MapContext
+	} from '$lib/types.js';
+	import { Draw } from 'ol/interaction.js';
+	import type { Options } from 'ol/interaction/Draw.js';
+	import type VectorSource from 'ol/source/Vector.js';
+	import { getContext, onMount } from 'svelte';
+
+	let {
+		type = $bindable('Point'),
+		source = $bindable(null),
+		features = $bindable(null),
+		interaction = $bindable(null),
+		clickTolerance = 6,
+		snapTolerance = 12,
+		stopClick = false,
+		maxPoints,
+		minPoints,
+		finishCondition,
+		style,
+		geometryFunction,
+		geometryName,
+		condition,
+		freehand = false,
+		freehandCondition,
+		trace = false,
+		traceSource,
+		wrapX = false,
+		geometryLayout = 'XY',
+		onDrawStart,
+		onDrawEnd,
+		onDrawAbort
+	}: InteractionDrawProps = $props();
+
+	const mapContext = getContext<MapContext>(MAP_CONTEXT_KEY);
+	const layerContext = getContext<LayerContext>(LAYER_CONTEXT_KEY);
+
+	let drawInteraction: Draw | null = null;
+	let isDestroyed = false;
+
+	function createDrawInteraction() {
+		let drawSource: VectorSource | null = source;
+		if (!drawSource && layerContext) {
+			drawSource = layerContext.getSource();
+		}
+
+		if (!drawSource) {
+			console.warn('InteractionDraw: No source provided and no layer context available');
+			return null;
+		}
+
+		const drawOptions: Options = {
+			type: type as any,
+			source: drawSource,
+			clickTolerance,
+			snapTolerance,
+			stopClick,
+			freehand,
+			wrapX,
+			geometryLayout
+		};
+
+		// Add optional properties
+		if (features) drawOptions.features = features;
+		if (maxPoints !== undefined) drawOptions.maxPoints = maxPoints;
+		if (minPoints !== undefined) drawOptions.minPoints = minPoints;
+		if (finishCondition) drawOptions.finishCondition = finishCondition;
+		if (style) drawOptions.style = style;
+		if (geometryFunction) drawOptions.geometryFunction = geometryFunction;
+		if (geometryName) drawOptions.geometryName = geometryName;
+		if (condition) drawOptions.condition = condition;
+		if (freehandCondition) drawOptions.freehandCondition = freehandCondition;
+		if (trace !== false) drawOptions.trace = trace;
+		if (traceSource) drawOptions.traceSource = traceSource;
+
+		const newInteraction = new Draw(drawOptions);
+
+		if (onDrawStart) {
+			newInteraction.on('drawstart', (evt: any) => {
+				onDrawStart(evt);
+			});
+		}
+
+		if (onDrawEnd) {
+			newInteraction.on('drawend', (evt: any) => {
+				onDrawEnd(evt);
+			});
+		}
+
+		if (onDrawAbort) {
+			newInteraction.on('drawabort', (evt: any) => {
+				onDrawAbort(evt);
+			});
+		}
+
+		return newInteraction;
+	}
+
+	function cleanupInteraction() {
+		if (drawInteraction && !isDestroyed) {
+			mapContext.removeInteraction(drawInteraction);
+			drawInteraction = null;
+			interaction = null;
+		}
+	}
+
+	onMount(() => {
+		drawInteraction = createDrawInteraction();
+		if (drawInteraction) {
+			interaction = drawInteraction;
+			drawInteraction.setActive(true);
+			mapContext.addInteraction(drawInteraction);
+		}
+
+		return () => {
+			isDestroyed = true;
+			cleanupInteraction();
+		};
+	});
+
+	$effect(() => {
+		if (!isDestroyed && drawInteraction && type) {
+			console.log('Draw type changed to:', type);
+
+			cleanupInteraction();
+
+			drawInteraction = createDrawInteraction();
+			if (drawInteraction) {
+				interaction = drawInteraction;
+				drawInteraction.setActive(true);
+				mapContext.addInteraction(drawInteraction);
+			}
+		}
+	});
+</script>

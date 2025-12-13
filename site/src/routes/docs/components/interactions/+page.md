@@ -94,4 +94,101 @@ Detects when the pointer hovers over features and provides callbacks for hover e
 | `hitTolerance` | `number`                                                          | `undefined` | Hit detection tolerance in pixels         |
 | `interaction`  | `any &#124; null`                                                 | `null`      | Bindable interaction instance (read-only) |
 
-> **Coming Soon:** Additional interaction types including Interaction.Draw, Interaction.Modify, and Interaction.Translate are planned for future releases.
+## Interaction.Draw {.toc}
+
+Enables drawing of vector features (points, lines, polygons, and circles) on the map. The interaction automatically handles user input and provides callbacks for drawing lifecycle events.
+
+### Basic Usage {.toc}
+
+```svelte
+<script>
+	import { Map, Layer, Interaction } from 'svelte-openlayers';
+	import { createStyle, createCircleStyle } from 'svelte-openlayers/utils';
+	import VectorSource from 'ol/source/Vector.js';
+
+	let drawType = $state('Point');
+	let drawnFeatures = $state([]);
+
+	// Create a vector source to store drawn features
+	const vectorSource = new VectorSource();
+
+	// Style for drawn features
+	const drawStyle = createStyle({
+		fill: { color: 'rgba(59, 130, 246, 0.3)' },
+		stroke: { color: '#2563eb', width: 2 },
+		image: createCircleStyle({
+			radius: 6,
+			fill: { color: '#2563eb' },
+			stroke: { color: '#ffffff', width: 2 }
+		})
+	});
+
+	// Style for drawing preview
+	const sketchStyle = createStyle({
+		fill: { color: 'rgba(16, 185, 129, 0.2)' },
+		stroke: { color: '#10b981', width: 2, lineDash: [10, 10] },
+		image: createCircleStyle({
+			radius: 6,
+			fill: { color: '#10b981' },
+			stroke: { color: '#ffffff', width: 2 }
+		})
+	});
+
+	function handleDrawEnd(evt) {
+		drawnFeatures = [...drawnFeatures, evt.feature];
+	}
+</script>
+
+<Map.Root>
+	<Map.View center={[-74.006, 40.7128]} zoom={10} />
+	<Layer.Tile source="osm" />
+
+	<Layer.Vector bind:source={vectorSource} style={drawStyle}>
+		<Interaction.Draw bind:type={drawType} style={sketchStyle} onDrawEnd={handleDrawEnd} />
+	</Layer.Vector>
+</Map.Root>
+```
+
+### Drawing Types {.toc}
+
+- **Point**: Click to place a single point
+- **LineString**: Click to start, continue clicking to add points, double-click to finish
+- **Polygon**: Click to start, continue clicking to add vertices, double-click to close
+- **Circle**: Click and drag to create a circle
+
+### Props {.toc}
+
+| Prop                | Type                                               | Default     | Description                                                    |
+| ------------------- | -------------------------------------------------- | ----------- | -------------------------------------------------------------- |
+| `type`              | `'Point' \| 'LineString' \| 'Polygon' \| 'Circle'` | `'Point'`   | Geometry type to draw (bindable)                               |
+| `source`            | `VectorSource`                                     | `null`      | Vector source for drawn features (bindable)                    |
+| `style`             | `StyleLike \| FlatStyleLike`                       | `undefined` | Style for drawing preview/sketch features                      |
+| `features`          | `Collection<Feature>`                              | `undefined` | Feature collection for drawn features (bindable)               |
+| `clickTolerance`    | `number`                                           | `6`         | Click tolerance in pixels                                      |
+| `snapTolerance`     | `number`                                           | `12`        | Snap tolerance for finishing drawing                           |
+| `stopClick`         | `boolean`                                          | `false`     | Stop click events during drawing                               |
+| `maxPoints`         | `number`                                           | `undefined` | Maximum number of points before auto-finish                    |
+| `minPoints`         | `number`                                           | `undefined` | Minimum points required (default: 3 for polygons, 2 for lines) |
+| `finishCondition`   | `Condition`                                        | `undefined` | Custom condition for finishing drawing                         |
+| `geometryFunction`  | `GeometryFunction`                                 | `undefined` | Custom geometry creation function                              |
+| `geometryName`      | `string`                                           | `undefined` | Geometry property name for features                            |
+| `condition`         | `Condition`                                        | `undefined` | Condition for handling events                                  |
+| `freehand`          | `boolean`                                          | `false`     | Enable freehand drawing mode                                   |
+| `freehandCondition` | `Condition`                                        | `undefined` | Condition for freehand mode                                    |
+| `trace`             | `boolean \| Condition`                             | `false`     | Enable tracing along existing geometries                       |
+| `traceSource`       | `VectorSource`                                     | `undefined` | Source for features to trace                                   |
+| `wrapX`             | `boolean`                                          | `false`     | Wrap drawing horizontally                                      |
+| `geometryLayout`    | `'XY' \| 'XYZ' \| 'XYM' \| 'XYZM'`                 | `'XY'`      | Coordinate layout for geometries                               |
+| `interaction`       | `Draw`                                             | `null`      | Bindable interaction instance (read-only)                      |
+
+### Events {.toc}
+
+| Event         | Type                       | Description                    |
+| ------------- | -------------------------- | ------------------------------ |
+| `onDrawStart` | `(evt: DrawEvent) => void` | Fired when drawing starts      |
+| `onDrawEnd`   | `(evt: DrawEvent) => void` | Fired when drawing is finished |
+| `onDrawAbort` | `(evt: DrawEvent) => void` | Fired when drawing is aborted  |
+
+> **Note:** The Draw interaction automatically creates its own overlay layer for displaying sketch features while drawing. You only need to provide a vector source for storing the final drawn features.
+
+> **Coming Soon:** Additional interaction types including Interaction.Modify and Interaction.Translate are planned for future releases.
