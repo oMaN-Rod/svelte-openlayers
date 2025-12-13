@@ -241,6 +241,18 @@ export interface InteractionDrawProps {
 	interaction?: Interaction | null;
 }
 
+// Control Component Props
+export interface ControlDrawProps {
+	type?: 'Point' | 'LineString' | 'Polygon' | 'Circle';
+	source?: VectorSource | null;
+	style?: StyleLike | FlatStyleLike;
+	control?: Control | null;
+	onDrawStart?: (evt: any) => void;
+	onDrawEnd?: (evt: any) => void;
+	onDrawAbort?: (evt: any) => void;
+	onTypeChange?: (type: 'Point' | 'LineString' | 'Polygon' | 'Circle') => void;
+}
+
 // Overlay Component Props
 export interface OverlayTooltipProps {
 	position?: Coordinate;
