@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { LayerTileProps } from '$lib/types.js';
-	import { getMapContext } from '$lib/utils/context.js';
 	import TileLayer from 'ol/layer/Tile.js';
 	import OSM from 'ol/source/OSM.js';
 	import type Source from 'ol/source/Source.js';
 	import XYZ from 'ol/source/XYZ.js';
 	import { onMount } from 'svelte';
+	import { getMap } from '../map/context.js';
 
 	let {
 		source = 'osm',
@@ -21,7 +21,7 @@
 		crossOrigin
 	}: LayerTileProps = $props();
 
-	const mapContext = getMapContext();
+	const mapContext = getMap()
 	let tileLayer: TileLayer<any> | null = null;
 	let isDestroyed = false;
 

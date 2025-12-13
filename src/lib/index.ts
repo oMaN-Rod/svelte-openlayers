@@ -1,4 +1,6 @@
-export { Map, MapRoot, MapView } from './components/map/index.js';
+import Map from './components/map/Map.svelte';
+import View from './components/view/View.svelte';
+export {Map, View}
 export {
 	Layer,
 	LayerTile,
@@ -27,7 +29,6 @@ export {
 	type MapProps,
 	type LayerContext,
 	// Component Props Types
-	type MapRootProps,
 	type MapViewProps,
 	type LayerTileProps,
 	type LayerStaticProps,
