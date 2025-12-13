@@ -56,7 +56,7 @@ export interface ExampleMeta {
 	id: string;
 	title: string;
 	description: string;
-	category: 'foundation' | 'core' | 'interaction' | 'advanced';
+	category: 'foundation' | 'core' | 'interaction' | 'control' | 'advanced';
 	icon: ComponentType;
 	tags: string[];
 	concepts: string[];
@@ -159,6 +159,23 @@ export const examplesMeta: Record<string, ExampleMeta> = {
 		],
 		order: 6
 	},
+	'draw-control-demo': {
+		id: 'draw-control',
+		title: 'Draw Control',
+		description: 'Control for drawing points, lines, polygons, and circles',
+		category: 'control',
+		icon: Pencil,
+		tags: ['Control', 'Drawing', 'Geometry'],
+		concepts: [
+			'Control.Draw',
+			'Drawing types',
+			'Feature creation',
+			'Vector sources',
+			'Event handling',
+			'Geometry styling'
+		],
+		order: 7
+	},
 	'custom-source-geojson-demo': {
 		id: 'custom-source-geojson',
 		title: 'GeoJSON Vector Source',
@@ -233,11 +250,17 @@ export const categoriesMeta: Record<string, CategoryMeta> = {
 		description: 'User interactions and UI components',
 		order: 3
 	},
+	control: {
+		id: 'control',
+		title: 'Controls',
+		description: 'Map controls',
+		order: 4
+	},
 	advanced: {
 		id: 'advanced',
 		title: 'Advanced',
 		description: 'Complex features and integrations',
-		order: 4
+		order: 5
 	}
 };
 
