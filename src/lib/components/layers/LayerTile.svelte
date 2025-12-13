@@ -21,7 +21,7 @@
 		crossOrigin
 	}: LayerTileProps = $props();
 
-	const mapContext = getMap()
+	const map = getMap();
 	let tileLayer: TileLayer<any> | null = null;
 	let isDestroyed = false;
 
@@ -53,12 +53,12 @@
 
 		tileLayer = new TileLayer(layerOptions);
 		layer = tileLayer;
-		mapContext.addLayer(tileLayer);
+		map?.addLayer(tileLayer);
 
 		return () => {
 			isDestroyed = true;
 			if (tileLayer) {
-				mapContext.removeLayer(tileLayer);
+				map?.removeLayer(tileLayer);
 				tileLayer.dispose();
 				tileLayer = null;
 				layer = null;

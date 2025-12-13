@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { LAYER_CONTEXT_KEY, type LayerContext, type LayerVectorProps } from '$lib/types.js';
-	import { getMapContext } from '$lib/utils/context.js';
 	import type { Feature } from 'ol';
 	import VectorLayer from 'ol/layer/Vector.js';
 	import VectorSource from 'ol/source/Vector.js';
 	import type { FlatStyleLike } from 'ol/style/flat.js';
 	import type { StyleLike } from 'ol/style/Style.js';
 	import { onMount, setContext } from 'svelte';
+	import { getMap } from '$lib/components/map/context.js';
 
 	let {
 		opacity = 1,
@@ -23,7 +23,7 @@
 		children
 	}: LayerVectorProps = $props();
 
-	const mapContext = getMapContext();
+	const map = getMap();
 	let vectorLayer: VectorLayer<any> | null = null;
 	let vectorSource: VectorSource | null = $state(null);
 	let isDestroyed = false;
@@ -83,12 +83,12 @@
 			layer = vectorLayer;
 		}
 
-		mapContext.addLayer(vectorLayer);
+		map?.addLayer(vectorLayer);
 
 		return () => {
 			isDestroyed = true;
 			if (vectorLayer) {
-				mapContext.removeLayer(vectorLayer);
+				map?.removeLayer(vectorLayer);
 				if (vectorSource) {
 					vectorSource.clear();
 					vectorSource = null;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { LAYER_CONTEXT_KEY, type LayerContext, type LayerWebGLProps } from '$lib/types.js';
-	import { getMapContext } from '$lib/utils/context.js';
+	import { getMap } from '$lib/components/map/context.js';
 	import type { Feature } from 'ol';
 	import WebGLVectorLayer from 'ol/layer/WebGLVector.js';
 	import VectorSource from 'ol/source/Vector.js';
@@ -20,7 +20,7 @@
 		disableHitDetection = false
 	}: LayerWebGLProps = $props();
 
-	const mapContext = getMapContext();
+	const map = getMap();
 	let webglLayer: WebGLVectorLayer<any> | null = null;
 	let vectorSource: VectorSource | null = $state(null);
 	let isDestroyed = false;
@@ -66,13 +66,13 @@
 
 		webglLayer = new WebGLVectorLayer(layerOptions);
 		layer = webglLayer;
-		mapContext.addLayer(webglLayer);
+		map?.addLayer(webglLayer);
 
 		return () => {
 			isDestroyed = true;
 			if (webglLayer) {
 				try {
-					mapContext.removeLayer(webglLayer);
+					map?.removeLayer(webglLayer);
 					if (vectorSource) {
 						vectorSource.clear();
 						vectorSource = null;

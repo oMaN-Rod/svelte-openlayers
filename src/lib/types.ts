@@ -22,26 +22,10 @@ import type { HTMLAttributes } from 'svelte/elements';
 import type { DefaultsOptions as ControlOptions } from 'ol/control/defaults.js';
 import type { DefaultsOptions as InteractionOptions } from 'ol/interaction/defaults.js';
 
-
-export const MAP_CONTEXT_KEY = Symbol('map-ctx');
 export const LAYER_CONTEXT_KEY = Symbol('layer-ctx');
-
-export type MapContext = {
-	getMap: () => Map | null;
-	getView: () => View | null;
-	addLayer: (layer: Layer) => void;
-	removeLayer: (layer: Layer) => void;
-	addInteraction: (interaction: Interaction) => void;
-	removeInteraction: (interaction: Interaction) => void;
-	addControl: (control: Control) => void;
-	removeControl: (control: Control) => void;
-	addOverlay: (overlay: Overlay) => void;
-	removeOverlay: (overlay: Overlay) => void;
-};
-
 export interface ViewProps {
 	view?: null | View;
-	bbox: null | Extent;
+	bbox?: null | Extent;
 	center?: Coordinate;
 	zoom?: number;
 	projection?: ProjectionLike;
@@ -55,7 +39,7 @@ export interface ViewProps {
 	onZoomChange?: (zoom: number | undefined) => void;
 	onRotationChange?: (rotation: number) => void;
 	onMoveEnd?: (evt: any) => void;
-	children: Snippet;
+	children?: Snippet;
 }
 
 export interface MapProps extends HTMLAttributes<HTMLDivElement> {
@@ -86,7 +70,7 @@ export interface MapProps extends HTMLAttributes<HTMLDivElement> {
 	rendercomplete?: (evt: RenderEvent) => void;
 	children?: Snippet;
 	map?: Map | null;
-	view?: View|null;
+	view?: View | null;
 }
 export interface LayerContext {
 	getSource: () => VectorSource | null;

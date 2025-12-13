@@ -1,12 +1,13 @@
 <script lang="ts">
 	import InteractionDraw from '$lib/components/interactions/InteractionDraw.svelte';
-	import { MAP_CONTEXT_KEY, type ControlDrawProps, type MapContext } from '$lib/types.js';
+	import { getMap } from '$lib/components/map/context.js';
+	import { type ControlDrawProps } from '$lib/types.js';
 	import Circle from '@lucide/svelte/icons/circle';
 	import MapPin from '@lucide/svelte/icons/map-pin';
 	import Pentagon from '@lucide/svelte/icons/pentagon';
 	import Spline from '@lucide/svelte/icons/spline';
 	import Control from 'ol/control/Control.js';
-	import { getContext, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	let {
 		type = $bindable('Point'),
@@ -19,7 +20,7 @@
 		control = $bindable(null)
 	}: ControlDrawProps = $props();
 
-	const mapContext = getContext<MapContext>(MAP_CONTEXT_KEY);
+	const map = getMap();
 
 	let controlElement: HTMLDivElement;
 	let olControl: Control | null = null;
@@ -54,7 +55,7 @@
 		});
 
 		// Add control to map
-		mapContext.addControl(olControl);
+		map?.addControl(olControl);
 		control = olControl;
 
 		return () => {
@@ -62,7 +63,7 @@
 
 			// Clean up control
 			if (olControl) {
-				mapContext.removeControl(olControl);
+				map?.removeControl(olControl);
 				olControl = null;
 				control = null;
 			}

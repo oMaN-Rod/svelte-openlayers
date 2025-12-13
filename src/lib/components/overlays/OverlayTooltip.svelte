@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { getMap } from '$lib/components/map/context.js';
 	import type { OverlayTooltipProps } from '$lib/types.js';
-	import { getMapContext } from '$lib/utils/context.js';
 	import { Overlay } from 'ol';
 	import { onMount } from 'svelte';
 
@@ -16,7 +16,7 @@
 		children
 	}: OverlayTooltipProps = $props();
 
-	const mapContext = getMapContext();
+	const map = getMap();
 	let tooltipElement: HTMLDivElement;
 	let olOverlay: Overlay | null = null;
 	let isDestroyed = false;
@@ -35,12 +35,12 @@
 			overlay = olOverlay;
 		}
 
-		mapContext.addOverlay(olOverlay);
+		map?.addOverlay(olOverlay);
 
 		return () => {
 			isDestroyed = true;
 			if (olOverlay) {
-				mapContext.removeOverlay(olOverlay);
+				map?.removeOverlay(olOverlay);
 				olOverlay.setMap(null);
 				olOverlay = null;
 				overlay = null;

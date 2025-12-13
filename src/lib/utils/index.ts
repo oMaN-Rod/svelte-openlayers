@@ -15,9 +15,6 @@ export {
 	type IconStyleOptions
 } from './styles.js';
 
-// Context utilities
-export { setMapContext, getMapContext, setLayerContext, getLayerContext } from './context.js';
-
 // CSS utilities
 export {
 	getCSSVariable,

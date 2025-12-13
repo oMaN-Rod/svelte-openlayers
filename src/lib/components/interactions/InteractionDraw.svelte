@@ -1,11 +1,6 @@
 <script lang="ts">
-	import {
-		LAYER_CONTEXT_KEY,
-		MAP_CONTEXT_KEY,
-		type InteractionDrawProps,
-		type LayerContext,
-		type MapContext
-	} from '$lib/types.js';
+	import { getMap } from '$lib/components/map/context.js';
+	import { LAYER_CONTEXT_KEY, type InteractionDrawProps, type LayerContext } from '$lib/types.js';
 	import { Draw } from 'ol/interaction.js';
 	import type { Options } from 'ol/interaction/Draw.js';
 	import type VectorSource from 'ol/source/Vector.js';
@@ -37,7 +32,7 @@
 		onDrawAbort
 	}: InteractionDrawProps = $props();
 
-	const mapContext = getContext<MapContext>(MAP_CONTEXT_KEY);
+	const map = getMap();
 	const layerContext = getContext<LayerContext>(LAYER_CONTEXT_KEY);
 
 	let drawInteraction: Draw | null = null;
@@ -103,7 +98,7 @@
 
 	function cleanupInteraction() {
 		if (drawInteraction && !isDestroyed) {
-			mapContext.removeInteraction(drawInteraction);
+			map?.removeInteraction(drawInteraction);
 			drawInteraction = null;
 			interaction = null;
 		}
@@ -114,7 +109,7 @@
 		if (drawInteraction) {
 			interaction = drawInteraction;
 			drawInteraction.setActive(true);
-			mapContext.addInteraction(drawInteraction);
+			map?.addInteraction(drawInteraction);
 		}
 
 		return () => {
@@ -125,15 +120,13 @@
 
 	$effect(() => {
 		if (!isDestroyed && drawInteraction && type) {
-			console.log('Draw type changed to:', type);
-
 			cleanupInteraction();
 
 			drawInteraction = createDrawInteraction();
 			if (drawInteraction) {
 				interaction = drawInteraction;
 				drawInteraction.setActive(true);
-				mapContext.addInteraction(drawInteraction);
+				map?.addInteraction(drawInteraction);
 			}
 		}
 	});

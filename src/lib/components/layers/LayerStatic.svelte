@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { LayerStaticProps } from '$lib/types.js';
-	import { getMapContext } from '$lib/utils/context.js';
 	import { onMount } from 'svelte';
 	import Static from 'ol/source/ImageStatic.js';
 	import ImageLayer from 'ol/layer/Image.js';
+	import { getMap } from '$lib/components/map/context.js';
 
 	let {
 		url,
@@ -19,7 +19,7 @@
 		projection
 	}: LayerStaticProps = $props();
 
-	const mapContext = getMapContext();
+	const map = getMap();
 	let isDestroyed = false;
 
 	onMount(() => {
@@ -41,12 +41,12 @@
 			source: new Static(layerOptions)
 		});
 
-		mapContext.addLayer(layer);
+		map?.addLayer(layer);
 
 		return () => {
 			isDestroyed = true;
 			if (layer) {
-				mapContext.removeLayer(layer);
+				map?.removeLayer(layer);
 				layer.dispose();
 				layer = null;
 			}

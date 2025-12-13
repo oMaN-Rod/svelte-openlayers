@@ -1,6 +1,6 @@
 import Map from './components/map/Map.svelte';
 import View from './components/view/View.svelte';
-export {Map, View}
+export { Map, View };
 export {
 	Layer,
 	LayerTile,
@@ -24,9 +24,7 @@ export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/i
 export { Control, ControlDraw } from './components/controls/index.js';
 
 export {
-	MAP_CONTEXT_KEY,
 	LAYER_CONTEXT_KEY,
-	type MapContext,
 	type ViewProps,
 	type MapProps,
 	type LayerContext,
