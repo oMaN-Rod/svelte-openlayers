@@ -11,7 +11,7 @@
 	import type { Feature } from 'ol';
 	import type { Geometry } from 'ol/geom';
 	import VectorSource from 'ol/source/Vector.js';
-	import { Interaction, Layer, Map } from 'svelte-openlayers';
+	import { Interaction, Layer, Map, View } from 'svelte-openlayers';
 	import { createStyle } from 'svelte-openlayers/utils';
 	import { mapSources } from './sources';
 	import { getFeatureInfo } from '$lib/utils';
@@ -134,26 +134,27 @@
 
 	<!-- Map -->
 	<div class="h-96 w-full overflow-hidden rounded-lg border">
-		<Map.Root class="h-full w-full">
-			<Map.View bind:center bind:zoom />
-			<Layer.Tile
-				source="xyz"
-				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
-			/>
-
-			<!-- Layer for drawn features -->
-			<Layer.Vector bind:source={vectorSource} style={drawStyle}>
-				<Interaction.Draw
-					bind:type={drawType}
-					source={vectorSource}
-					style={sketchStyle}
-					onDrawStart={handleDrawStart}
-					onDrawEnd={handleDrawEnd}
-					onDrawAbort={handleDrawAbort}
+		<View bind:center bind:zoom >
+			<Map class="h-full w-full">
+				<Layer.Tile
+					source="xyz"
+					url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+					attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 				/>
-			</Layer.Vector>
-		</Map.Root>
+
+				<!-- Layer for drawn features -->
+				<Layer.Vector bind:source={vectorSource} style={drawStyle}>
+					<Interaction.Draw
+						bind:type={drawType}
+						source={vectorSource}
+						style={sketchStyle}
+						onDrawStart={handleDrawStart}
+						onDrawEnd={handleDrawEnd}
+						onDrawAbort={handleDrawAbort}
+					/>
+				</Layer.Vector>
+			</Map>
+		</View>
 	</div>
 
 	<!-- Feature List -->

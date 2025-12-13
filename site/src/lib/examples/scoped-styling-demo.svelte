@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Map, Layer, Feature } from 'svelte-openlayers';
-	import { createCircleStyle, getCSSVariable } from 'svelte-openlayers/utils';
-	import { onMount } from 'svelte';
 	import type { Style } from 'ol/style';
+	import type { View as OLView } from 'ol';
+	import { onMount } from 'svelte';
+	import { Feature, Layer, Map, View } from 'svelte-openlayers';
+	import { createCircleStyle, getCSSVariable } from 'svelte-openlayers/utils';
 	import { mapSources } from './sources';
 
 	let oceanContainer: HTMLDivElement;
@@ -12,6 +13,9 @@
 	let oceanPointStyle: Style | null = $state(null);
 	let sunsetPointStyle: Style | null = $state(null);
 	let forestPointStyle: Style | null = $state(null);
+	let view: OLView | null = $state(null)
+	let center = $state([0, 0]);
+	let zoom = $state(2);
 
 	// Function to create theme-specific point styles using CSS variables
 	function createThemePointStyle(container: Element, radius: number = 10) {
@@ -33,14 +37,15 @@
 	});
 </script>
 
+<View bind:center bind:zoom bind:view />
+
 <div class="ocean-theme" bind:this={oceanContainer}>
 	<h3>Ocean Theme Map</h3>
 	<p class="theme-description">
 		Point styles dynamically created from CSS variables (large cyan circles)
 	</p>
 	<div class="map-container">
-		<Map.Root zoomControl={true} mousePositionControl={true}>
-			<Map.View center={[0, 0]} zoom={2} />
+		<Map {view}>
 			<Layer.Tile
 				source="xyz"
 				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
@@ -52,7 +57,7 @@
 					<Feature.Point coordinates={[20, 20]} style={oceanPointStyle} />
 				{/if}
 			</Layer.Vector>
-		</Map.Root>
+		</Map>
 	</div>
 </div>
 
@@ -62,8 +67,7 @@
 		Point styles dynamically created from CSS variables (small orange circles)
 	</p>
 	<div class="map-container">
-		<Map.Root zoomControl={true} mousePositionControl={true}>
-			<Map.View center={[-100, 40]} zoom={3} />
+		<Map {view}>
 			<Layer.Tile
 				source="xyz"
 				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
@@ -75,7 +79,7 @@
 					<Feature.Point coordinates={[-80, 35]} style={sunsetPointStyle} />
 				{/if}
 			</Layer.Vector>
-		</Map.Root>
+		</Map>
 	</div>
 </div>
 
@@ -85,8 +89,7 @@
 		Point styles dynamically created from CSS variables (extra-large green circles)
 	</p>
 	<div class="map-container">
-		<Map.Root zoomControl={true} attributionControl={true}>
-			<Map.View center={[10, 50]} zoom={4} />
+		<Map {view}>
 			<Layer.Tile
 				source="xyz"
 				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
@@ -98,7 +101,7 @@
 					<Feature.Point coordinates={[15, 55]} style={forestPointStyle} />
 				{/if}
 			</Layer.Vector>
-		</Map.Root>
+		</Map>
 	</div>
 </div>
 

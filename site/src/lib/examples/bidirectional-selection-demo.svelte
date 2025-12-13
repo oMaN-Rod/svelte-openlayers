@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
+	import { Map, Layer, Feature, Overlay, View } from 'svelte-openlayers';
 	import { createCircleStyle, ReactiveCollection } from 'svelte-openlayers/utils';
 	import type { Feature as OlFeature } from 'ol';
 	import Input from '$lib/components/ui/input/input.svelte';
@@ -184,57 +184,58 @@
 	<!-- Map -->
 	<div class="flex-1">
 		<div class="h-96 w-full overflow-hidden rounded-lg border">
-			<Map.Root class="h-full w-full">
-				<Map.View bind:center bind:zoom />
-				<Layer.Tile
-					source="xyz"
-					url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-					attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
-				/>
+			<View bind:center bind:zoom>
+				<Map class="h-full w-full">
+					<Layer.Tile
+						source="xyz"
+						url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+						attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+					/>
 
-				<Layer.Vector style={pointStyle}>
-					{#each filteredLocations as location}
-						<Feature.Point
-							coordinates={location.coords}
-							style={getFeatureStyle(location)}
-							properties={{
-								id: location.id,
-								name: location.name,
-								visitors: location.visitors
-							}}
-							bind:feature={location.feature}
-						/>
-					{/each}
-				</Layer.Vector>
+					<Layer.Vector style={pointStyle}>
+						{#each filteredLocations as location}
+							<Feature.Point
+								coordinates={location.coords}
+								style={getFeatureStyle(location)}
+								properties={{
+									id: location.id,
+									name: location.name,
+									visitors: location.visitors
+								}}
+								bind:feature={location.feature}
+							/>
+						{/each}
+					</Layer.Vector>
 
-				<!-- Using Interaction.Select
+					<!-- Using Interaction.Select
 
-				<Interaction.Select
-					bind:selectedFeatures
-					style={selectedStyle}
-					multi={false}
-				/>
+					<Interaction.Select
+						bind:selectedFeatures
+						style={selectedStyle}
+						multi={false}
+					/>
 
-				-->
+					-->
 
-				<!-- Using TooltipManager -->
-				<Overlay.TooltipManager
-					bind:selectedFeatures
-					selectStyle={selectedStyle}
-					hoverClass="!bg-transparent !shadow-none"
-					selectClass="!bg-transparent !shadow-none"
-					multi={false}
-				>
-					{#snippet hoverSnippet(feature)}
-						{@const props = feature.getProperties()}
-						<ToolTipHover name={props.name} type={props.type} />
-					{/snippet}
-					{#snippet selectSnippet(feature)}
-						{@const props = feature.getProperties()}
-						<TooltipSelect {...props} />
-					{/snippet}
-				</Overlay.TooltipManager>
-			</Map.Root>
+					<!-- Using TooltipManager -->
+					<Overlay.TooltipManager
+						bind:selectedFeatures
+						selectStyle={selectedStyle}
+						hoverClass="!bg-transparent !shadow-none"
+						selectClass="!bg-transparent !shadow-none"
+						multi={false}
+					>
+						{#snippet hoverSnippet(feature)}
+							{@const props = feature.getProperties()}
+							<ToolTipHover name={props.name} type={props.type} />
+						{/snippet}
+						{#snippet selectSnippet(feature)}
+							{@const props = feature.getProperties()}
+							<TooltipSelect {...props} />
+						{/snippet}
+					</Overlay.TooltipManager>
+				</Map>
+			</View>
 		</div>
 		<div class="text-muted-foreground mt-4 text-sm">
 			{#if selectedFeatures && selectedFeatures.getLength() > 0}

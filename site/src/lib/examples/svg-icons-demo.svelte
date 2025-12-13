@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Map, Layer, Feature } from 'svelte-openlayers';
+	import { Map, Layer, Feature, View } from 'svelte-openlayers';
 	import { createIconStyle } from 'svelte-openlayers/utils';
 	import { Icon, Style } from 'ol/style';
 	import { mapSources } from './sources';
@@ -125,25 +125,26 @@
 
 	<!-- Map -->
 	<div class="h-[500px] overflow-hidden rounded-lg border">
-		<Map.Root class="h-full w-full">
-			<Map.View center={[20, 30]} zoom={3} />
-			<Layer.Tile
-				source="xyz"
-				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
-			/>
+		<View center={[20, 30]} zoom={3} >
+			<Map class="h-full w-full">
+				<Layer.Tile
+					source="xyz"
+					url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+					attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+				/>
 
-			<Layer.Vector>
-				{#each locations as location}
-					{#await getIconStyle(location.icon, useCustomColors ? location.color : '#4338ca', iconScale, useCustomColors)}
-						<!-- Loading placeholder -->
-						<Feature.Point coordinates={location.coords} properties={location} />
-					{:then style}
-						<Feature.Point coordinates={location.coords} properties={location} {style} />
-					{/await}
-				{/each}
-			</Layer.Vector>
-		</Map.Root>
+				<Layer.Vector>
+					{#each locations as location}
+						{#await getIconStyle(location.icon, useCustomColors ? location.color : '#4338ca', iconScale, useCustomColors)}
+							<!-- Loading placeholder -->
+							<Feature.Point coordinates={location.coords} properties={location} />
+						{:then style}
+							<Feature.Point coordinates={location.coords} properties={location} {style} />
+						{/await}
+					{/each}
+				</Layer.Vector>
+			</Map>
+		</View>
 	</div>
 
 	<!-- Legend -->

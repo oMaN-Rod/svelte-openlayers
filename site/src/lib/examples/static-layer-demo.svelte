@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Map, Layer } from 'svelte-openlayers';
+	import { Map, Layer, View } from 'svelte-openlayers';
 	import { Projection } from 'ol/proj.js';
 
 	let mapCenter = $state([512, 484]);
@@ -14,14 +14,15 @@
 </script>
 
 <div class="h-[60dvh] w-full overflow-hidden rounded-lg border">
-	<Map.Root class="h-full w-full">
-		<Map.View bind:center={mapCenter} bind:zoom={mapZoom} {projection} />
-		<Layer.Static
-			attributions="© <a href='https://xkcd.com/license.html'>xkcd</a>"
-			url="https://imgs.xkcd.com/comics/online_communities.png"
-			{extent}
-		/>
-	</Map.Root>
+	<View bind:center={mapCenter} bind:zoom={mapZoom} {projection} >
+		<Map class="h-full w-full">
+			<Layer.Static
+				attributions="© <a href='https://xkcd.com/license.html'>xkcd</a>"
+				url="https://imgs.xkcd.com/comics/online_communities.png"
+				{extent}
+			/>
+		</Map>
+	</View>
 </div>
 <div class="text-muted-foreground mt-4 flex gap-4 text-sm">
 	<div>

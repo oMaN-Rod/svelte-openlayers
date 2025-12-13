@@ -6,7 +6,7 @@
 	import GeoJSON from 'ol/format/GeoJSON.js';
 	import type { FlatStyleLike } from 'ol/style/flat.js';
 	import { onMount } from 'svelte';
-	import { Layer, LayerWebGL, Map, Overlay } from 'svelte-openlayers';
+	import { Layer, Map, Overlay, View } from 'svelte-openlayers';
 	import { mapSources } from './sources';
 
 	let center = $state([0, 0]);
@@ -289,43 +289,44 @@
 </div>
 
 <div class="relative h-[500px] w-full overflow-hidden rounded-lg border">
-	<Map.Root class="h-full w-full" onPointermove={handlePointerMove}>
-		<Map.View bind:center bind:zoom />
-		<Layer.Tile
-			source="xyz"
-			url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-			attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
-		/>
-		<Layer.WebGL bind:layer={webglLayer} style={currentStyle}>
-			{#await getGeoJSONFeatures() then features}
-				{#each features as feature}
-					{#snippet children()}
-						{(() => {
-							webglLayer?.getSource()?.addFeature(feature);
-							return '';
-						})()}
-					{/snippet}
-					{@render children()}
-				{/each}
-			{/await}
-		</Layer.WebGL>
-		<Overlay.TooltipManager
-			hoverClass="!bg-transparent !shadow-none"
-			selectClass="!bg-transparent !shadow-none"
-		>
-			{#snippet hoverSnippet(feature)}
-				{@const props = feature.getProperties()}
-				<ToolTipHover name={props.city} type={props.type} />
-			{/snippet}
-			{#snippet selectSnippet(feature)}
-				{@const props = feature.getProperties()}
-				<TooltipSelect
-					city={props.city}
-					lat={props.latitude?.toFixed(2)}
-					lng={props.longitude?.toFixed(2)}
-					population={props.population?.toLocaleString()}
-				/>
-			{/snippet}
-		</Overlay.TooltipManager>
-	</Map.Root>
+	<View bind:center bind:zoom >
+		<Map class="h-full w-full" pointermove={handlePointerMove}>
+			<Layer.Tile
+				source="xyz"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+			/>
+			<Layer.WebGL bind:layer={webglLayer} style={currentStyle}>
+				{#await getGeoJSONFeatures() then features}
+					{#each features as feature}
+						{#snippet children()}
+							{(() => {
+								webglLayer?.getSource()?.addFeature(feature);
+								return '';
+							})()}
+						{/snippet}
+						{@render children()}
+					{/each}
+				{/await}
+			</Layer.WebGL>
+			<Overlay.TooltipManager
+				hoverClass="!bg-transparent !shadow-none"
+				selectClass="!bg-transparent !shadow-none"
+			>
+				{#snippet hoverSnippet(feature)}
+					{@const props = feature.getProperties()}
+					<ToolTipHover name={props.city} type={props.type} />
+				{/snippet}
+				{#snippet selectSnippet(feature)}
+					{@const props = feature.getProperties()}
+					<TooltipSelect
+						city={props.city}
+						lat={props.latitude?.toFixed(2)}
+						lng={props.longitude?.toFixed(2)}
+						population={props.population?.toLocaleString()}
+					/>
+				{/snippet}
+			</Overlay.TooltipManager>
+		</Map>
+	</View>
 </div>

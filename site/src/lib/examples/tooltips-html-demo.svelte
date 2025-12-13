@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Geometry } from 'ol/geom';
 	import { Feature as OLFeature } from 'ol';
-	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
+	import { Map, Layer, Feature, Overlay, View } from 'svelte-openlayers';
 	import { createCircleStyle } from 'svelte-openlayers/utils';
 	import { mapSources } from './sources';
 
@@ -97,34 +97,35 @@
 </script>
 
 <div class="relative h-96 w-full overflow-hidden rounded-lg border">
-	<Map.Root class="h-full w-full">
-		<Map.View center={[5, 50]} zoom={5} />
-		<Layer.Tile
-			source="xyz"
-			url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-			attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
-		/>
+	<View center={[5, 50]} zoom={5} >
+		<Map class="h-full w-full">
+			<Layer.Tile
+				source="xyz"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+			/>
 
-		<Layer.Vector style={pointStyle}>
-			{#each landmarks as landmark}
-				{@const { id, coordinates, ...rest } = landmark}
-				<Feature.Point {coordinates} properties={rest} />
-			{/each}
-		</Layer.Vector>
+			<Layer.Vector style={pointStyle}>
+				{#each landmarks as landmark}
+					{@const { id, coordinates, ...rest } = landmark}
+					<Feature.Point {coordinates} properties={rest} />
+				{/each}
+			</Layer.Vector>
 
-		<Overlay.TooltipManager
-			hoverTooltip={true}
-			selectTooltip={true}
-			selectStyle={selectedStyle}
-			hoverContent={(feature) => {
-				const props = feature.getProperties();
-				return hoverContent(props.name, props.type || 'Feature');
-			}}
-			selectContent={(feature) => selectContent(feature)}
-			hoverClass="!bg-white"
-			selectClass="!bg-white"
-		/>
-	</Map.Root>
+			<Overlay.TooltipManager
+				hoverTooltip={true}
+				selectTooltip={true}
+				selectStyle={selectedStyle}
+				hoverContent={(feature) => {
+					const props = feature.getProperties();
+					return hoverContent(props.name, props.type || 'Feature');
+				}}
+				selectContent={(feature) => selectContent(feature)}
+				hoverClass="!bg-white"
+				selectClass="!bg-white"
+			/>
+		</Map>
+	</View>
 </div>
 <div class="text-muted-foreground mt-4 text-sm">
 	{#if tooltipMode === 'hover'}

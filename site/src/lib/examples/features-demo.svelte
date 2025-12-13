@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
-	import { createCircleStyle, createStyle } from 'svelte-openlayers/utils';
 	import ToolTipHover from '$lib/examples/tooltip-hover.svelte';
 	import TooltipSelect from '$lib/examples/tooltip-select.svelte';
+	import { Feature, Layer, Map, Overlay, View } from 'svelte-openlayers';
+	import { createCircleStyle, createStyle } from 'svelte-openlayers/utils';
 	import { mapSources } from './sources';
 
 	let center = $state([-73.98513, 40.758896]);
@@ -74,68 +74,69 @@
 </script>
 
 <div class="h-96 w-full overflow-hidden rounded-lg border">
-	<Map.Root class="h-full w-full">
-		<Map.View bind:center bind:zoom />
-		<Layer.Tile
-			source="xyz"
-			url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-			attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
-		/>
-
-		<!-- Vector layer containing all Markers -->
-		<Layer.Vector>
-			<Feature.LineString
-				coordinates={lineCoordinates}
-				style={lineStyle}
-				properties={{
-					name: 'Tour Route',
-					type: 'LineString',
-					length: '3.5 km'
-				}}
+	<View bind:center bind:zoom >
+		<Map class="h-full w-full">
+			<Layer.Tile
+				source="xyz"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 			/>
 
-			<Feature.Polygon
-				coordinates={polygonCoordinates}
-				style={polygonStyle}
-				properties={{
-					name: 'Central Area',
-					type: 'Polygon',
-					area: '2.3 sq km'
-				}}
-			/>
-		</Layer.Vector>
-
-		<Layer.Vector style={pointStyle}>
-			{#each locations as location}
-				<Feature.Point
-					coordinates={location.coords}
-					style={pointStyle}
+			<!-- Vector layer containing all Markers -->
+			<Layer.Vector>
+				<Feature.LineString
+					coordinates={lineCoordinates}
+					style={lineStyle}
 					properties={{
-						name: location.name,
-						type: 'POI',
-						lon: location.coords[0],
-						lat: location.coords[1]
+						name: 'Tour Route',
+						type: 'LineString',
+						length: '3.5 km'
 					}}
 				/>
-			{/each}
-		</Layer.Vector>
-		<Overlay.TooltipManager
-			hoverTooltip={true}
-			selectTooltip={true}
-			selectStyle={selectedStyle}
-			hoverClass="!bg-transparent !shadow-none"
-			selectClass="!bg-transparent !shadow-none"
-		>
-			{#snippet hoverSnippet(feature)}
-				{@const props = feature.getProperties()}
-				<ToolTipHover name={props.name} type={props.type} />
-			{/snippet}
-			{#snippet selectSnippet(feature)}
-				{@const props = feature.getProperties()}
-				<TooltipSelect {...props} />
-			{/snippet}
-		</Overlay.TooltipManager>
-	</Map.Root>
+
+				<Feature.Polygon
+					coordinates={polygonCoordinates}
+					style={polygonStyle}
+					properties={{
+						name: 'Central Area',
+						type: 'Polygon',
+						area: '2.3 sq km'
+					}}
+				/>
+			</Layer.Vector>
+
+			<Layer.Vector style={pointStyle}>
+				{#each locations as location}
+					<Feature.Point
+						coordinates={location.coords}
+						style={pointStyle}
+						properties={{
+							name: location.name,
+							type: 'POI',
+							lon: location.coords[0],
+							lat: location.coords[1]
+						}}
+					/>
+				{/each}
+			</Layer.Vector>
+			<Overlay.TooltipManager
+				hoverTooltip={true}
+				selectTooltip={true}
+				selectStyle={selectedStyle}
+				hoverClass="!bg-transparent !shadow-none"
+				selectClass="!bg-transparent !shadow-none"
+			>
+				{#snippet hoverSnippet(feature)}
+					{@const props = feature.getProperties()}
+					<ToolTipHover name={props.name} type={props.type} />
+				{/snippet}
+				{#snippet selectSnippet(feature)}
+					{@const props = feature.getProperties()}
+					<TooltipSelect {...props} />
+				{/snippet}
+			</Overlay.TooltipManager>
+		</Map>
+	</View>
 </div>
 {#if selectedFeature}
 	<div class="bg-muted mt-4 rounded-lg p-3">

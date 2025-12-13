@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { Map, Layer } from 'svelte-openlayers';
-	import VectorSource from 'ol/source/Vector';
 	import GeoJSON from 'ol/format/GeoJSON';
-	import { Overlay } from 'svelte-openlayers';
 	import VectorLayer from 'ol/layer/Vector';
+	import VectorSource from 'ol/source/Vector';
+	import { Layer, Map, Overlay, View } from 'svelte-openlayers';
 
 	let center = $state([0, 0]);
 	let zoom = $state(1);
@@ -20,12 +19,13 @@
 </script>
 
 <div class="h-96 w-full overflow-hidden rounded-lg border">
-	<Map.Root class="h-full w-full">
-		<Map.View bind:center bind:zoom />
-		<Layer.Tile source="osm" />
+	<View bind:center bind:zoom >
+		<Map class="h-full w-full">
+			<Layer.Tile source="osm" />
 
-		<Layer.Vector {layer} />
+			<Layer.Vector {layer} />
 
-		<Overlay.TooltipManager />
-	</Map.Root>
+			<Overlay.TooltipManager />
+		</Map>
+	</View>
 </div>

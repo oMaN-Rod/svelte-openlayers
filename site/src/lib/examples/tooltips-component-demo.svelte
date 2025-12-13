@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ToolTipHover from '$lib/examples/tooltip-hover.svelte';
 	import TooltipSelect from '$lib/examples/tooltip-select.svelte';
-	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
+	import { Feature, Layer, Map, Overlay, View } from 'svelte-openlayers';
 	import { createCircleStyle } from 'svelte-openlayers/utils';
 	import { mapSources } from './sources';
 
@@ -63,38 +63,39 @@
 </script>
 
 <div class="relative h-96 w-full overflow-hidden rounded-lg border">
-	<Map.Root class="h-full w-full">
-		<Map.View center={[5, 50]} zoom={5} />
-		<Layer.Tile
-			source="xyz"
-			url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-			attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
-		/>
+	<View center={[5, 50]} zoom={5} >
+		<Map class="h-full w-full">
+			<Layer.Tile
+				source="xyz"
+				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+			/>
 
-		<Layer.Vector style={pointStyle}>
-			{#each landmarks as landmark}
-				{@const { id, coordinates, ...rest } = landmark}
-				<Feature.Point {coordinates} properties={rest} />
-			{/each}
-		</Layer.Vector>
+			<Layer.Vector style={pointStyle}>
+				{#each landmarks as landmark}
+					{@const { id, coordinates, ...rest } = landmark}
+					<Feature.Point {coordinates} properties={rest} />
+				{/each}
+			</Layer.Vector>
 
-		<Overlay.TooltipManager
-			hoverTooltip={true}
-			selectTooltip={true}
-			selectStyle={selectedStyle}
-			hoverClass="!bg-transparent !shadow-none"
-			selectClass="!bg-transparent !shadow-none"
-		>
-			{#snippet hoverSnippet(feature)}
-				{@const props = feature.getProperties()}
-				<ToolTipHover name={props.name} type={props.type} />
-			{/snippet}
-			{#snippet selectSnippet(feature)}
-				{@const props = feature.getProperties()}
-				<TooltipSelect {...props} />
-			{/snippet}
-		</Overlay.TooltipManager>
-	</Map.Root>
+			<Overlay.TooltipManager
+				hoverTooltip={true}
+				selectTooltip={true}
+				selectStyle={selectedStyle}
+				hoverClass="!bg-transparent !shadow-none"
+				selectClass="!bg-transparent !shadow-none"
+			>
+				{#snippet hoverSnippet(feature)}
+					{@const props = feature.getProperties()}
+					<ToolTipHover name={props.name} type={props.type} />
+				{/snippet}
+				{#snippet selectSnippet(feature)}
+					{@const props = feature.getProperties()}
+					<TooltipSelect {...props} />
+				{/snippet}
+			</Overlay.TooltipManager>
+		</Map>
+	</View>
 </div>
 <div class="text-muted-foreground mt-4 text-sm">
 	{#if tooltipMode === 'hover'}

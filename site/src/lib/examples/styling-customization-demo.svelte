@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CodeBlock } from '$lib/components/docs';
 	import { onMount } from 'svelte';
-	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
+	import { Feature, Layer, Map, Overlay, View } from 'svelte-openlayers';
 	import { createCircleStyle } from 'svelte-openlayers/utils';
 	import { mapSources } from './sources';
 
@@ -119,38 +119,39 @@
 	</div>
 
 	<div class="h-[400px] overflow-hidden rounded-lg border">
-		<Map.Root class="h-full w-full" mousePositionControl={false}>
-			<Map.View center={[2, 48]} zoom={5} />
-			<Layer.Tile
-				source="xyz"
-				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
-			/>
+		<View center={[2, 48]} zoom={5}>
+			<Map class="h-full w-full">
+				<Layer.Tile
+					source="xyz"
+					url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
+					attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+				/>
 
-			<Layer.Vector style={getFeatureStyle(theme)}>
-				{#each features as feature}
-					<Feature.Point coordinates={feature.coords} properties={feature} />
-				{/each}
-			</Layer.Vector>
+				<Layer.Vector style={getFeatureStyle(theme)}>
+					{#each features as feature}
+						<Feature.Point coordinates={feature.coords} properties={feature} />
+					{/each}
+				</Layer.Vector>
 
-			<Overlay.TooltipManager
-				hoverTooltip={true}
-				selectTooltip={true}
-				hoverContent={(f) => {
-					const props = f.getProperties();
-					return `<strong style="color: var(--ol-tooltip-select-accent-color)">${props.name}</strong>`;
-				}}
-				selectContent={(f) => {
-					const props = f.getProperties();
-					return `
-							<div>
-								<strong style="color: var(--ol-tooltip-select-accent-color)">${props.name}</strong>
-								<div>Population: ${props.population}</div>
-							</div>
-						`;
-				}}
-			/>
-		</Map.Root>
+				<Overlay.TooltipManager
+					hoverTooltip={true}
+					selectTooltip={true}
+					hoverContent={(f) => {
+						const props = f.getProperties();
+						return `<strong style="color: var(--ol-tooltip-select-accent-color)">${props.name}</strong>`;
+					}}
+					selectContent={(f) => {
+						const props = f.getProperties();
+						return `
+								<div>
+									<strong style="color: var(--ol-tooltip-select-accent-color)">${props.name}</strong>
+									<div>Population: ${props.population}</div>
+								</div>
+							`;
+					}}
+				/>
+			</Map>
+		</View>
 	</div>
 
 	<!-- Live CSS Variables Display -->
