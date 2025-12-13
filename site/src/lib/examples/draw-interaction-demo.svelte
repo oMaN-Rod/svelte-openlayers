@@ -97,24 +97,23 @@
 
 		const formatCoords = (coords: number[][]) => {
 			const transformed = coords.map((c) => transform(c, 'EPSG:3857', 'EPSG:4326'));
-			return transformed.map((c) => `(${c[0].toFixed(2)}, ${c[1].toFixed(2)})`).join(', ');
+			return transformed.map((c) => `(${c[1].toFixed(2)}, ${c[0].toFixed(2)})`).join(', ');
 		};
+
+		const coords = (geom as any).getCoordinates();
 
 		switch (type) {
 			case 'Point':
-				const coords = (geom as any).getCoordinates();
 				const point = formatCoords([coords]);
 				details = `Coordinates: [ ${point} ]`;
 				break;
 			case 'LineString':
-				const lineCoords = (geom as any).getCoordinates();
-				const line = formatCoords(lineCoords);
-				details = `${lineCoords.length} points: [ ${line} ]`;
+				const line = formatCoords(coords);
+				details = `${coords.length} points: [ ${line} ]`;
 				break;
 			case 'Polygon':
-				const polyCoords = (geom as any).getCoordinates()[0];
-				const polygon = formatCoords(polyCoords);
-				details = `${polyCoords.length - 1} vertices: [ ${polygon} ]`;
+				const polygon = formatCoords(coords[0]);
+				details = `${coords[0].length - 1} vertices: [ ${polygon} ]`;
 				break;
 			case 'Circle':
 				const center = (geom as any).getCenter();
