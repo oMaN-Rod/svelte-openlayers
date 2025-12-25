@@ -613,15 +613,19 @@ Apply different styles to different map instances:
 
 ```svelte
 <div class="ocean-theme">
-	<Map.Root>
-		<!-- Uses ocean theme -->
-	</Map.Root>
+	<View>
+		<Map class="h-64">
+			<!-- Uses ocean theme -->
+		</Map>
+	</View>
 </div>
 
 <div class="forest-theme">
-	<Map.Root>
-		<!-- Uses forest theme -->
-	</Map.Root>
+	<View>
+		<Map class="h-64">
+			<!-- Uses forest theme -->
+		</Map>
+	</View>
 </div>
 
 <style>

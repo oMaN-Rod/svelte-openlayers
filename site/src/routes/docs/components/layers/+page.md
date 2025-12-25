@@ -10,13 +10,14 @@ Displays raster tile data from various sources like OpenStreetMap, satellite ima
 
 ```svelte
 <script>
-	import { Map, Layer } from 'svelte-openlayers';
+	import { View, Map, Layer } from 'svelte-openlayers';
 </script>
 
-<Map.Root>
-	<Map.View center={[0, 0]} zoom={2} />
-	<Layer.Tile source="osm" />
-</Map.Root>
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+	</Map>
+</View>
 ```
 
 ### Props {.toc}
@@ -62,7 +63,7 @@ Displays a single static image as a map layer with a custom projection and exten
 
 ```svelte
 <script>
-	import { Map, Layer } from 'svelte-openlayers';
+	import { View, Map, Layer } from 'svelte-openlayers';
 	import { Projection } from 'ol/proj.js';
 
 	const extent = [0, 0, 1024, 968];
@@ -73,10 +74,11 @@ Displays a single static image as a map layer with a custom projection and exten
 	});
 </script>
 
-<Map.Root>
-	<Map.View center={[512, 484]} zoom={2} {projection} />
-	<Layer.Static url="https://example.com/image.png" {extent} attributions="© Example" />
-</Map.Root>
+<View center={[512, 484]} zoom={2} {projection}>
+	<Map class="h-96 w-full">
+		<Layer.Static url="https://example.com/image.png" {extent} attributions="© Example" />
+	</Map>
+</View>
 ```
 
 ### Props {.toc}
@@ -120,19 +122,11 @@ Static layers typically use custom pixel-based projections:
 	});
 </script>
 
-<Map.Root>
-	<Map.View
-		center={[512, 384]} <!-- Center of the image -->
-		zoom={2}
-		{projection}
-		{extent} <!-- Constrain view to image bounds -->
-	/>
-	<Layer.Static
-		url="/path/to/image.png"
-		{extent}
-		attributions="© Your Attribution"
-	/>
-</Map.Root>
+<View center={[512, 384]} zoom={2} {projection} {extent}>
+	<Map class="h-96 w-full">
+		<Layer.Static url="/path/to/image.png" {extent} attributions="© Your Attribution" />
+	</Map>
+</View>
 ```
 
 ## Layer.Vector {.toc}
@@ -142,19 +136,20 @@ Displays vector data like points, lines, and polygons using Canvas rendering. Co
 ### Basic Usage {.toc}
 
 ```svelte
-<Map.Root>
-	<Map.View />
-	<Layer.Tile source="osm" />
-	<Layer.Vector>
-		<Feature.Point coordinates={[0, 0]} />
-		<Feature.LineString
-			coordinates={[
-				[0, 0],
-				[10, 10]
-			]}
-		/>
-	</Layer.Vector>
-</Map.Root>
+<View>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Feature.Point coordinates={[0, 0]} />
+			<Feature.LineString
+				coordinates={[
+					[0, 0],
+					[10, 10]
+				]}
+			/>
+		</Layer.Vector>
+	</Map>
+</View>
 ```
 
 ### Props {.toc}
@@ -180,20 +175,21 @@ High-performance WebGL vector layer for rendering large datasets with hardware a
 ### Basic Usage {.toc}
 
 ```svelte
-<Map.Root>
-	<Map.View />
-	<Layer.Tile source="osm" />
-	<LayerWebGL
-		style={{
-			'circle-radius': 8,
-			'circle-fill-color': '#ff0000',
-			'circle-stroke-color': '#000000',
-			'circle-stroke-width': 1
-		}}
-	>
-		<!-- Features are added programmatically via the source -->
-	</LayerWebGL>
-</Map.Root>
+<View>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.WebGL
+			style={{
+				'circle-radius': 8,
+				'circle-fill-color': '#ff0000',
+				'circle-stroke-color': '#000000',
+				'circle-stroke-width': 1
+			}}
+		>
+			<!-- Features are added programmatically via the source -->
+		</Layer.WebGL>
+	</Map>
+</View>
 ```
 
 ### Props {.toc}

@@ -10,7 +10,7 @@ Displays tooltips anchored to map coordinates with HTML content.
 
 ```svelte
 <script>
-	import { Map, Layer, Feature, Overlay, Interaction } from 'svelte-openlayers';
+	import { View, Map, Layer, Feature, Overlay, Interaction } from 'svelte-openlayers';
 	import type { Feature as OlFeature } from 'ol';
 	import type { Coordinate } from 'ol/coordinate';
 
@@ -34,23 +34,24 @@ Displays tooltips anchored to map coordinates with HTML content.
 	}
 </script>
 
-<Map.Root>
-	<Map.View center={[0, 0]} zoom={2} />
-	<Layer.Tile source="osm" />
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
 
-	<Layer.Vector>
-		<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York' }} />
-		<Feature.Point coordinates={[-118.2, 34.0]} properties={{ name: 'Los Angeles' }} />
-	</Layer.Vector>
+		<Layer.Vector>
+			<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York' }} />
+			<Feature.Point coordinates={[-118.2, 34.0]} properties={{ name: 'Los Angeles' }} />
+		</Layer.Vector>
 
-	<Interaction.Hover onHover={handleFeatureHover} onHoverEnd={hideTooltip} />
+		<Interaction.Hover onHover={handleFeatureHover} onHoverEnd={hideTooltip} />
 
-	{#if showTooltip}
-		<Overlay.Tooltip position={hoverPosition}>
-			{tooltipContent}
-		</Overlay.Tooltip>
-	{/if}
-</Map.Root>
+		{#if showTooltip}
+			<Overlay.Tooltip position={hoverPosition}>
+				{tooltipContent}
+			</Overlay.Tooltip>
+		{/if}
+	</Map>
+</View>
 ```
 
 ### Props {.toc}
@@ -75,7 +76,7 @@ A higher-level component that automatically manages tooltips for hover and selec
 
 ```svelte
 <script>
-	import { Map, Layer, Feature, Overlay } from 'svelte-openlayers';
+	import { View, Map, Layer, Feature, Overlay } from 'svelte-openlayers';
 
 	const cities = [
 		{ name: 'New York', coords: [-74.0, 40.7], population: 8000000 },
@@ -90,18 +91,19 @@ A higher-level component that automatically manages tooltips for hover and selec
 	});
 </script>
 
-<Map.Root>
-	<Map.View center={[-96, 38]} zoom={4} />
-	<Layer.Tile source="osm" />
+<View center={[-96, 38]} zoom={4}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
 
-	<Layer.Vector>
-		{#each cities as city}
-			<Feature.Point coordinates={city.coords} properties={city} />
-		{/each}
-	</Layer.Vector>
+		<Layer.Vector>
+			{#each cities as city}
+				<Feature.Point coordinates={city.coords} properties={city} />
+			{/each}
+		</Layer.Vector>
 
-	<Overlay.TooltipManager selectStyle={selectedStyle} />
-</Map.Root>
+		<Overlay.TooltipManager selectStyle={selectedStyle} />
+	</Map>
+</View>
 ```
 
 ### Props {.toc}

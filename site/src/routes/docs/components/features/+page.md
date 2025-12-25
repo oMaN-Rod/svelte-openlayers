@@ -10,16 +10,17 @@ Displays point locations on the map.
 
 ```svelte
 <script>
-	import { Map, Layer, Feature } from 'svelte-openlayers';
+	import { View, Map, Layer, Feature } from 'svelte-openlayers';
 </script>
 
-<Map.Root>
-	<Map.View center={[0, 0]} zoom={2} />
-	<Layer.Tile source="osm" />
-	<Layer.Vector>
-		<Feature.Point coordinates={[0, 0]} />
-	</Layer.Vector>
-</Map.Root>
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Feature.Point coordinates={[0, 0]} />
+		</Layer.Vector>
+	</Map>
+</View>
 ```
 
 ### Props {.toc}

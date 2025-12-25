@@ -10,7 +10,7 @@ Allows users to select features by clicking or other methods.
 
 ```svelte
 <script>
-	import { Map, Layer, Feature, Interaction } from 'svelte-openlayers';
+	import { View, Map, Layer, Feature, Interaction } from 'svelte-openlayers';
 
 	let selectedFeatures: ReactiveCollection | null = $state(null);
 
@@ -22,16 +22,17 @@ Allows users to select features by clicking or other methods.
 	});
 </script>
 
-<Map.Root>
-	<Map.View center={[0, 0]} zoom={2} />
-	<Layer.Tile source="osm" />
-	<Layer.Vector>
-		<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York' }} />
-		<Feature.Point coordinates={[-118.2, 34.0]} properties={{ name: 'Los Angeles' }} />
-	</Layer.Vector>
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York' }} />
+			<Feature.Point coordinates={[-118.2, 34.0]} properties={{ name: 'Los Angeles' }} />
+		</Layer.Vector>
 
-	<Interaction.Select bind:selectedFeatures style={selectedStyle} />
-</Map.Root>
+		<Interaction.Select bind:selectedFeatures style={selectedStyle} />
+	</Map>
+</View>
 ```
 
 ### Props {.toc}
@@ -59,7 +60,7 @@ Detects when the pointer hovers over features and provides callbacks for hover e
 
 ```svelte
 <script>
-	import { Map, Layer, Feature, Interaction } from 'svelte-openlayers';
+	import { View, Map, Layer, Feature, Interaction } from 'svelte-openlayers';
 
 	let hoveredFeature = null;
 
@@ -72,16 +73,17 @@ Detects when the pointer hovers over features and provides callbacks for hover e
 	};
 </script>
 
-<Map.Root>
-	<Map.View center={[0, 0]} zoom={2} />
-	<Layer.Tile source="osm" />
-	<Layer.Vector>
-		<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York' }} />
-		<Feature.Point coordinates={[-118.2, 34.0]} properties={{ name: 'Los Angeles' }} />
-	</Layer.Vector>
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York' }} />
+			<Feature.Point coordinates={[-118.2, 34.0]} properties={{ name: 'Los Angeles' }} />
+		</Layer.Vector>
 
-	<Interaction.Hover onHover={handleHover} onHoverEnd={handleHoverEnd} />
-</Map.Root>
+		<Interaction.Hover onHover={handleHover} onHoverEnd={handleHoverEnd} />
+	</Map>
+</View>
 ```
 
 ### Props {.toc}
@@ -139,14 +141,15 @@ Enables drawing of vector features (points, lines, polygons, and circles) on the
 	}
 </script>
 
-<Map.Root>
-	<Map.View center={[-74.006, 40.7128]} zoom={10} />
-	<Layer.Tile source="osm" />
+<View center={[-74.006, 40.7128]} zoom={10}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
 
-	<Layer.Vector bind:source={vectorSource} style={drawStyle}>
-		<Interaction.Draw bind:type={drawType} style={sketchStyle} onDrawEnd={handleDrawEnd} />
-	</Layer.Vector>
-</Map.Root>
+		<Layer.Vector bind:source={vectorSource} style={drawStyle}>
+			<Interaction.Draw bind:type={drawType} style={sketchStyle} onDrawEnd={handleDrawEnd} />
+		</Layer.Vector>
+	</Map>
+</View>
 ```
 
 ### Drawing Types {.toc}

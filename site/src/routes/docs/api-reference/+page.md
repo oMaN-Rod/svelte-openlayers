@@ -4,80 +4,23 @@ Complete API documentation for all Svelte OpenLayers components.
 
 ## Map Components {.toc}
 
-### Map.Root {.toc}
+### View {.toc}
 
-Main map container component that creates the OpenLayers Map instance and provides context for child components.
-
-```typescript
-interface MapRootProps extends MapProps {
-	// Basic styling
-	class?: string;
-	style?: string;
-
-	// OpenLayers map options
-	target?: HTMLElement;
-	pixelRatio?: number;
-	keyboardEventTarget?: HTMLElement | Document;
-	maxTilesLoading?: number;
-	moveTolerance?: number;
-
-	// Built-in controls (boolean toggles)
-	zoomControl?: boolean; // default: true
-	attributionControl?: boolean; // default: true
-	rotateControl?: boolean; // default: false
-	mousePositionControl?: boolean; // default: false
-
-	// Bindable instances (read-only)
-	map?: Map | null; // bindable
-	view?: View | null; // bindable
-
-	// MapBrowserEvent handlers
-	onSingleclick?: (evt: MapBrowserEvent) => void;
-	onClick?: (evt: MapBrowserEvent) => void;
-	onDblclick?: (evt: MapBrowserEvent) => void;
-	onPointerdrag?: (evt: MapBrowserEvent) => void;
-	onPointermove?: (evt: MapBrowserEvent) => void;
-	onPointerdown?: (evt: MapBrowserEvent) => void;
-	onPointerup?: (evt: MapBrowserEvent) => void;
-	onPointerover?: (evt: MapBrowserEvent) => void;
-	onPointerout?: (evt: MapBrowserEvent) => void;
-	onPointerenter?: (evt: MapBrowserEvent) => void;
-	onPointerleave?: (evt: MapBrowserEvent) => void;
-	onPointercancel?: (evt: MapBrowserEvent) => void;
-
-	// MapEvent handlers
-	onPostrender?: (evt: MapEvent) => void;
-	onMovestart?: (evt: MapEvent) => void;
-	onMoveend?: (evt: MapEvent) => void;
-	onLoadstart?: (evt: MapEvent) => void;
-	onLoadend?: (evt: MapEvent) => void;
-
-	// RenderEvent handlers
-	onPrecompose?: (evt: RenderEvent) => void;
-	onPostcompose?: (evt: RenderEvent) => void;
-	onRendercomplete?: (evt: RenderEvent) => void;
-
-	// Children
-	children?: Snippet;
-}
-```
-
-### Map.View {.toc}
-
-Controls the map viewport including center, zoom, rotation, and projection.
+The top-level component that provides the OpenLayers View context to all child components. Wraps the Map component and configures projection, center, zoom, rotation, and extent.
 
 ```typescript
-interface MapViewProps extends ViewProps {
+interface ViewProps {
 	// View positioning
 	center?: Coordinate; // bindable, default: [0, 0]
-	zoom?: number; // bindable, default: 2
+	zoom?: number; // bindable, default: 5
 	rotation?: number; // bindable, default: 0
+	bbox?: Extent | null; // bindable, current view extent
 
 	// View constraints
 	projection?: ProjectionLike; // default: 'EPSG:3857'
 	minZoom?: number; // default: 0
 	maxZoom?: number; // default: 28
-	extent?: number[];
+	extent?: Extent; // constraining extent
 	constrainRotation?: boolean | number; // default: true
 	enableRotation?: boolean; // default: true
 
@@ -86,7 +29,81 @@ interface MapViewProps extends ViewProps {
 	onZoomChange?: (zoom: number | undefined) => void;
 	onRotationChange?: (rotation: number) => void;
 	onMoveEnd?: (evt: any) => void;
+
+	// Bindable instance (read-only)
+	view?: View | null; // bindable
+
+	// Children
+	children?: Snippet;
 }
+```
+
+### Map {.toc}
+
+The map container component that renders the OpenLayers map and provides map context to child components. Can be placed inside a `View` component (receives view from context) or separately with the `view` prop passed explicitly.
+
+```typescript
+interface MapProps extends HTMLAttributes<HTMLDivElement> {
+	// Basic styling (inherited from HTMLAttributes)
+	class?: string;
+	style?: string;
+
+	// View configuration
+	view?: View | null; // Optional external view (uses context if not provided)
+
+	// Controls and interactions (OpenLayers DefaultsOptions)
+	controls?: ControlOptions; // default: {} (uses OpenLayers defaults)
+	interactions?: InteractionOptions; // default: {} (uses OpenLayers defaults)
+
+	// OpenLayers map options
+	pixelRatio?: number;
+	keyboardEventTarget?: HTMLElement | Document;
+	maxTilesLoading?: number; // default: 16
+	moveTolerance?: number; // default: 1
+
+	// Bindable instances (read-only)
+	map?: Map | null; // bindable
+
+	// Map events (use lowercase, no 'on' prefix)
+	click?: (evt: MapBrowserEvent) => void;
+	dblclick?: (evt: MapBrowserEvent) => void;
+	pointerdrag?: (evt: MapBrowserEvent) => void;
+	pointermove?: (evt: MapBrowserEvent) => void;
+	pointerdown?: (evt: MapBrowserEvent) => void;
+	pointerup?: (evt: MapBrowserEvent) => void;
+	pointerover?: (evt: MapBrowserEvent) => void;
+	pointerout?: (evt: MapBrowserEvent) => void;
+	pointerenter?: (evt: MapBrowserEvent) => void;
+	pointerleave?: (evt: MapBrowserEvent) => void;
+	pointercancel?: (evt: MapBrowserEvent) => void;
+
+	// MapEvent handlers
+	postrender?: (evt: MapEvent) => void;
+	movestart?: (evt: MapEvent) => void;
+	moveend?: (evt: MapEvent) => void;
+	loadstart?: (evt: MapEvent) => void;
+	loadend?: (evt: MapEvent) => void;
+
+	// RenderEvent handlers
+	precompose?: (evt: RenderEvent) => void;
+	postcompose?: (evt: RenderEvent) => void;
+	rendercomplete?: (evt: RenderEvent) => void;
+
+	// Children
+	children?: Snippet;
+}
+```
+
+**Controls and Interactions Configuration**:
+
+The `controls` and `interactions` props accept OpenLayers `DefaultsOptions` objects to configure which default controls/interactions to include:
+
+```typescript
+// ControlOptions example
+<Map controls={{ zoom: true, rotate: false, attribution: true }}>
+
+// InteractionOptions example
+<Map interactions={{ doubleClickZoom: false, dragPan: true }}>
 ```
 
 ## Layer Components {.toc}
@@ -163,7 +180,7 @@ interface LayerStaticProps {
 
 ```svelte
 <script>
-	import { Map, Layer } from 'svelte-openlayers';
+	import { View, Map, Layer } from 'svelte-openlayers';
 	import { Projection } from 'ol/proj.js';
 
 	const extent = [0, 0, 1024, 768];
@@ -174,10 +191,11 @@ interface LayerStaticProps {
 	});
 </script>
 
-<Map.Root>
-	<Map.View center={[512, 384]} zoom={2} {projection} {extent} />
-	<Layer.Static url="/path/to/image.png" {extent} attributions="© Attribution" />
-</Map.Root>
+<View center={[512, 384]} zoom={2} {projection} {extent}>
+	<Map class="h-96 w-full">
+		<Layer.Static url="/path/to/image.png" {extent} attributions="© Attribution" />
+	</Map>
+</View>
 ```
 
 **Key Points**:
@@ -557,6 +575,52 @@ interface TooltipManagerProps {
 }
 ```
 
+## Control Components {.toc}
+
+### Control.Draw {.toc}
+
+A drawing control toolbar that provides buttons for drawing different geometry types on the map.
+
+```typescript
+interface ControlDrawProps {
+	// Geometry type
+	type?: 'Point' | 'LineString' | 'Polygon' | 'Circle'; // bindable, default: 'Point'
+
+	// Source configuration
+	source?: VectorSource | null; // bindable, vector source for drawn features
+
+	// Styling
+	style?: StyleLike | FlatStyleLike; // Style for drawn features
+
+	// Event callbacks
+	onDrawStart?: (evt: DrawEvent) => void;
+	onDrawEnd?: (evt: DrawEvent) => void;
+	onDrawAbort?: (evt: DrawEvent) => void;
+	onTypeChange?: (type: 'Point' | 'LineString' | 'Polygon' | 'Circle') => void;
+
+	// Bindable instance (read-only)
+	control?: Control | null; // bindable
+}
+```
+
+**Usage**:
+
+The Control.Draw component creates a toolbar with buttons for each geometry type. Place it inside a Layer.Vector to automatically use that layer's source:
+
+```svelte
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Control.Draw
+				type="Point"
+				onDrawEnd={(evt) => console.log('Drew:', evt.feature)}
+			/>
+		</Layer.Vector>
+	</Map>
+</View>
+```
+
 ## Type Definitions {.toc}
 
 ### Positioning {.toc}
@@ -628,23 +692,45 @@ type StyleFunction = (feature: Feature, resolution: number) => Style | Style[];
 
 ## Context API {.toc}
 
-Components communicate through Svelte's context system:
+Components communicate through Svelte's context system. The library uses internal context functions for map and view access that are automatically managed by the component hierarchy.
+
+### How Context Works {.toc}
+
+When you nest components inside `View` and `Map`, they automatically receive access to the OpenLayers instances:
+
+```svelte
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96">
+		<!-- All child components have access to map and view context -->
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<!-- Feature components access layer context -->
+			<Feature.Point coordinates={[0, 0]} />
+		</Layer.Vector>
+	</Map>
+</View>
+```
+
+For direct access to OpenLayers instances, use bindable props:
+
+```svelte
+<script>
+	import type { Map, View } from 'ol';
+
+	let map: Map | null = $state(null);
+	let view: View | null = $state(null);
+</script>
+
+<View bind:view>
+	<Map bind:map>
+		<!-- ... -->
+	</Map>
+</View>
+```
+
+### Layer Context {.toc}
 
 ```typescript
-// Map context (available to all child components)
-type MapContext = {
-	getMap: () => Map | null;
-	getView: () => View | null;
-	addLayer: (layer: Layer) => void;
-	removeLayer: (layer: Layer) => void;
-	addInteraction: (interaction: Interaction) => void;
-	removeInteraction: (interaction: Interaction) => void;
-	addControl: (control: Control) => void;
-	removeControl: (control: Control) => void;
-	addOverlay: (overlay: Overlay) => void;
-	removeOverlay: (overlay: Overlay) => void;
-};
-
 // Layer context (available to feature components)
 interface LayerContext {
 	getSource: () => VectorSource | null;
@@ -661,13 +747,15 @@ Many component properties are reactive and bindable:
 
 ```svelte
 <script>
-	import { Map, Layer, Feature } from 'svelte-openlayers';
+	import { View, Map, Layer, Feature } from 'svelte-openlayers';
+
+	// Bindable view properties
+	let viewInstance = null;
+	let center = $state([0, 0]);
+	let zoom = $state(2);
 
 	// Bindable map properties
 	let mapInstance = null;
-	let viewInstance = null;
-	let center = [0, 0];
-	let zoom = 2;
 
 	// Bindable layer properties
 	let tileLayer = null;
@@ -682,19 +770,19 @@ Many component properties are reactive and bindable:
 	$inspect('Zoom level:', zoom);
 </script>
 
-<Map.Root bind:map={mapInstance} bind:view={viewInstance}>
-	<Map.View bind:center bind:zoom />
+<View bind:view={viewInstance} bind:center bind:zoom>
+	<Map bind:map={mapInstance} class="h-96 w-full">
+		<Layer.Tile bind:layer={tileLayer} source="osm" />
 
-	<Layer.Tile bind:layer={tileLayer} source="osm" />
-
-	<Layer.Vector bind:layer={vectorLayer} bind:source={vectorSource}>
-		<Feature.Point
-			bind:feature={pointFeature}
-			coordinates={center}
-			properties={{ name: 'Map Center' }}
-		/>
-	</Layer.Vector>
-</Map.Root>
+		<Layer.Vector bind:layer={vectorLayer} bind:source={vectorSource}>
+			<Feature.Point
+				bind:feature={pointFeature}
+				coordinates={center}
+				properties={{ name: 'Map Center' }}
+			/>
+		</Layer.Vector>
+	</Map>
+</View>
 ```
 
 ## Utility Functions {.toc}

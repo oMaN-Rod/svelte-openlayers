@@ -71,7 +71,7 @@ export const examplesMeta: Record<string, ExampleMeta> = {
 		category: 'foundation',
 		icon: Map,
 		tags: ['Beginner', 'Foundation'],
-		concepts: ['Map.Root', 'Map.View', 'Layer.Tile', 'Reactive bindings'],
+		concepts: ['View', 'Map', 'Layer.Tile', 'Reactive bindings'],
 		order: 1
 	},
 	'features-demo': {

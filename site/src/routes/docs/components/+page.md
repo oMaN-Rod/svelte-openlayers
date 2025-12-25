@@ -8,19 +8,17 @@ Svelte OpenLayers provides a comprehensive set of components for building intera
 
 The foundation of every map application:
 
-- **Map.Root** - Main map container and context provider
-- **Map.View** - Controls viewport (center, zoom, rotation)
-- **Map.Controls** - Built-in map controls (zoom, scale, etc.)
+- **View** - Controls viewport (center, zoom, rotation, projection) and provides context
+- **Map** - Main map container that renders the map
 
 ### Layer Components {.toc}
 
 Display different types of data on your map:
 
-- **Layer.Tile** - Raster tile layers (OSM, XYZ, WMS)
+- **Layer.Tile** - Raster tile layers (OSM, XYZ)
 - **Layer.Vector** - Vector data layers with Canvas rendering
 - **Layer.WebGL** - High-performance WebGL vector layers for large datasets
-- **Layer.VectorTile** - Vector tile layers for performance
-- **Layer.Image** - Static image layers
+- **Layer.Static** - Static image layers with custom projections
 
 ### Feature Components {.toc}
 
@@ -29,24 +27,27 @@ Vector geometries that can be displayed and interacted with:
 - **Feature.Point** - Point locations
 - **Feature.LineString** - Lines and paths
 - **Feature.Polygon** - Areas and boundaries
-- **Feature.Circle** - Circular areas
-- **Feature.MultiPoint** - Multiple points as one feature
 
 ### Interaction Components {.toc}
 
 Handle user interactions with the map:
 
 - **Interaction.Select** - Feature selection
+- **Interaction.Hover** - Feature hover detection
 - **Interaction.Draw** - Drawing new features
-- **Interaction.Modify** - Editing existing features
-- **Interaction.Translate** - Moving features
+
+### Control Components {.toc}
+
+Map control UI components:
+
+- **Control.Draw** - Drawing control toolbar
 
 ### Overlay Components {.toc}
 
 Display HTML content positioned on the map:
 
-- **Overlay.Popup** - Information popups
-- **Overlay.Tooltip** - Hover tooltips
+- **Overlay.Tooltip** - Tooltips anchored to coordinates
+- **Overlay.TooltipManager** - Automatic tooltip management for hover/select
 
 ## Component Patterns {.toc}
 
@@ -55,16 +56,17 @@ Display HTML content positioned on the map:
 All components follow a consistent, nestable structure:
 
 ```svelte
-<Map.Root>
-	<Map.View center={[0, 0]} zoom={2} />
-	<Layer.Tile source="osm" />
-	<Layer.Vector>
-		<Feature.Point coordinates={[0, 0]} />
-	</Layer.Vector>
-	<!-- High-performance WebGL layer for large datasets -->
-	<Layer.WebGL style={{ 'circle-radius': 8, 'circle-fill-color': '#ff0000' }} />
-	<Overlay.TooltipManager />
-</Map.Root>
+<View center={[0, 0]} zoom={2}>
+	<Map>
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Feature.Point coordinates={[0, 0]} />
+		</Layer.Vector>
+		<!-- High-performance WebGL layer for large datasets -->
+		<Layer.WebGL style={{ 'circle-radius': 8, 'circle-fill-color': '#ff0000' }} />
+		<Overlay.TooltipManager />
+	</Map>
+</View>
 ```
 
 ### Reactive Properties {.toc}
@@ -73,15 +75,16 @@ Component properties are reactive and bindable:
 
 ```svelte
 <script>
-	let center = [0, 0];
-	let zoom = 2;
+	let center = $state([0, 0]);
+	let zoom = $state(2);
 </script>
 
-<Map.Root class="h-full w-full">
-	<!-- Map automatically updates when center or zoom change -->
-	<Map.View bind:center={mapCenter} bind:zoom={mapZoom} />
-	<Layer.Tile source="osm" />
-</Map.Root>
+<View bind:center bind:zoom>
+	<Map class="h-full w-full">
+		<!-- Map automatically updates when center or zoom change -->
+		<Layer.Tile source="osm" />
+	</Map>
+</View>
 ```
 
 ### Event Handling {.toc}
