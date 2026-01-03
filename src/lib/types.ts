@@ -22,7 +22,6 @@ import type { HTMLAttributes } from 'svelte/elements';
 import type { DefaultsOptions as ControlOptions } from 'ol/control/defaults.js';
 import type { DefaultsOptions as InteractionOptions } from 'ol/interaction/defaults.js';
 
-export const LAYER_CONTEXT_KEY = Symbol('layer-ctx');
 export interface ViewProps {
 	view?: null | View;
 	bbox?: null | Extent;

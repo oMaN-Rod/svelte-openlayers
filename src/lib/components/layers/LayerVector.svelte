@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { LAYER_CONTEXT_KEY, type LayerContext, type LayerVectorProps } from '$lib/types.js';
+	import { getMap } from '$lib/components/map/context.js';
+	import { type LayerContext, type LayerVectorProps } from '$lib/types.js';
 	import type { Feature } from 'ol';
 	import VectorLayer from 'ol/layer/Vector.js';
 	import VectorSource from 'ol/source/Vector.js';
 	import type { FlatStyleLike } from 'ol/style/flat.js';
 	import type { StyleLike } from 'ol/style/Style.js';
-	import { onMount, setContext } from 'svelte';
-	import { getMap } from '$lib/components/map/context.js';
+	import { onMount } from 'svelte';
+	import { setLayerContext } from './context.js';
 
 	let {
 		opacity = 1,
@@ -48,7 +49,7 @@
 		}
 	};
 
-	setContext(LAYER_CONTEXT_KEY, layerContext);
+	setLayerContext(layerContext);
 
 	function initLayer() {
 		if (source instanceof VectorSource) {

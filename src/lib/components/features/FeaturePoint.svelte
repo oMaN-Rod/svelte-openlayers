@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { LAYER_CONTEXT_KEY, type FeaturePointProps, type LayerContext } from '$lib/types.js';
+	import { getLayerContext } from '$lib/components/layers/context.js';
+	import { type FeaturePointProps } from '$lib/types.js';
 	import { Feature } from 'ol';
 	import type { Coordinate } from 'ol/coordinate.js';
 	import { Point } from 'ol/geom.js';
 	import { fromLonLat } from 'ol/proj.js';
-	import { getContext, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	let {
 		coordinates = $bindable([]),
@@ -14,7 +15,7 @@
 		feature = $bindable(null)
 	}: FeaturePointProps = $props();
 
-	const layerContext = getContext<LayerContext>(LAYER_CONTEXT_KEY);
+	const layerContext = getLayerContext();
 
 	if (!layerContext) {
 		throw new Error('FeaturePoint must be used within LayerVector');

@@ -24,7 +24,6 @@ export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/i
 export { Control, ControlDraw } from './components/controls/index.js';
 
 export {
-	LAYER_CONTEXT_KEY,
 	type ViewProps,
 	type MapProps,
 	type LayerContext,

@@ -1,16 +1,17 @@
-import { getContext, setContext } from 'svelte';
-import { LAYER_CONTEXT_KEY, type LayerContext } from '$lib/types.js';
+import { createContext } from 'svelte';
+import { type LayerContext } from '$lib/types.js';
 
-export function setLayerContext(context: LayerContext): void {
-	setContext(LAYER_CONTEXT_KEY, context);
-}
+const [getLayer, setLayerContext] = createContext<LayerContext>();
 
-export function getLayerContext(feature: string): LayerContext {
-	const context = getContext<LayerContext>(LAYER_CONTEXT_KEY);
-
-	if (!context) {
-		throw new Error(`Feature ${feature} must be used within LayerVector`);
+function getLayerContext() {
+	try {
+		return getLayer();
+	} catch {
+		console.warn(
+			'Layer context not found. Make sure to use components that depend on it within a Layer.Vector or Layer.WebGL.'
+		);
+		return undefined;
 	}
-
-	return context;
 }
+
+export { setLayerContext, getLayerContext };

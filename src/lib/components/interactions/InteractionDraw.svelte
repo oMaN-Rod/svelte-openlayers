@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { getLayerContext } from '$lib/components/layers/context.js';
 	import { getMap } from '$lib/components/map/context.js';
-	import { LAYER_CONTEXT_KEY, type InteractionDrawProps, type LayerContext } from '$lib/types.js';
+	import { type InteractionDrawProps } from '$lib/types.js';
 	import { Draw } from 'ol/interaction.js';
 	import type { Options } from 'ol/interaction/Draw.js';
 	import type VectorSource from 'ol/source/Vector.js';
-	import { getContext, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	let {
 		type = $bindable('Point'),
@@ -33,7 +34,7 @@
 	}: InteractionDrawProps = $props();
 
 	const map = getMap();
-	const layerContext = getContext<LayerContext>(LAYER_CONTEXT_KEY);
+	const layerContext = getLayerContext();
 
 	let drawInteraction: Draw | null = null;
 	let isDestroyed = false;
