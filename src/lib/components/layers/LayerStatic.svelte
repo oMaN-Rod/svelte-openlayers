@@ -16,18 +16,24 @@
 		layer = $bindable(null),
 		attributions,
 		extent,
-		projection
+		projection,
+		crossOrigin
 	}: LayerStaticProps = $props();
 
 	const map = getMap();
 	let isDestroyed = false;
 
 	onMount(() => {
-		const layerOptions: any = {
+		const sourceOptions: any = {
 			attributions,
 			url,
 			projection,
 			imageExtent: extent,
+			crossOrigin
+		};
+
+		const layerOptions: any = {
+			source: new Static(sourceOptions),
 			opacity,
 			visible,
 			preload
@@ -37,9 +43,7 @@
 		if (minZoom !== undefined) layerOptions.minZoom = minZoom;
 		if (maxZoom !== undefined) layerOptions.maxZoom = maxZoom;
 
-		layer = new ImageLayer({
-			source: new Static(layerOptions)
-		});
+		layer = new ImageLayer(layerOptions);
 
 		map?.addLayer(layer);
 

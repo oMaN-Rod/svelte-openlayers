@@ -45,6 +45,7 @@ export interface LayerStaticProps {
 	layer?: ImageLayer<any> | null;
 	attributions?: string | string[];
 	projection?: ProjectionLike;
+	crossOrigin?: string | null;
 }
 
 export interface LayerVectorProps {
