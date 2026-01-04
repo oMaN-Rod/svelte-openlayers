@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getLayerContext } from '$lib/components/layers/context.js';
-	import { type FeatureLineStringProps } from '$lib/types.js';
+	import { type FeatureLineStringProps } from './types.js';
 	import { Feature } from 'ol';
 	import type { Coordinate } from 'ol/coordinate.js';
 	import { LineString } from 'ol/geom.js';

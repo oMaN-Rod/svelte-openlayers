@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getMap } from '$lib/components/map/context.js';
-	import { type LayerContext, type LayerVectorProps } from '$lib/types.js';
+	import { type LayerContext, type LayerVectorProps } from './types.js';
 	import type { Feature } from 'ol';
 	import VectorLayer from 'ol/layer/Vector.js';
 	import VectorSource from 'ol/source/Vector.js';

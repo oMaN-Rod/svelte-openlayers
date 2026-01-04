@@ -1,7 +1,7 @@
 <script lang="ts">
 	import InteractionDraw from '$lib/components/interactions/InteractionDraw.svelte';
 	import { getMap } from '$lib/components/map/context.js';
-	import { type ControlDrawProps } from '$lib/types.js';
+	import { type ControlDrawProps } from './types.js';
 	import Circle from '@lucide/svelte/icons/circle';
 	import MapPin from '@lucide/svelte/icons/map-pin';
 	import Pentagon from '@lucide/svelte/icons/pentagon';

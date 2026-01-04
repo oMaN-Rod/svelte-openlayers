@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getMap } from '$lib/components/map/context.js';
-	import type { InteractionSelectProps } from '$lib/types.js';
+	import type { InteractionSelectProps } from './types.js';
 	import { ReactiveCollection } from '$lib/utils/reactive-collection.js';
 	import Collection from 'ol/Collection.js';
 	import { Select } from 'ol/interaction.js';

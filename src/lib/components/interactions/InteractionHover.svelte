@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { getMap } from '$lib/components/map/context.js';
-	import type { InteractionHoverProps } from '$lib/types.js';
 	import type { MapBrowserEvent } from 'ol';
 	import { Feature } from 'ol';
 	import type Layer from 'ol/layer/Layer.js';
 	import { onMount } from 'svelte';
+	import type { InteractionHoverProps } from './types.js';
 
 	let {
 		onHover,

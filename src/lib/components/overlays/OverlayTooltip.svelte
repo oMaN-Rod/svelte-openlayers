@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { getMap } from '$lib/components/map/context.js';
-	import type { OverlayTooltipProps } from '$lib/types.js';
 	import { Overlay } from 'ol';
 	import { onMount } from 'svelte';
+	import type { OverlayTooltipProps } from './types.js';
 
 	let {
 		position = $bindable(),

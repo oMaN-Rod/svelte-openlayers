@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { LayerTileProps } from '$lib/types.js';
+	import type { LayerTileProps } from './types.js';
 	import TileLayer from 'ol/layer/Tile.js';
 	import OSM from 'ol/source/OSM.js';
 	import type Source from 'ol/source/Source.js';

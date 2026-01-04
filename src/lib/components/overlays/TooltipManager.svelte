@@ -2,7 +2,7 @@
 	import InteractionHover from '$lib/components/interactions/InteractionHover.svelte';
 	import InteractionSelect from '$lib/components/interactions/InteractionSelect.svelte';
 	import OverlayTooltip from '$lib/components/overlays/OverlayTooltip.svelte';
-	import type { TooltipManagerProps } from '$lib/types.js';
+	import type { TooltipManagerProps } from './types.js';
 	import type { Feature } from 'ol';
 	import type { Coordinate } from 'ol/coordinate.js';
 	import { getCenter } from 'ol/extent.js';

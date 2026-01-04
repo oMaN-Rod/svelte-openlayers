@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getView } from '$lib/components/view/context.js';
-	import type { MapProps } from '$lib/types.js';
+	import type { MapProps } from './types.js';
 	import { Map } from 'ol';
 	import { defaults as defaultControls } from 'ol/control.js';
 	import { defaults as defaultInteractions } from 'ol/interaction.js';

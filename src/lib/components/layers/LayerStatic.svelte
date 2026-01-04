@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { LayerStaticProps } from '$lib/types.js';
+	import type { LayerStaticProps } from './types.js';
 	import { onMount } from 'svelte';
 	import Static from 'ol/source/ImageStatic.js';
 	import ImageLayer from 'ol/layer/Image.js';

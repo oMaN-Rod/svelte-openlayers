@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ViewProps } from '$lib/types.js';
+	import type { ViewProps } from './types.js';
 	import { View } from 'ol';
 	import { fromLonLat } from 'ol/proj.js';
 	import { onMount } from 'svelte';
@@ -24,22 +24,23 @@
 		children
 	}: ViewProps = $props();
 
-	view = setView(
-		new View({
-			center: center ? fromLonLat(center) : undefined,
-			zoom,
-			projection,
-			minZoom,
-			maxZoom,
-			rotation,
-			extent,
-			constrainRotation,
-			enableRotation
-		})
-	);
-
-	bbox = view.calculateExtent();
 	onMount(() => {
+		view = setView(
+			new View({
+				center: center ? fromLonLat(center) : undefined,
+				zoom,
+				projection,
+				minZoom,
+				maxZoom,
+				rotation,
+				extent,
+				constrainRotation,
+				enableRotation
+			})
+		);
+
+		bbox = view?.calculateExtent();
+
 		if (!view) {
 			return;
 		}
@@ -57,7 +58,7 @@
 		}
 		view.on('change:center', () => {
 			const newCenter = view?.getCenter();
-			const newBbox = view.calculateExtent();
+			const newBbox = view?.calculateExtent();
 			bbox = newBbox ? newBbox : bbox;
 			if (newCenter) {
 				center = newCenter;
@@ -66,7 +67,7 @@
 		});
 		view.on('change:resolution', () => {
 			const newZoom = view?.getZoom();
-			const newBbox = view.calculateExtent();
+			const newBbox = view?.calculateExtent();
 			bbox = newBbox ? newBbox : bbox;
 			if (newZoom !== undefined) {
 				zoom = newZoom;
@@ -75,7 +76,7 @@
 		});
 
 		view.on('change:rotation', () => {
-			const newBbox = view.calculateExtent();
+			const newBbox = view?.calculateExtent();
 			bbox = newBbox ? newBbox : bbox;
 			const newRotation = view?.getRotation();
 			if (newRotation !== undefined) {
@@ -86,7 +87,7 @@
 	});
 	$effect(() => {
 		if (zoom != view?.getZoom()) {
-			view.animate({ zoom });
+			view?.animate({ zoom });
 		}
 	});
 </script>

@@ -8,7 +8,7 @@ import type {
 	CircleStyleOptions,
 	IconStyleOptions,
 	RegularShapeOptions
-} from '$lib/types.js';
+} from '$lib/styles/types.js';
 
 export function createStroke(options: StrokeStyleOptions): Stroke {
 	return new Stroke(options);
