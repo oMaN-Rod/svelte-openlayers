@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { ViewProps } from './types.js';
 	import { View } from 'ol';
-	import { fromLonLat } from 'ol/proj.js';
+	import type { Coordinate } from 'ol/coordinate.js';
+	import { fromLonLat, get as getProjection } from 'ol/proj.js';
 	import { onMount } from 'svelte';
 	import { setView } from './context.js';
+	import type { ViewProps } from './types.js';
 
 	let {
 		view = $bindable(null),
@@ -24,10 +25,48 @@
 		children
 	}: ViewProps = $props();
 
+	/**
+	 * Transform center coordinates based on projection units.
+	 *
+	 * - Pixel/tile-pixel projections (custom image projections): never transform
+	 * - Degree-based projections (EPSG:4326): no transform needed
+	 * - Meter/feet-based projections (EPSG:3857, UTM, etc.): transform if input
+	 *   appears to be lon/lat coordinates (within ±180/±90 range)
+	 *
+	 * Edge case: If you need to pass small meter values (e.g., [50, 30]) to a
+	 * meters-based projection, use `fromLonLat()` explicitly in your code or
+	 * pass coordinates that fall outside the ±180/±90 range.
+	 */
+	const transformCenter = (c: Coordinate): Coordinate => {
+		const proj = typeof projection === 'string' ? getProjection(projection) : projection;
+		if (!proj || c.length < 2) return c;
+
+		const units = proj.getUnits();
+
+		// Pixel/tile-pixel projections: never transform (custom image projections)
+		if (units === 'pixels' || units === 'tile-pixels') {
+			return c;
+		}
+
+		// Degree-based projections: already in correct format
+		if (units === 'degrees') {
+			return c;
+		}
+
+		// Meters/feet-based projections: apply lon/lat heuristic
+		if (units === 'm' || units === 'ft' || units === 'us-ft') {
+			if (Math.abs(c[0]) <= 180 && Math.abs(c[1]) <= 90) {
+				return fromLonLat(c, projection);
+			}
+		}
+
+		return c;
+	};
+
 	onMount(() => {
 		view = setView(
 			new View({
-				center: center ? fromLonLat(center) : undefined,
+				center: center ? transformCenter(center) : undefined,
 				zoom,
 				projection,
 				minZoom,
