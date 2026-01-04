@@ -3,16 +3,11 @@
 // Style utilities
 export {
 	createCircleStyle,
-	createStrokeStyle,
-	createFillStyle,
+	createStroke,
+	createFill,
 	createTextStyle,
 	createIconStyle,
-	createStyle,
-	type CircleStyleOptions,
-	type StrokeStyleOptions,
-	type FillStyleOptions,
-	type TextStyleOptions,
-	type IconStyleOptions
+	createStyle
 } from './styles.js';
 
 // CSS utilities

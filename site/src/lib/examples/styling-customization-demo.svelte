@@ -81,9 +81,8 @@
 	function getFeatureStyle(theme: string) {
 		return createCircleStyle({
 			radius: 8,
-			fill: themes[theme as keyof typeof themes].primary,
-			stroke: '#ffffff',
-			strokeWidth: 2
+			fill: { color: themes[theme as keyof typeof themes].primary },
+			stroke: { color: '#ffffff', width: 2 }
 		});
 	}
 

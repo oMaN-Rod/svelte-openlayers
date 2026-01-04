@@ -5,9 +5,8 @@
 
 	const pointStyle = createCircleStyle({
 		radius: 6,
-		fill: '#4338ca', // Uses --ol-color-primary
-		stroke: '#ffffff',
-		strokeWidth: 2
+		fill: { color: '#4338ca' }, // Uses --ol-color-primary
+		stroke: { color: '#ffffff', width: 2 }
 	});
 </script>
 

@@ -1,11 +1,14 @@
 import type { Collection, Feature, Map, Overlay, View } from 'ol';
 import type Control from 'ol/control/Control.js';
+import type { DefaultsOptions as ControlOptions } from 'ol/control/defaults.js';
 import type { Coordinate } from 'ol/coordinate.js';
+import type { Extent } from 'ol/extent.js';
 import type { Geometry } from 'ol/geom.js';
+import type { DefaultsOptions as InteractionOptions } from 'ol/interaction/defaults.js';
 import type Interaction from 'ol/interaction/Interaction.js';
+import type ImageLayer from 'ol/layer/Image.js';
 import type Layer from 'ol/layer/Layer.js';
 import type TileLayer from 'ol/layer/Tile.js';
-import type ImageLayer from 'ol/layer/Image.js';
 import type VectorLayer from 'ol/layer/Vector.js';
 import type WebGLVectorLayer from 'ol/layer/WebGLVector.js';
 import type MapBrowserEvent from 'ol/MapBrowserEvent.js';
@@ -14,13 +17,36 @@ import type { ProjectionLike } from 'ol/proj.js';
 import type RenderEvent from 'ol/render/Event.js';
 import type Source from 'ol/source/Source.js';
 import type VectorSource from 'ol/source/Vector.js';
+import type { Options as OLCircleStyleOptions } from 'ol/style/Circle.js';
+import type { Options as OLFillStyleOptions } from 'ol/style/Fill.js';
 import type { FlatStyleLike, StyleVariables } from 'ol/style/flat.js';
+import type { Options as OLIconStyleOptions } from 'ol/style/Icon.js';
+import type { Options as OLRegularShapeStyleOptions } from 'ol/style/RegularShape.js';
+import type { Options as OLStrokeStyleOptions } from 'ol/style/Stroke.js';
 import type { StyleLike } from 'ol/style/Style.js';
+import type { Options as OLTextStyleOptions } from 'ol/style/Text.js';
 import type { Snippet } from 'svelte';
-import type { Extent } from 'ol/extent.js';
 import type { HTMLAttributes } from 'svelte/elements';
-import type { DefaultsOptions as ControlOptions } from 'ol/control/defaults.js';
-import type { DefaultsOptions as InteractionOptions } from 'ol/interaction/defaults.js';
+
+export type FillStyleOptions = OLFillStyleOptions;
+export type StrokeStyleOptions = OLStrokeStyleOptions;
+export type TextStyleOptions = OLTextStyleOptions;
+
+export interface CircleStyleOptions extends Omit<OLCircleStyleOptions, 'fill' | 'stroke'> {
+	fill?: FillStyleOptions;
+	stroke?: StrokeStyleOptions;
+}
+
+export interface IconStyleOptions extends OLIconStyleOptions {
+	src: string;
+}
+
+export interface RegularShapeOptions extends Omit<OLRegularShapeStyleOptions, 'fill' | 'stroke'> {
+	fill?: FillStyleOptions;
+	stroke?: StrokeStyleOptions;
+}
+
+export type PointStyleOptions = CircleStyleOptions | IconStyleOptions | RegularShapeOptions;
 
 export interface ViewProps {
 	view?: null | View;

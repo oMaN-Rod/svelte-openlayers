@@ -17,9 +17,8 @@
 
 	const selectedStyle = createCircleStyle({
 		radius: 10,
-		fill: '#ef4444',
-		stroke: '#991b1b',
-		strokeWidth: 3
+		fill: { color: '#ef4444' },
+		stroke: { color: '#991b1b', width: 3 }
 	});
 
 	const landmarks = [
@@ -56,9 +55,8 @@
 
 	const pointStyle = createCircleStyle({
 		radius: 6,
-		fill: '#4338ca', // Uses --ol-color-primary
-		stroke: '#ffffff',
-		strokeWidth: 2
+		fill: { color: '#4338ca' }, // Uses --ol-color-primary
+		stroke: { color: '#ffffff', width: 2 }
 	});
 </script>
 

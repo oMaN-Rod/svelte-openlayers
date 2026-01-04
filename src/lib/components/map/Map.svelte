@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { setMap } from './context.js';
+	import { getView } from '$lib/components/view/context.js';
+	import type { MapProps } from '$lib/types.js';
 	import { Map } from 'ol';
 	import { defaults as defaultControls } from 'ol/control.js';
 	import { defaults as defaultInteractions } from 'ol/interaction.js';
 	import { onMount } from 'svelte';
-	import type { MapProps } from '$lib/types.js';
-	import { getView } from '../view/context';
+	import { setMap } from './context.js';
+
 	let {
 		class: className = null,
 		view,
@@ -133,4 +134,3 @@
 		{@render children()}
 	{/if}
 </div>
-

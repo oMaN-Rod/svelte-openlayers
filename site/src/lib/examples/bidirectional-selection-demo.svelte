@@ -18,23 +18,20 @@
 
 	const pointStyle = createCircleStyle({
 		radius: 6,
-		fill: '#4338ca',
-		stroke: '#ffffff',
-		strokeWidth: 2
+		fill: { color: '#4338ca'},
+		stroke: { color: '#ffffff', width: 2 }
 	});
 
 	const selectedStyle = createCircleStyle({
 		radius: 10,
-		fill: '#ef4444',
-		stroke: '#991b1b',
-		strokeWidth: 3
+		fill: { color: '#ef4444' },
+		stroke: { color: '#991b1b', width: 3 }
 	});
 
 	const hoverStyle = createCircleStyle({
 		radius: 8,
-		fill: '#10b981',
-		stroke: '#ffffff',
-		strokeWidth: 2
+		fill: { color: '#10b981' },
+		stroke: { color: '#ffffff', width: 2 }
 	});
 
 	const locations = [

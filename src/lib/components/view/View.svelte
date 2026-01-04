@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { fromLonLat } from 'ol/proj.js';
-	import type { ViewProps } from '../types.ts';
-	import { setView } from './context.js';
+	import type { ViewProps } from '$lib/types.js';
 	import { View } from 'ol';
+	import { fromLonLat } from 'ol/proj.js';
 	import { onMount } from 'svelte';
+	import { setView } from './context.js';
+
 	let {
 		view = $bindable(null),
 		center = $bindable([0, 0]),

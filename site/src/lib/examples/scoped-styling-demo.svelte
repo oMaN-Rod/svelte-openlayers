@@ -23,9 +23,8 @@
 
 		return createCircleStyle({
 			radius,
-			fill: primaryColor,
-			stroke: '#ffffff',
-			strokeWidth: 2
+			fill: { color: primaryColor },
+			stroke: { color: '#ffffff', width: 2 }
 		});
 	}
 

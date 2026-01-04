@@ -43,9 +43,8 @@
 		},
 		image: {
 			radius: 6,
-			fill: '#2563eb',
-			stroke: '#ffffff',
-			strokeWidth: 2
+			fill: { color: '#2563eb' },
+			stroke: { color: '#ffffff', width: 2 }
 		}
 	});
 
@@ -61,9 +60,8 @@
 		},
 		image: {
 			radius: 6,
-			fill: '#10b981',
-			stroke: '#ffffff',
-			strokeWidth: 2
+			fill: { color: '#10b981' },
+			stroke: { color: '#ffffff', width: 2 }
 		}
 	});
 
