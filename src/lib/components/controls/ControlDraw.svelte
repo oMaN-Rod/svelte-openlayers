@@ -1,67 +1,265 @@
 <script lang="ts">
-	import InteractionDraw from '$lib/components/interactions/InteractionDraw.svelte';
+	import { Control } from '$lib/components/controls/index.js';
+	import { Interaction } from '$lib/components/interactions/index.js';
+	import { getLayerContext } from '$lib/components/layers/context.js';
 	import { getMap } from '$lib/components/map/context.js';
-	import { type ControlDrawProps } from './types.js';
+	import type {
+		FillStyleOptions,
+		PointStyleOptions,
+		StrokeStyleOptions
+	} from '$lib/styles/types.js';
+	import { isCircleStyleOptions, isRegularShapeOptions } from '$lib/utils/styles.js';
 	import Circle from '@lucide/svelte/icons/circle';
 	import MapPin from '@lucide/svelte/icons/map-pin';
+	import MousePointer2 from '@lucide/svelte/icons/mouse-pointer-2';
 	import Pentagon from '@lucide/svelte/icons/pentagon';
 	import Spline from '@lucide/svelte/icons/spline';
-	import Control from 'ol/control/Control.js';
+	import type { Feature } from 'ol';
+	import Collection from 'ol/Collection.js';
+	import { Control as OLControl } from 'ol/control.js';
+	import type { Geometry } from 'ol/geom.js';
+	import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
 	import { onMount } from 'svelte';
+	import { type ControlDrawProps, type DrawType } from './types.js';
 
 	let {
-		type = $bindable('Point'),
+		type = $bindable(null),
 		source = $bindable(null),
 		onDrawStart,
 		onDrawEnd,
 		onDrawAbort,
 		onTypeChange,
+		onFeatureSelect,
+		onFeatureModified,
+		onFeatureDelete,
 		style,
+		selectStyle,
+		selectedFeature = $bindable(null),
+		propertiesPanelPosition = 'right',
 		control = $bindable(null)
 	}: ControlDrawProps = $props();
 
 	const map = getMap();
+	const layerContext = getLayerContext();
+
+	const drawTypes = ['Point', 'LineString', 'Polygon', 'Circle'] as DrawType[];
+	const allTypes: Array<DrawType | 'Select'> = [...drawTypes, 'Select'];
 
 	let controlElement: HTMLDivElement;
-	let olControl: Control | null = null;
-	let isDestroyed = false;
+	let olControl: OLControl | null = null;
+	let selectedFeaturesCollection = $state<Collection<Feature<Geometry>> | null>(null);
 
-	const drawTypes: Array<'Point' | 'LineString' | 'Polygon' | 'Circle'> = [
-		'Point',
-		'LineString',
-		'Polygon',
-		'Circle'
-	];
+	const isDrawMode = $derived(type !== null && type !== 'Select' && drawTypes.includes(type));
+	const isSelectMode = $derived(type === 'Select');
+	const drawType = $derived(isDrawMode ? (type as DrawType) : 'Point');
 
-	// Icons and labels for each draw type
-	const drawConfig = {
+	const typeConfig = {
 		Point: { icon: MapPin, label: 'Point', description: 'Draw points' },
 		LineString: { icon: Spline, label: 'Line', description: 'Draw lines' },
 		Polygon: { icon: Pentagon, label: 'Polygon', description: 'Draw polygons' },
-		Circle: { icon: Circle, label: 'Circle', description: 'Draw circles' }
+		Circle: { icon: Circle, label: 'Circle', description: 'Draw circles' },
+		Select: { icon: MousePointer2, label: 'Select', description: 'Select and edit features' }
 	};
 
-	function handleTypeChange(newType: 'Point' | 'LineString' | 'Polygon' | 'Circle') {
+	// Selection style function that preserves feature's actual style and adds a subtle highlight
+	function defaultSelectStyleFunction(
+		feature: Feature<Geometry> | import('ol/render/Feature.js').default
+	): Style[] {
+		// Only handle regular features, not render features
+		if (!('get' in feature)) return [];
+		const geometry = feature.getGeometry();
+		const geomType = geometry?.getType();
+		const styles: Style[] = [];
+
+		const fillProp = feature.get('fill') as FillStyleOptions | undefined;
+		const strokeProp = feature.get('stroke') as StrokeStyleOptions | undefined;
+		const imageProp = feature.get('image') as PointStyleOptions | undefined;
+
+		const defaultFillColor = 'rgba(59, 130, 246, 0.3)';
+		const defaultStrokeColor = '#3b82f6';
+		const defaultStrokeWidth = 2;
+
+		// Create the feature's actual style first
+		if (geomType === 'Point' || geomType === 'MultiPoint') {
+			let radius = 6;
+			let pointFill: string = '#3b82f6';
+			let pointStroke: string = defaultStrokeColor;
+			let pointStrokeWidth: number = defaultStrokeWidth;
+
+			if (imageProp) {
+				if (isCircleStyleOptions(imageProp)) {
+					radius = imageProp.radius ?? 6;
+					if (imageProp.fill?.color) pointFill = imageProp.fill.color as string;
+					if (imageProp.stroke?.color) pointStroke = imageProp.stroke.color as string;
+					if (imageProp.stroke?.width) pointStrokeWidth = imageProp.stroke.width;
+				} else if (isRegularShapeOptions(imageProp)) {
+					radius = imageProp.radius ?? 6;
+					if (imageProp.fill?.color) pointFill = imageProp.fill.color as string;
+					if (imageProp.stroke?.color) pointStroke = imageProp.stroke.color as string;
+					if (imageProp.stroke?.width) pointStrokeWidth = imageProp.stroke.width;
+				}
+			}
+
+			// Draw the actual point
+			styles.push(
+				new Style({
+					image: new CircleStyle({
+						radius,
+						fill: new Fill({ color: pointFill }),
+						stroke: new Stroke({ color: pointStroke, width: pointStrokeWidth })
+					})
+				})
+			);
+			// Add selection highlight ring
+			styles.push(
+				new Style({
+					image: new CircleStyle({
+						radius: radius + 4,
+						fill: new Fill({ color: 'transparent' }),
+						stroke: new Stroke({ color: '#3b82f6', width: 2, lineDash: [4, 4] })
+					})
+				})
+			);
+		} else if (geomType === 'LineString' || geomType === 'MultiLineString') {
+			const strokeColor = strokeProp?.color ?? defaultStrokeColor;
+			const strokeWidth = strokeProp?.width ?? defaultStrokeWidth;
+			const lineDash = strokeProp?.lineDash;
+
+			// Draw a wider highlight underneath
+			styles.push(
+				new Style({
+					stroke: new Stroke({
+						color: 'rgba(59, 130, 246, 0.3)',
+						width: strokeWidth + 6
+					})
+				})
+			);
+			// Draw the actual line
+			styles.push(
+				new Style({
+					stroke: new Stroke({
+						color: strokeColor as string,
+						width: strokeWidth,
+						lineDash
+					})
+				})
+			);
+		} else {
+			const fillColor = fillProp?.color ?? defaultFillColor;
+			const strokeColor = strokeProp?.color ?? defaultStrokeColor;
+			const strokeWidth = strokeProp?.width ?? defaultStrokeWidth;
+			const lineDash = strokeProp?.lineDash;
+
+			// Draw selection outline first
+			styles.push(
+				new Style({
+					stroke: new Stroke({
+						color: '#3b82f6',
+						width: 2,
+						lineDash: [6, 4]
+					})
+				})
+			);
+			// Draw the actual fill and stroke
+			styles.push(
+				new Style({
+					fill: new Fill({ color: fillColor as string }),
+					stroke: new Stroke({
+						color: strokeColor as string,
+						width: strokeWidth,
+						lineDash
+					})
+				})
+			);
+		}
+
+		return styles;
+	}
+
+	function handleTypeChange(newType: DrawType | 'Select') {
+		// Toggle behavior: clicking active button deselects it
+		if (type === newType) {
+			type = null;
+			clearSelection();
+			onTypeChange?.(null);
+			return;
+		}
+
+		// Clear selection when switching modes
+		clearSelection();
+
 		type = newType;
-		if (onTypeChange) {
-			onTypeChange(newType);
+		onTypeChange?.(newType);
+	}
+
+	function handleEscapeKey(event: KeyboardEvent) {
+		if (event.key === 'Escape') {
+			type = null;
+			clearSelection();
+			onTypeChange?.(null);
 		}
 	}
 
+	function clearSelection() {
+		if (selectedFeaturesCollection) {
+			selectedFeaturesCollection.clear();
+		}
+		selectedFeature = null;
+	}
+
+	function handleFeatureSelect(features: Feature<Geometry>[]) {
+		selectedFeature = features.length > 0 ? features[0] : null;
+		onFeatureSelect?.(selectedFeature);
+	}
+
+	function handleModifyEnd(evt: any) {
+		if (selectedFeature) {
+			onFeatureModified?.(selectedFeature);
+		}
+	}
+
+	function handleDrawEnd(evt: any) {
+		onDrawEnd?.(evt);
+
+		const drawnFeature = evt.feature as Feature<Geometry>;
+
+		requestAnimationFrame(() => {
+			// Open the feature panel for the drawn feature without switching to Select mode
+			if (drawnFeature) {
+				selectedFeature = drawnFeature;
+				onFeatureSelect?.(selectedFeature);
+			}
+		});
+	}
+
+	function handleDelete(feature: Feature<Geometry>) {
+		const featureSource = source || layerContext?.getSource();
+		if (featureSource) {
+			featureSource.removeFeature(feature);
+		}
+		clearSelection();
+		onFeatureDelete?.(feature);
+	}
+
+	function handlePanelClose() {
+		clearSelection();
+	}
+
 	onMount(() => {
-		// Create the OpenLayers Control
-		olControl = new Control({
+		selectedFeaturesCollection = new Collection<Feature<Geometry>>([]);
+
+		olControl = new OLControl({
 			element: controlElement
 		});
 
-		// Add control to map
 		map?.addControl(olControl);
 		control = olControl;
 
-		return () => {
-			isDestroyed = true;
+		document.addEventListener('keydown', handleEscapeKey);
 
-			// Clean up control
+		return () => {
+			document.removeEventListener('keydown', handleEscapeKey);
+
 			if (olControl) {
 				map?.removeControl(olControl);
 				olControl = null;
@@ -77,16 +275,16 @@
 	role="toolbar"
 	aria-label="Drawing tools"
 >
-	{#each drawTypes as drawType}
-		{@const config = drawConfig[drawType]}
+	{#each allTypes as toolType}
+		{@const config = typeConfig[toolType]}
 		{@const Icon = config.icon}
 		<button
 			class="ol-control-draw-button"
-			class:active={drawType === type}
-			onclick={() => handleTypeChange(drawType)}
+			class:active={toolType === type}
+			onclick={() => handleTypeChange(toolType)}
 			title={config.description}
 			aria-label={config.description}
-			aria-pressed={drawType === type}
+			aria-pressed={toolType === type}
 			type="button"
 		>
 			<Icon class="ol-control-draw-icon" size={16} />
@@ -94,7 +292,35 @@
 	{/each}
 </div>
 
-<InteractionDraw bind:type bind:source {style} {onDrawStart} {onDrawEnd} {onDrawAbort} />
+{#if isSelectMode}
+	<Interaction.Select
+		style={selectStyle || defaultSelectStyleFunction}
+		onSelect={handleFeatureSelect}
+		selectedFeatures={selectedFeaturesCollection}
+		reactive={false}
+	/>
+	{#if selectedFeature && selectedFeaturesCollection}
+		<Interaction.Modify features={selectedFeaturesCollection} onModifyEnd={handleModifyEnd} />
+	{/if}
+{:else if isDrawMode}
+	<Interaction.Draw
+		type={drawType}
+		bind:source
+		{style}
+		{onDrawStart}
+		onDrawEnd={handleDrawEnd}
+		{onDrawAbort}
+	/>
+{/if}
+
+{#if selectedFeature}
+	<Control.FeaturePanel
+		bind:feature={selectedFeature}
+		position={propertiesPanelPosition}
+		onDelete={handleDelete}
+		onClose={handlePanelClose}
+	/>
+{/if}
 
 <style>
 	.ol-control-draw {

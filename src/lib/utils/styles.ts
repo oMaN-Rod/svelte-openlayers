@@ -113,15 +113,15 @@ export function createStyleFromFeature(feature: Feature): Style {
 	return new Style(styleOptions);
 }
 
-function isCircleStyleOptions(options: PointStyleOptions): options is CircleStyleOptions {
+export function isCircleStyleOptions(options: PointStyleOptions): options is CircleStyleOptions {
 	return 'radius' in options && !('src' in options) && !('points' in options);
 }
 
-function isIconStyleOptions(options: PointStyleOptions): options is IconStyleOptions {
+export function isIconStyleOptions(options: PointStyleOptions): options is IconStyleOptions {
 	return 'src' in options;
 }
 
-function isRegularShapeOptions(options: PointStyleOptions): options is RegularShapeOptions {
+export function isRegularShapeOptions(options: PointStyleOptions): options is RegularShapeOptions {
 	return 'points' in options;
 }
 
@@ -159,4 +159,87 @@ export function createImage(options: PointStyleOptions): Circle | Icon | Regular
 	}
 
 	return new Circle({ radius: 6, fill: new Fill({ color: '#3b82f6' }) });
+}
+
+export function setDefaultStyleProperties(feature: Feature): void {
+	const geometry = feature.getGeometry();
+	const geomType = geometry?.getType();
+
+	const defaultFillColor = 'rgba(59, 130, 246, 0.3)';
+	const defaultStrokeColor = '#2563eb';
+	const defaultStrokeWidth = 2;
+
+	switch (geomType) {
+		case 'Point':
+		case 'MultiPoint':
+			feature.set(
+				'image',
+				{
+					type: 'circle',
+					radius: 6,
+					fill: { color: '#3b82f6' },
+					stroke: { color: defaultStrokeColor, width: defaultStrokeWidth }
+				},
+				true
+			);
+			break;
+		case 'LineString':
+		case 'MultiLineString':
+			feature.set('stroke', { color: defaultStrokeColor, width: defaultStrokeWidth }, true);
+			break;
+		case 'Polygon':
+		case 'MultiPolygon':
+		case 'Circle':
+			feature.set('fill', { color: defaultFillColor }, true);
+			feature.set('stroke', { color: defaultStrokeColor, width: defaultStrokeWidth }, true);
+			break;
+	}
+}
+
+export function createFeatureStyleFunction() {
+	return (feature: Feature): Style => {
+		return createStyleFromFeature(feature);
+	};
+}
+
+export function hexToRgba(hex: string, opacity: number): string {
+	const r = parseInt(hex.slice(1, 3), 16);
+	const g = parseInt(hex.slice(3, 5), 16);
+	const b = parseInt(hex.slice(5, 7), 16);
+	return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
+
+export function parseColor(color: any): { hex: string; opacity: number } | null {
+	if (typeof color === 'string') {
+		if (color.startsWith('#')) {
+			return { hex: color.slice(0, 7), opacity: 1 };
+		}
+		if (color.startsWith('rgba')) {
+			const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+			if (match) {
+				const r = parseInt(match[1]);
+				const g = parseInt(match[2]);
+				const b = parseInt(match[3]);
+				const a = match[4] ? parseFloat(match[4]) : 1;
+				const hex = '#' + [r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('');
+				return { hex, opacity: a };
+			}
+		}
+		if (color.startsWith('rgb')) {
+			const match = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+			if (match) {
+				const r = parseInt(match[1]);
+				const g = parseInt(match[2]);
+				const b = parseInt(match[3]);
+				const hex = '#' + [r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('');
+				return { hex, opacity: 1 };
+			}
+		}
+	}
+	if (Array.isArray(color) && color.length >= 3) {
+		const [r, g, b, a = 1] = color;
+		const hex = '#' + [r, g, b].map((x) => Math.round(x).toString(16).padStart(2, '0')).join('');
+		return { hex, opacity: a };
+	}
+	return null;
 }

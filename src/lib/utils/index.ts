@@ -3,21 +3,27 @@
 // Style utilities
 export {
 	createCircleStyle,
-	createStroke,
+	createFeatureStyleFunction,
 	createFill,
-	createTextStyle,
 	createIconStyle,
-	createStyle
+	createStroke,
+	createStyle,
+	createStyleFromFeature,
+	createTextStyle,
+	isCircleStyleOptions,
+	isIconStyleOptions,
+	isRegularShapeOptions,
+	setDefaultStyleProperties
 } from './styles.js';
 
 // CSS utilities
 export {
 	getCSSVariable,
-	setCSSVariable,
 	getCSSVariables,
+	getOpenLayersTheme,
 	getThemePrimaryColor,
 	hasCSSVariable,
-	getOpenLayersTheme
+	setCSSVariable
 } from './css.js';
 
 // Collection utilities

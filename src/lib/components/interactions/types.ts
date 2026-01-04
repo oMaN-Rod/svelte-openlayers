@@ -56,3 +56,17 @@ export interface InteractionDrawProps {
 	onDrawAbort?: (evt: any) => void;
 	interaction?: Interaction | null;
 }
+
+export interface InteractionModifyProps {
+	features?: Collection<Feature<Geometry>> | Feature<Geometry>[] | null;
+	source?: VectorSource | null;
+	style?: StyleLike | FlatStyleLike;
+	pixelTolerance?: number;
+	condition?: any;
+	deleteCondition?: any;
+	insertVertexCondition?: any;
+	hitDetection?: boolean | Layer;
+	onModifyStart?: (evt: any) => void;
+	onModifyEnd?: (evt: any) => void;
+	interaction?: Interaction | null;
+}

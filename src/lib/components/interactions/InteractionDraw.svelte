@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { getLayerContext } from '$lib/components/layers/context.js';
 	import { getMap } from '$lib/components/map/context.js';
-	import { type InteractionDrawProps } from './types.js';
+	import { getLayerContext } from '$lib/components/layers/context.js';
+	import { type InteractionDrawProps } from '$lib/types.js';
 	import { Draw } from 'ol/interaction.js';
 	import type { Options } from 'ol/interaction/Draw.js';
 	import type VectorSource from 'ol/source/Vector.js';
@@ -98,8 +98,9 @@
 	}
 
 	function cleanupInteraction() {
-		if (drawInteraction && !isDestroyed) {
+		if (drawInteraction) {
 			map?.removeInteraction(drawInteraction);
+			drawInteraction.setActive(false);
 			drawInteraction = null;
 			interaction = null;
 		}
@@ -114,8 +115,8 @@
 		}
 
 		return () => {
-			isDestroyed = true;
 			cleanupInteraction();
+			isDestroyed = true;
 		};
 	});
 

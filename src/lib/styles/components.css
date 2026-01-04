@@ -76,6 +76,24 @@
 	--ol-draw-label-font-size: var(--ol-font-size-xs);
 	--ol-draw-label-font-weight: var(--ol-font-weight-medium);
 
+	/* Properties Panel */
+	--ol-properties-panel-width: 400px;
+	--ol-properties-panel-bg: var(--ol-color-background);
+	--ol-properties-panel-border: var(--ol-color-border);
+	--ol-properties-panel-shadow: var(--ol-shadow-lg);
+	--ol-properties-panel-padding: var(--ol-space-4);
+	--ol-properties-panel-z-index: 200;
+
+	/* Properties Panel Inputs */
+	--ol-properties-input-height: 32px;
+	--ol-properties-input-bg: var(--ol-color-background);
+	--ol-properties-input-border: var(--ol-color-border);
+	--ol-properties-input-border-radius: var(--ol-radius-sm);
+
+	/* Properties Panel Delete Button */
+	--ol-properties-delete-bg: var(--ol-color-destructive);
+	--ol-properties-delete-color: var(--ol-color-destructive-foreground);
+
 	/* Attribution */
 	--ol-attribution-bg: rgba(255, 255, 255, 0.7);
 	--ol-attribution-color: var(--ol-color-muted-foreground);
