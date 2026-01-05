@@ -3,7 +3,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Badge } from '$lib/components/ui/badge/index.js';
-	import { getSortedCategoriesWithExamples } from '$lib/examples/sources';
+	import { getSortedCategoriesWithExamples } from '$lib/examples/registry';
 
 	const categoriesWithExamples = getSortedCategoriesWithExamples();
 	const allExamples = categoriesWithExamples.flatMap((cat) => cat.examples);

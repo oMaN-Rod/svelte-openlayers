@@ -2,7 +2,7 @@
 	import { type Snippet } from 'svelte';
 	import ExamplePreview from './example-preview.svelte';
 	import CodeBlock from './code-block.svelte';
-	import { getExampleSource, getExampleComponent } from '$lib/examples/sources';
+	import { getExampleComponent, getExampleFiles } from '$lib/examples/registry';
 
 	interface Props {
 		name: string;
@@ -15,10 +15,11 @@
 	let { name, title, description, customPreview, componentProps = {} }: Props = $props();
 
 	const Component = $derived(getExampleComponent(name));
-	const source = $derived(getExampleSource(name));
+	const files = $derived(getExampleFiles(name));
+	const primaryFile = $derived(files.find((f) => f.isPrimary));
 </script>
 
-{#if Component && source}
+{#if Component && primaryFile}
 	<div class="component-example mb-4">
 		{#if title}
 			<h2 class="mb-4 text-2xl font-bold">{title}</h2>
@@ -38,7 +39,7 @@
 			{/snippet}
 
 			{#snippet code()}
-				<CodeBlock code={source} language="svelte" title={`${name}.svelte`} />
+				<CodeBlock code={primaryFile.content} language="svelte" title={primaryFile.filename} />
 			{/snippet}
 		</ExamplePreview>
 	</div>

@@ -4,6 +4,7 @@
 	import { createHighlighter } from 'shiki';
 	import { onMount } from 'svelte';
 	import svelteLogo from '$lib/components/icons/svelte-logo.svg';
+	import typescriptLogo from '$lib/components/icons/typescript-logo.png';
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 
 	interface Props {
@@ -31,6 +32,10 @@
 		copied = true;
 		setTimeout(() => (copied = false), 2000);
 	}
+
+	const logo = $derived(
+		language === 'svelte' ? svelteLogo : language === 'typescript' ? typescriptLogo : null
+	);
 
 	onMount(async () => {
 		try {
@@ -85,7 +90,7 @@
 	{#if filename || title}
 		<div class="bg-muted/50 flex items-center justify-between rounded-t-lg border-b px-4 py-2">
 			<div class="flex gap-2">
-				<img src={svelteLogo} alt="Svelte" class="h-4 w-4" />
+				<img src={logo} alt="Svelte" class="h-4 w-4" />
 				<span class="text-muted-foreground font-mono text-sm">{filename || title}</span>
 			</div>
 			<Button
@@ -122,7 +127,7 @@
 		{#if mounted && highlightedCode}
 			<ScrollArea class="{height} rounded-b-lg">
 				<div
-					class="[&>pre]:!m-0 [&>pre]:min-w-0 [&>pre]:overflow-x-auto [&>pre]:!border-0 [&>pre]:!p-4"
+					class="[&>pre]:m-0! [&>pre]:min-w-0 [&>pre]:overflow-x-auto [&>pre]:border-0! [&>pre]:p-4!"
 				>
 					{@html highlightedCode}
 				</div>

@@ -48,5 +48,5 @@ export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/i
 export type { OverlayTooltipProps, TooltipManagerProps } from './components/overlays/index.js';
 
 export { Control, ControlDraw } from './components/controls/index.js';
-export type { ControlDrawProps } from './components/controls/index.js';
+export type { ControlDrawProps, ControlDrawType } from './components/controls/index.js';
 export * from './styles/types.js';

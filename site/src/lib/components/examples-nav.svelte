@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
-	import { getSortedCategoriesWithExamples } from '$lib/examples/sources';
+	import { getSortedCategoriesWithExamples } from '$lib/examples/registry';
 
 	const categoriesWithExamples = getSortedCategoriesWithExamples();
 	let currentPath = $derived(page.url.pathname);
