@@ -1,4 +1,4 @@
-import type { Component, ComponentType } from 'svelte';
+import type { Component } from 'svelte';
 
 // ============ TYPES ============
 
@@ -7,7 +7,7 @@ export interface ExampleMeta {
 	title: string;
 	description: string;
 	category: 'foundation' | 'core' | 'interaction' | 'control' | 'advanced';
-	icon: ComponentType;
+	icon: Component;
 	tags: string[];
 	concepts: string[];
 	order: number;

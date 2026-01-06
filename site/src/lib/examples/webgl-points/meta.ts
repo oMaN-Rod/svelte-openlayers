@@ -1,4 +1,4 @@
-import { Zap } from 'lucide-svelte';
+import { Zap } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
@@ -19,8 +19,6 @@ const meta: ExampleMeta = {
 	],
 	order: 8,
 	additionalFiles: [
-		'styles.ts',
-		'data.ts',
 		'_shared/components/tooltip-hover.svelte',
 		'_shared/components/tooltip-select.svelte',
 		'_shared/data/map-sources.ts'

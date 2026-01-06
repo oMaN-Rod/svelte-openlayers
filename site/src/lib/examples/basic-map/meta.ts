@@ -1,4 +1,4 @@
-import { Map } from 'lucide-svelte';
+import { Map } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {

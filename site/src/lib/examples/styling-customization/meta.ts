@@ -1,4 +1,4 @@
-import { Palette } from 'lucide-svelte';
+import { Palette } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
@@ -10,7 +10,7 @@ const meta: ExampleMeta = {
 	tags: ['Advanced', 'Styling', 'UI'],
 	concepts: ['Dynamic Themes', 'Dark Mode', 'CSS Variables', 'Scoped Styles', 'Runtime Theming'],
 	order: 6,
-	additionalFiles: ['themes.ts', '_shared/data/map-sources.ts']
+	additionalFiles: ['_shared/data/map-sources.ts']
 };
 
 export default meta;

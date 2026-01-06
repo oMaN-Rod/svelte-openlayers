@@ -16,7 +16,7 @@
 
 	if (!featureState) {
 		console.warn(
-			'Overlay.Click must be used within a Feature component (Feature.Point, Feature.LineString, or Feature.Polygon)'
+			'Overlay.Popup must be used within a Feature component (Feature.Point, Feature.LineString, or Feature.Polygon)'
 		);
 	}
 

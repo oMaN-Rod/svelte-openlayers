@@ -150,9 +150,8 @@
 				{#snippet selectSnippet(feature)}
 					{@const props = feature.getProperties()}
 					<TooltipSelect
-						city={props.city}
-						lat={props.latitude?.toFixed(2)}
-						lng={props.longitude?.toFixed(2)}
+						type={props.type}
+						name={props.city}
 						population={props.population?.toLocaleString()}
 					/>
 				{/snippet}

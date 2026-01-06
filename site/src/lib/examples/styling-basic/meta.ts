@@ -1,4 +1,4 @@
-import { Palette } from 'lucide-svelte';
+import { Palette } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
@@ -10,7 +10,7 @@ const meta: ExampleMeta = {
 	tags: ['Core', 'Styling', 'Beginner'],
 	concepts: ['Feature.Point', 'createCircleStyle', 'Layer.Vector', 'Custom fill and stroke'],
 	order: 2.5,
-	additionalFiles: ['data.ts', 'styles.ts']
+	additionalFiles: ['_shared/styles.ts']
 };
 
 export default meta;

@@ -10,7 +10,7 @@
 		Phone,
 		Globe,
 		DollarSign
-	} from 'lucide-svelte';
+	} from '@lucide/svelte';
 
 	let { ...props }: { [key: string]: any } = $props();
 
@@ -26,18 +26,15 @@
 		'address',
 		'phone',
 		'website',
-		'priceLevel'
+		'priceLevel',
+		'description'
 	];
 </script>
 
 <Card.Root class="w-64 overflow-hidden rounded-sm py-0 shadow-lg">
 	<div class="relative h-32 overflow-hidden">
 		{#if props.image}
-			<img
-				src={props.image}
-				alt={props.name || 'Feature'}
-				class="h-full w-full object-cover"
-			/>
+			<img src={props.image} alt={props.name || 'Feature'} class="h-full w-full object-cover" />
 		{:else}
 			<div
 				class="flex h-full w-full items-center justify-center bg-linear-to-br from-indigo-500 to-purple-600"
@@ -47,8 +44,8 @@
 		{/if}
 	</div>
 
-	<Card.Header class="gap-0 px-3 py-0 my-0">
-		<Card.Description class="text-xs font-medium uppercase tracking-wide">
+	<Card.Header class="my-0 gap-0 px-3 py-0">
+		<Card.Description class="text-xs font-medium tracking-wide uppercase">
 			{props.type || 'Feature'}
 		</Card.Description>
 		<Card.Title class="text-base leading-tight">
@@ -56,7 +53,10 @@
 		</Card.Title>
 	</Card.Header>
 
-	<Card.Content class="space-y-1.5 px-3 py-0 my-0">
+	<Card.Content class="my-0 space-y-1.5 px-3 py-0">
+		{#if props.description}
+			<p class="text-muted-foreground text-sm">{props.description}</p>
+		{/if}
 		{#if props.rating !== undefined || props.priceLevel}
 			<div class="flex items-center gap-3 text-sm">
 				{#if props.rating !== undefined}
@@ -128,7 +128,7 @@
 	<Card.Footer class="gap-2 px-3 py-3">
 		<Button
 			size="sm"
-			class="pointer-events-auto h-8 flex-1 bg-indigo-600 hover:bg-indigo-700"
+			class="pointer-events-auto h-8 flex-1 bg-indigo-600 text-white hover:bg-indigo-700"
 			onclick={() => alert(`Directions to ${props.name}`)}
 		>
 			<Navigation class="mr-1.5 size-3.5" />

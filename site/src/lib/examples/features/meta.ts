@@ -1,4 +1,4 @@
-import { MapPin } from 'lucide-svelte';
+import { MapPin } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
@@ -7,21 +7,21 @@ const meta: ExampleMeta = {
 	description: 'Points, lines, and polygons with custom styling and click interactions',
 	category: 'core',
 	icon: MapPin,
-	tags: ['Core', 'Styling'],
+	tags: ['Core', 'Styling', 'Interactive'],
 	concepts: [
 		'Feature.Point',
 		'Feature.LineString',
 		'Feature.Polygon',
-		'Custom styles',
-		'Event handling'
+		'hoverStyle / selectedStyle',
+		'Overlay.Hover',
+		'Overlay.Popup'
 	],
 	order: 2,
 	additionalFiles: [
-		'data.ts',
-		'styles.ts',
 		'_shared/components/tooltip-hover.svelte',
 		'_shared/components/tooltip-select.svelte',
-		'_shared/data/map-sources.ts'
+		'_shared/data/map-sources.ts',
+		'_shared/styles.ts'
 	]
 };
 

@@ -43,7 +43,7 @@ export interface OverlayHoverProps {
 }
 
 /**
- * Props for Overlay.Click - shows when parent Feature is selected
+ * Props for Overlay.Popup - shows when parent Feature is selected
  */
 export interface OverlayPopupProps {
 	offset?: [number, number];

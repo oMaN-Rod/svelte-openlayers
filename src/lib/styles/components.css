@@ -95,14 +95,14 @@
 	--ol-properties-delete-color: var(--ol-color-destructive-foreground);
 
 	/* Attribution */
-	--ol-attribution-bg: rgba(255, 255, 255, 0.7);
+	--ol-attribution-bg: var(--ol-color-background);
 	--ol-attribution-color: var(--ol-color-muted-foreground);
 	--ol-attribution-font-size: var(--ol-font-size-xs);
 	--ol-attribution-padding: var(--ol-space-1) var(--ol-space-2);
 
 	/* === Tooltips === */
-	--ol-tooltip-bg: rgba(255, 255, 255, 0.85);
-	--ol-tooltip-color: #181818;
+	--ol-tooltip-bg: var(--ol-color-background);
+	--ol-tooltip-color: var(--ol-color-foreground);
 	--ol-tooltip-padding: var(--ol-space-2) var(--ol-space-3);
 	--ol-tooltip-border-radius: var(--ol-radius);
 	--ol-tooltip-font-size: var(--ol-font-size-sm);
@@ -120,13 +120,13 @@
 	--ol-tooltip-transition-timing: var(--ol-transition-timing-ease-in-out);
 
 	/* Hover Tooltips */
-	--ol-tooltip-hover-bg: rgba(255, 255, 255, 0.85);
-	--ol-tooltip-hover-color: #181818;
+	--ol-tooltip-hover-bg: var(--ol-color-background);
+	--ol-tooltip-hover-color: var(--ol-color-foreground);
 	--ol-tooltip-hover-font-size: var(--ol-font-size-xs);
 	--ol-tooltip-hover-padding: var(--ol-space-1-5) var(--ol-space-2-5);
 
 	/* Select Tooltips */
-	--ol-tooltip-select-bg: rgba(255, 255, 255, 0.96);
+	--ol-tooltip-select-bg: var(--ol-color-background);
 	--ol-tooltip-select-color: var(--ol-color-foreground);
 	--ol-tooltip-select-border: 1px solid var(--ol-color-border);
 	--ol-tooltip-select-font-size: var(--ol-font-size-sm);
@@ -151,20 +151,6 @@
 	--ol-feature-point-fill: var(--ol-color-primary);
 	--ol-feature-point-stroke: var(--ol-color-primary-foreground);
 	--ol-feature-point-stroke-width: 2;
-}
-
-.dark {
-	/* Controls */
-	--ol-control-bg: rgba(31, 41, 55, 0.9);
-	--ol-mouse-position-bg: rgba(31, 41, 55, 0.95);
-	--ol-mouse-position-color: var(--ol-color-foreground);
-	--ol-attribution-bg: rgba(17, 24, 39, 0.8);
-	--ol-attribution-color: var(--ol-color-muted-foreground);
-
-	/* Select Tooltips in Dark Mode */
-	--ol-tooltip-select-bg: rgba(31, 41, 55, 0.96);
-	--ol-tooltip-select-color: var(--ol-color-foreground);
-	--ol-tooltip-select-border: 1px solid var(--ol-color-border);
 }
 
 /* === Component Base Styles === */

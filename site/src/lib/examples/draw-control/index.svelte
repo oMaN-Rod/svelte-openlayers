@@ -11,7 +11,10 @@
 	import type { ControlDrawType } from 'svelte-openlayers';
 	import { createStyleFromFeature, setDefaultStyleProperties } from 'svelte-openlayers/utils';
 	import { mapSources } from '../_shared/data/map-sources';
-	import { sketchStyle, DEFAULT_CENTER, DEFAULT_ZOOM } from './styles';
+	import { sketchStyle } from '../_shared/styles';
+
+	const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128];
+ 	const DEFAULT_ZOOM = 10;
 
 	let center = $state(DEFAULT_CENTER);
 	let zoom = $state(DEFAULT_ZOOM);

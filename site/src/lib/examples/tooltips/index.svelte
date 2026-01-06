@@ -1,18 +1,8 @@
 <script lang="ts">
 	import { Map, Layer, Feature, Overlay, View } from 'svelte-openlayers';
 	import { mapSources } from '../_shared/data/map-sources';
-	import { landmarks, DEFAULT_CENTER, DEFAULT_ZOOM, type Landmark } from './data';
-	import { pointStyle, selectedStyle } from './styles';
-
-	let {
-		tooltipMode = $bindable<'hover' | 'select'>('hover'),
-		hoveredFeature = $bindable<Landmark | null>(null),
-		selectedFeature = $bindable<Landmark | null>(null)
-	}: {
-		tooltipMode?: 'hover' | 'select';
-		hoveredFeature?: Landmark | null;
-		selectedFeature?: Landmark | null;
-	} = $props();
+	import { landmarks, DEFAULT_CENTER, DEFAULT_ZOOM } from './data';
+	import { pointStyle, hoverStyle, selectedStyle } from '../_shared/styles';
 </script>
 
 <div class="relative h-96 w-full overflow-hidden rounded-lg border">
@@ -24,25 +14,22 @@
 				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 			/>
 
-			<Layer.Vector style={pointStyle}>
+			<Layer.Vector>
 				{#each landmarks as landmark}
-					{@const { id, coordinates, ...rest } = landmark}
-					<Feature.Point {coordinates} properties={rest} />
+					<Feature.Point
+						coordinates={landmark.coordinates}
+						style={pointStyle}
+						{hoverStyle}
+						{selectedStyle}
+						properties={{
+							name: landmark.name,
+							description: landmark.description
+						}}
+					/>
 				{/each}
 			</Layer.Vector>
 
-			<Overlay.TooltipManager
-				hoverTooltip={true}
-				selectTooltip={true}
-				selectStyle={selectedStyle}
-			/>
+			<Overlay.TooltipManager />
 		</Map>
 	</View>
-</div>
-<div class="text-muted-foreground mt-4 text-sm">
-	{#if tooltipMode === 'hover'}
-		Hover over landmarks to see their information
-	{:else}
-		Click on landmarks to toggle their information
-	{/if}
 </div>

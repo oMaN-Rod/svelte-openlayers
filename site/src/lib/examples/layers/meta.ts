@@ -1,4 +1,4 @@
-import { Layers } from 'lucide-svelte';
+import { Layers } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
@@ -15,7 +15,7 @@ const meta: ExampleMeta = {
 		'Data organization'
 	],
 	order: 3,
-	additionalFiles: ['data.ts', 'styles.ts', '_shared/data/map-sources.ts']
+	additionalFiles: ['_shared/data/map-sources.ts', '_shared/styles.ts']
 };
 
 export default meta;

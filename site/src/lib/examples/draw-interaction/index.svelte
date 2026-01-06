@@ -14,7 +14,10 @@
 	import { Interaction, Layer, Map, View } from 'svelte-openlayers';
 	import { mapSources } from '../_shared/data/map-sources';
 	import { getFeatureInfo } from '$lib/utils';
-	import { drawStyle, sketchStyle, DEFAULT_CENTER, DEFAULT_ZOOM } from './styles';
+	import { drawStyle, sketchStyle } from '../_shared/styles';
+
+	const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128];
+	const DEFAULT_ZOOM = 10;
 
 	let center = $state(DEFAULT_CENTER);
 	let zoom = $state(DEFAULT_ZOOM);

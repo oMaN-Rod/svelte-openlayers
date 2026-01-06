@@ -1,10 +1,10 @@
-import { MousePointer } from 'lucide-svelte';
+import { MousePointer } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
 	id: 'tooltips-html',
 	title: 'HTML Tooltips',
-	description: 'Tooltips with custom HTML content using string generators',
+	description: 'Tooltips with custom HTML content',
 	category: 'interaction',
 	icon: MousePointer,
 	tags: ['Interaction', 'UI', 'Tooltips'],

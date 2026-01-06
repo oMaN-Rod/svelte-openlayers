@@ -4,7 +4,7 @@
 	import XYZ from 'ol/source/XYZ.js';
 	import { Feature, Layer, Map, View } from 'svelte-openlayers';
 	import { sampleData, DEFAULT_CENTER, DEFAULT_ZOOM } from './data';
-	import { airportStyle } from './styles';
+	import { pointStyle } from '../_shared/styles';
 	import { Button } from '$lib/components/ui/button';
 	import { Switch } from '$lib/components/ui/switch';
 
@@ -91,7 +91,7 @@
 
 			<!-- Airports Layer -->
 			{#if layersVisible.airports}
-				<Layer.Vector style={airportStyle} zIndex={1}>
+				<Layer.Vector style={pointStyle} zIndex={1}>
 					{#each sampleData.airports as airport}
 						<Feature.Point coordinates={airport.coordinates} />
 					{/each}

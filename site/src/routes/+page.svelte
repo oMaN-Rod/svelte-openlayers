@@ -4,7 +4,7 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
-	import { ArrowRight, Code2, Layers, MapPin, Sparkles, Type, Zap } from 'lucide-svelte';
+	import { ArrowRight, Code2, Layers, MapPin, Sparkles, Type, Zap } from '@lucide/svelte';
 
 	const quickStartCode = `<script>
   import { View, Map, Layer, Feature } from 'svelte-openlayers';

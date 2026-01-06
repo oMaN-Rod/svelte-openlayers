@@ -2,7 +2,7 @@
 	import { cn } from '$lib/utils';
 	import CodeBlock from './code-block.svelte';
 	import { getExample, getTabLabel, type ExampleFile } from '$lib/examples/registry';
-	import { Code, Eye, FileCode, FileText, Palette, Database } from 'lucide-svelte';
+	import { Code, Eye, FileCode, FileText, Palette, Database } from '@lucide/svelte';
 
 	interface Props {
 		exampleId: string;

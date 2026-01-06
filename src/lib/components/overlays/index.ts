@@ -8,7 +8,7 @@ export * from './types.js';
 export const Overlay = {
 	Tooltip: OverlayTooltip,
 	Hover: OverlayHover,
-	Click: OverlayPopup,
+	Popup: OverlayPopup,
 	TooltipManager
 };
 

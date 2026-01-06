@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { Button } from '$lib/components/ui/button';
-	import { Sun, Moon, Menu } from 'lucide-svelte';
+	import { Sun, Moon, Menu } from '@lucide/svelte';
 	import GitHub from '$lib/components/icons/github.svg?raw';
 
 	let isDarkMode = $state(false);

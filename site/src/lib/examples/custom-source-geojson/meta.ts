@@ -1,4 +1,4 @@
-import { Globe } from 'lucide-svelte';
+import { Globe } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {

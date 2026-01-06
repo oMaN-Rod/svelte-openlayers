@@ -1,4 +1,4 @@
-import { ArrowLeftRight } from 'lucide-svelte';
+import { ArrowLeftRight } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
@@ -19,7 +19,8 @@ const meta: ExampleMeta = {
 	additionalFiles: [
 		'_shared/components/tooltip-hover.svelte',
 		'_shared/components/tooltip-select.svelte',
-		'_shared/data/map-sources.ts'
+		'_shared/data/map-sources.ts',
+		'_shared/styles.ts'
 	]
 };
 

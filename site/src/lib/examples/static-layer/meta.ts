@@ -1,4 +1,4 @@
-import { Image } from 'lucide-svelte';
+import { Image } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {

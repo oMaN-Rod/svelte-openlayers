@@ -1,39 +1,21 @@
 <script lang="ts">
 	import { Map, Layer, Feature, Overlay, View } from 'svelte-openlayers';
-	import { createCircleStyle, ReactiveCollection } from 'svelte-openlayers/utils';
-	import Input from '$lib/components/ui/input/input.svelte';
-	import TooltipHover from '../_shared/components/tooltip-hover.svelte';
-	import TooltipSelect from '../_shared/components/tooltip-select.svelte';
+	import { ReactiveCollection } from 'svelte-openlayers/utils';
+	import { Input } from '$lib/components/ui/input';
+	import { TooltipHover, TooltipSelect } from '../_shared';
 	import { mapSources } from '../_shared/data/map-sources';
 	import { nycLocations, DEFAULT_CENTER, type Location } from './data';
+	import { hoverStyle, pointStyle, selectedStyle } from '../_shared/styles';
 
 	let center: number[] = $state(DEFAULT_CENTER);
 	let zoom = $state(11);
 	let search = $state('');
-	// Create a mutable copy of the locations for binding features
+	
 	let locations = $state<Location[]>(nycLocations.map((loc) => ({ ...loc })));
 	let filteredLocations = $state<Location[]>([]);
 
 	let selectedFeatures: ReactiveCollection | null = $state(null);
 	let hoveredId = $state<string | null>(null);
-
-	const pointStyle = createCircleStyle({
-		radius: 6,
-		fill: { color: '#4338ca' },
-		stroke: { color: '#ffffff', width: 2 }
-	});
-
-	const selectedStyle = createCircleStyle({
-		radius: 10,
-		fill: { color: '#ef4444' },
-		stroke: { color: '#991b1b', width: 3 }
-	});
-
-	const hoverStyle = createCircleStyle({
-		radius: 8,
-		fill: { color: '#10b981' },
-		stroke: { color: '#ffffff', width: 2 }
-	});
 
 	function selectFromTable(locationId: string) {
 		if (!selectedFeatures) return;

@@ -2,7 +2,7 @@
 	import DocsNav from '$lib/components/docs-nav.svelte';
 	import TableOfContents from '$lib/components/table-of-contents.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { Menu } from 'lucide-svelte';
+	import { Menu } from '@lucide/svelte';
 
 	let { children } = $props();
 	let mobileNavOpen = $state(false);

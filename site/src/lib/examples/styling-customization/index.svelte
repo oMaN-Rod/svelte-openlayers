@@ -11,7 +11,7 @@
 	let mapElement: HTMLElement | null = $state(null);
 
 	$effect(() => {
-		applyTheme(theme, mapElement ||  undefined);
+		applyTheme(theme, mapElement || undefined);
 	});
 
 	// Sample features to demonstrate styling
@@ -26,6 +26,22 @@
 			radius: 8,
 			fill: { color: themes[themeName].primary },
 			stroke: { color: '#ffffff', width: 2 }
+		});
+	}
+
+	function getHoverStyle(themeName: ThemeName) {
+		return createCircleStyle({
+			radius: 10,
+			fill: { color: themes[themeName].primary },
+			stroke: { color: '#ffffff', width: 3 }
+		});
+	}
+
+	function getSelectedStyle(themeName: ThemeName) {
+		return createCircleStyle({
+			radius: 12,
+			fill: { color: themes[themeName].primary },
+			stroke: { color: '#ffffff', width: 4 }
 		});
 	}
 
@@ -65,29 +81,38 @@
 					attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
 				/>
 
-				<Layer.Vector style={getFeatureStyle(theme)}>
+				<Layer.Vector>
 					{#each features as feature}
-						<Feature.Point coordinates={feature.coords} properties={feature} />
+						<Feature.Point
+							coordinates={feature.coords}
+							style={getFeatureStyle(theme)}
+							hoverStyle={getHoverStyle(theme)}
+							selectedStyle={getSelectedStyle(theme)}
+							properties={feature}
+						>
+							<Overlay.Hover offset={[10, 0]} positioning="center-left">
+								<div
+									class="rounded px-2 py-1 text-sm shadow"
+									style="background: var(--ol-tooltip-bg); color: var(--ol-tooltip-select-accent-color);"
+								>
+									<strong>{feature.name}</strong>
+								</div>
+							</Overlay.Hover>
+
+							<Overlay.Popup positioning="top-center" offset={[0, -10]} autoPan>
+								<div
+									class="rounded-lg p-3 shadow-lg"
+									style="background: var(--ol-tooltip-bg); color: var(--ol-tooltip-color);"
+								>
+									<strong style="color: var(--ol-tooltip-select-accent-color);"
+										>{feature.name}</strong
+									>
+									<div>Population: {feature.population}</div>
+								</div>
+							</Overlay.Popup>
+						</Feature.Point>
 					{/each}
 				</Layer.Vector>
-
-				<Overlay.TooltipManager
-					hoverTooltip={true}
-					selectTooltip={true}
-					hoverContent={(f) => {
-						const props = f.getProperties();
-						return `<strong style="color: var(--ol-tooltip-select-accent-color)">${props.name}</strong>`;
-					}}
-					selectContent={(f) => {
-						const props = f.getProperties();
-						return `
-								<div>
-									<strong style="color: var(--ol-tooltip-select-accent-color)">${props.name}</strong>
-									<div>Population: ${props.population}</div>
-								</div>
-							`;
-					}}
-				/>
 			</Map>
 		</View>
 	</div>

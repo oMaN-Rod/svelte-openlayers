@@ -1,4 +1,4 @@
-import { Image } from 'lucide-svelte';
+import { Image } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
@@ -10,7 +10,7 @@ const meta: ExampleMeta = {
 	tags: ['Core', 'Styling', 'Icons'],
 	concepts: ['createIconStyle', 'SVG icons', 'Color tinting', 'Dynamic sizing'],
 	order: 3.5,
-	additionalFiles: ['data.ts', 'styles.ts']
+	additionalFiles: []
 };
 
 export default meta;

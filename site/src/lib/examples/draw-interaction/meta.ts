@@ -1,4 +1,4 @@
-import { Pencil } from 'lucide-svelte';
+import { Pencil } from '@lucide/svelte';
 import type { ExampleMeta } from '../registry';
 
 const meta: ExampleMeta = {
@@ -18,7 +18,7 @@ const meta: ExampleMeta = {
 		'Geometry styling'
 	],
 	order: 6,
-	additionalFiles: ['styles.ts', '_shared/data/map-sources.ts']
+	additionalFiles: ['_shared/data/map-sources.ts', '_shared/styles.ts']
 };
 
 export default meta;

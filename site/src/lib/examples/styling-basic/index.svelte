@@ -2,7 +2,7 @@
 	import { Feature, Layer, Map, View } from 'svelte-openlayers';
 	import { mapSources } from '../_shared/data/map-sources';
 	import { cities, DEFAULT_CENTER, DEFAULT_ZOOM } from './data';
-	import { pointStyle } from './styles';
+	import { pointStyle } from '../_shared/styles';
 </script>
 
 <div class="h-100 overflow-hidden rounded-lg border">

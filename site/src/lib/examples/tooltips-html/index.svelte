@@ -2,7 +2,8 @@
 	import { Map, Layer, Feature, Overlay, View } from 'svelte-openlayers';
 	import { mapSources } from '../_shared/data/map-sources';
 	import { landmarks, DEFAULT_CENTER, DEFAULT_ZOOM, type Landmark } from './data';
-	import { pointStyle, selectedStyle, createHoverContent, createSelectContent } from './styles';
+	import { pointStyle } from '../_shared/styles';
+	import { Badge } from '$lib/components/ui/badge';
 
 	let {
 		tooltipMode = $bindable<'hover' | 'select'>('hover'),
@@ -26,30 +27,44 @@
 
 			<Layer.Vector style={pointStyle}>
 				{#each landmarks as landmark}
-					{@const { id, coordinates, ...rest } = landmark}
-					<Feature.Point {coordinates} properties={rest} />
+					{@const { id, coordinates, name, ...rest } = landmark}
+					<Feature.Point {coordinates} properties={rest}>
+						<Overlay.Hover>
+							<div class="bg-background/90 rounded p-2">
+								<div class="text-foreground mb-2 text-base font-bold">
+									{name || 'Unknown'}
+								</div>
+								<div>
+									<Badge>Landmark</Badge>
+								</div>
+							</div>
+						</Overlay.Hover>
+						<Overlay.Popup positioning="center-left">
+							<div class="bg-background/90 rounded p-2">
+								<div class="p-1">
+									<div class="text-foreground mb-2 text-base font-bold">
+										{name}
+									</div>
+									<table class="w-full">
+										<tbody>
+											{#each Object.entries(rest) as [key, value]}
+												<tr>
+													<td class="text-foreground px-2 py-1 font-medium">
+														<Badge variant="outline" class="capitalize">
+															{key}
+														</Badge>
+													</td>
+													<td class="text-foreground px-2 py-1">{value}</td>
+												</tr>
+											{/each}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</Overlay.Popup>
+					</Feature.Point>
 				{/each}
 			</Layer.Vector>
-
-			<Overlay.TooltipManager
-				hoverTooltip={true}
-				selectTooltip={true}
-				selectStyle={selectedStyle}
-				hoverContent={(feature) => {
-					const props = feature.getProperties();
-					return createHoverContent(props.name, props.type || 'Landmark');
-				}}
-				selectContent={(feature) => createSelectContent(feature)}
-				hoverClass="!bg-white"
-				selectClass="!bg-white"
-			/>
 		</Map>
 	</View>
-</div>
-<div class="text-muted-foreground mt-4 text-sm">
-	{#if tooltipMode === 'hover'}
-		Hover over landmarks to see their information
-	{:else}
-		Click on landmarks to toggle their information
-	{/if}
 </div>
