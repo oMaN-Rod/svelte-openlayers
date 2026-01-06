@@ -10,11 +10,12 @@
 	import { Control, Layer, Map, View } from 'svelte-openlayers';
 	import type { ControlDrawType } from 'svelte-openlayers';
 	import { createStyleFromFeature, setDefaultStyleProperties } from 'svelte-openlayers/utils';
-	import { mapSources } from '../_shared/data/map-sources';
+	import { themeMapSource, useThemeMapSource } from '../_shared/data/map-sources.svelte';
 	import { sketchStyle } from '../_shared/styles';
+	import type TileLayer from 'ol/layer/Tile';
 
 	const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128];
- 	const DEFAULT_ZOOM = 10;
+	const DEFAULT_ZOOM = 10;
 
 	let center = $state(DEFAULT_CENTER);
 	let zoom = $state(DEFAULT_ZOOM);
@@ -23,6 +24,9 @@
 	let drawnFeatures = $state<Feature<Geometry>[]>([]);
 	let selectedFeature = $state<Feature<Geometry> | null>(null);
 	let vectorSource: VectorSource | null = $state(null);
+	let tileLayer = $state<TileLayer | null>(null);
+
+	useThemeMapSource(() => tileLayer);
 
 	const isActiveDrawMode = $derived(drawType !== null && drawType !== 'Select');
 
@@ -110,7 +114,7 @@
 						Press <kbd class="bg-muted rounded px-1 py-0.5 text-xs">Esc</kbd> to exit.
 					</Badge>
 				{:else if drawType === 'Select' && selectedFeature}
-					<Badge variant="outline"> Feature Selected </Badge>
+					<Badge variant="outline">Feature Selected</Badge>
 				{/if}
 			</div>
 			<Button
@@ -130,8 +134,9 @@
 			<Map class="h-full w-full">
 				<Layer.Tile
 					source="xyz"
-					url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-					attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+					url={themeMapSource.current.url}
+					attributions={themeMapSource.current.attributions}
+					bind:layer={tileLayer}
 				/>
 
 				<!-- Layer for drawn features -->

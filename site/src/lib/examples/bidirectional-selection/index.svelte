@@ -3,19 +3,25 @@
 	import { ReactiveCollection } from 'svelte-openlayers/utils';
 	import { Input } from '$lib/components/ui/input';
 	import { TooltipHover, TooltipSelect } from '../_shared';
-	import { mapSources } from '../_shared/data/map-sources';
+	import { themeMapSource, useThemeMapSource } from '../_shared/data/map-sources.svelte';
 	import { nycLocations, DEFAULT_CENTER, type Location } from './data';
 	import { hoverStyle, pointStyle, selectedStyle } from '../_shared/styles';
+	import type TileLayer from 'ol/layer/Tile';
 
 	let center: number[] = $state(DEFAULT_CENTER);
 	let zoom = $state(11);
 	let search = $state('');
-	
+
 	let locations = $state<Location[]>(nycLocations.map((loc) => ({ ...loc })));
 	let filteredLocations = $state<Location[]>([]);
 
 	let selectedFeatures: ReactiveCollection | null = $state(null);
 	let hoveredId = $state<string | null>(null);
+
+	let tileLayer = $state<TileLayer | null>(null);
+
+	// Automatically update tile layer when theme changes
+	useThemeMapSource(() => tileLayer);
 
 	function selectFromTable(locationId: string) {
 		if (!selectedFeatures) return;
@@ -122,8 +128,9 @@
 				<Map class="h-full w-full">
 					<Layer.Tile
 						source="xyz"
-						url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-						attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+						url={themeMapSource.current.url}
+						attributions={themeMapSource.current.attributions}
+						bind:layer={tileLayer}
 					/>
 
 					<Layer.Vector style={pointStyle}>

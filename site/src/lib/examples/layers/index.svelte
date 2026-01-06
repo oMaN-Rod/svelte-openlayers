@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { mapSources } from '../_shared/data/map-sources';
+	import { mapSources } from '../_shared/data/map-sources.svelte';
 	import type TileLayer from 'ol/layer/Tile';
 	import XYZ from 'ol/source/XYZ.js';
 	import { Feature, Layer, Map, View } from 'svelte-openlayers';

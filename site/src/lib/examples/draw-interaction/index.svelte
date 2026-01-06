@@ -12,9 +12,10 @@
 	import type { Geometry } from 'ol/geom';
 	import VectorSource from 'ol/source/Vector.js';
 	import { Interaction, Layer, Map, View } from 'svelte-openlayers';
-	import { mapSources } from '../_shared/data/map-sources';
+	import { themeMapSource, useThemeMapSource } from '../_shared/data/map-sources.svelte';
 	import { getFeatureInfo } from '$lib/utils';
 	import { drawStyle, sketchStyle } from '../_shared/styles';
+	import type TileLayer from 'ol/layer/Tile';
 
 	const DEFAULT_CENTER: [number, number] = [-74.006, 40.7128];
 	const DEFAULT_ZOOM = 10;
@@ -27,6 +28,9 @@
 
 	// Create a vector source to store drawn features
 	let vectorSource: VectorSource | null = $state(null);
+	let tileLayer = $state<TileLayer | null>(null);
+
+	useThemeMapSource(() => tileLayer);
 
 	const drawTypes = [
 		{ type: 'Point', icon: MapPin },
@@ -106,8 +110,9 @@
 			<Map class="h-full w-full">
 				<Layer.Tile
 					source="xyz"
-					url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-					attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+					url={themeMapSource.current.url}
+					attributions={themeMapSource.current.attributions}
+					bind:layer={tileLayer}
 				/>
 
 				<!-- Layer for drawn features -->

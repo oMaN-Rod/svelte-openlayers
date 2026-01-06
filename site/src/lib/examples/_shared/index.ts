@@ -1,5 +1,5 @@
 // Re-export shared data
-export { mapSources, getMapSource, type MapSource } from './data/map-sources';
+export { mapSources, type MapSource } from './data/map-sources.svelte';
 
 // Re-export shared components
 export { default as TooltipHover } from './components/tooltip-hover.svelte';

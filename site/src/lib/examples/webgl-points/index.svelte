@@ -4,7 +4,8 @@
 	import TooltipSelect from '../_shared/components/tooltip-select.svelte';
 	import { onMount } from 'svelte';
 	import { Layer, Map, Overlay, View } from 'svelte-openlayers';
-	import { mapSources } from '../_shared/data/map-sources';
+	import { themeMapSource, useThemeMapSource } from '../_shared/data/map-sources.svelte';
+	import type TileLayer from 'ol/layer/Tile';
 	import {
 		generateStyles,
 		stylePresets,
@@ -18,16 +19,17 @@
 	let zoom = $state(2);
 	let selectedStyle = $state<StylePreset>('circles');
 	let selectedTheme = $state<ThemeName>('default');
-	let styleJson = $state('');
 	let styleError = $state<string | null>(null);
 	let selectedFeature = $state<any>(null);
 	let webglLayer: any = $state(null);
+	let tileLayer = $state<TileLayer | null>(null);
+
+	useThemeMapSource(() => tileLayer);
 
 	const predefinedStyles = $derived(generateStyles(selectedTheme));
 	let currentStyle = $derived(predefinedStyles[selectedStyle]);
 
 	onMount(() => {
-		updateStyleEditor();
 		// Start animation loop for rotating bars style
 		if (typeof window !== 'undefined') {
 			const animate = () => {
@@ -43,17 +45,11 @@
 		}
 	});
 
-	function updateStyleEditor() {
-		styleJson = JSON.stringify(currentStyle, null, 2);
-	}
-
 	function handleStyleChange() {
-		updateStyleEditor();
 		styleError = null;
 	}
 
 	function handleThemeChange() {
-		updateStyleEditor();
 		styleError = null;
 	}
 
@@ -123,8 +119,9 @@
 		<Map class="h-full w-full" pointermove={handlePointerMove}>
 			<Layer.Tile
 				source="xyz"
-				url={mapSources.find((s) => s.id === 'carto-voyager')?.url}
-				attributions={mapSources.find((s) => s.id === 'carto-voyager')?.attributions}
+				url={themeMapSource.current.url}
+				attributions={themeMapSource.current.attributions}
+				bind:layer={tileLayer}
 			/>
 			<Layer.WebGL bind:layer={webglLayer} style={currentStyle}>
 				{#await fetchWorldCities() then features}
