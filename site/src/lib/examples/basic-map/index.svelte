@@ -8,7 +8,7 @@
 	const transformedCoordinates = $derived(transform(center, 'EPSG:3857', 'EPSG:4326'));
 </script>
 
-<div class="h-96 w-full overflow-hidden rounded-lg border">
+<div class="map-container">
 	<View bind:center bind:zoom>
 		<Map>
 			<Layer.Tile source="osm" />

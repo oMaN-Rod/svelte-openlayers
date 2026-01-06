@@ -4,15 +4,15 @@
 	import { Input } from '$lib/components/ui/input';
 	import { TooltipHover, TooltipSelect } from '../_shared';
 	import { themeMapSource, useThemeMapSource } from '../_shared/data/map-sources.svelte';
-	import { nycLocations, DEFAULT_CENTER, type Location } from './data';
 	import { hoverStyle, pointStyle, selectedStyle } from '../_shared/styles';
 	import type TileLayer from 'ol/layer/Tile';
+	import { DEFAULT_CENTER_US, locationsUS, type Location } from '../_shared/data/locations';
 
-	let center: number[] = $state(DEFAULT_CENTER);
+	let center: number[] = $state(DEFAULT_CENTER_US);
 	let zoom = $state(11);
 	let search = $state('');
 
-	let locations = $state<Location[]>(nycLocations.map((loc) => ({ ...loc })));
+	let locations = $state<Location[]>(locationsUS);
 	let filteredLocations = $state<Location[]>([]);
 
 	let selectedFeatures: ReactiveCollection | null = $state(null);
@@ -40,13 +40,14 @@
 		if (!selectedFeatures) return;
 
 		selectedFeatures.clear();
-		center = DEFAULT_CENTER;
+		center = DEFAULT_CENTER_US;
 	}
 
 	function isSelected(locationId: string): boolean {
 		if (!selectedFeatures) return false;
 		return selectedFeatures.hasId(locationId);
 	}
+	$inspect(selectedFeatures);
 
 	function getFeatureStyle(location: Location) {
 		const selected = isSelected(location.id);
@@ -123,7 +124,7 @@
 
 	<!-- Map -->
 	<div class="flex-1">
-		<div class="h-96 w-full overflow-hidden rounded-lg border">
+		<div class="map-container">
 			<View bind:center bind:zoom>
 				<Map class="h-full w-full">
 					<Layer.Tile
@@ -135,14 +136,11 @@
 
 					<Layer.Vector style={pointStyle}>
 						{#each filteredLocations as location}
+							{@const { coords, ...rest } = location}
 							<Feature.Point
-								coordinates={location.coords}
+								coordinates={coords}
 								style={getFeatureStyle(location)}
-								properties={{
-									id: location.id,
-									name: location.name,
-									visitors: location.visitors
-								}}
+								properties={rest}
 								bind:feature={location.feature}
 							/>
 						{/each}

@@ -12,9 +12,9 @@
 		lineHoverStyle,
 		lineSelectedStyle
 	} from '../_shared/styles';
-	import { tourRoute, locations } from './data';
+	import { locationsUS, tourRouteUS } from '../_shared/data/locations';
 
-	let center = $state<[number, number]>([-73.98513, 40.758896]);
+	let center = $state<[number, number]>([-73.99371, 40.73496]);
 	let zoom = $state(12);
 
 	// Event log
@@ -30,7 +30,7 @@
 	useThemeMapSource(() => tileLayer);
 </script>
 
-<div class="h-105 w-full overflow-hidden rounded-lg border">
+<div class="map-container">
 	<View bind:center bind:zoom>
 		<Map class="h-full w-full">
 			<Layer.Tile
@@ -43,7 +43,7 @@
 			<!-- Line with events and overlays -->
 			<Layer.Vector>
 				<Feature.LineString
-					coordinates={tourRoute}
+					coordinates={tourRouteUS}
 					style={lineStyle}
 					hoverStyle={lineHoverStyle}
 					selectedStyle={lineSelectedStyle}
@@ -54,12 +54,12 @@
 					onSelect={(f) => logEvent(`Selected: ${f.get('name')}`)}
 					onDeselect={(f) => logEvent(`Deselected: ${f.get('name')}`)}
 				>
-					<Overlay.Hover offset={[10, 0]} positioning="center-left">
+					<Overlay.Hover>
 						<div class="rounded bg-emerald-600 px-2 py-1 text-xs text-white shadow">
 							Tour Route (5.2 km)
 						</div>
 					</Overlay.Hover>
-					<Overlay.Popup positioning="bottom-center" offset={[0, 10]}>
+					<Overlay.Popup>
 						<div class="rounded-lg bg-white p-3 shadow-lg">
 							<div class="font-semibold">NYC Walking Tour</div>
 							<div class="text-sm text-gray-600">Duration: ~2 hours</div>
@@ -71,7 +71,7 @@
 
 			<!-- Points with events and child overlays -->
 			<Layer.Vector>
-				{#each locations as location (location.id)}
+				{#each locationsUS as location (location.name)}
 					<Feature.Point
 						coordinates={location.coords}
 						style={pointStyle}
@@ -87,12 +87,12 @@
 						onSelect={(f) => logEvent(`Selected: ${f.get('name')}`)}
 						onDeselect={(f) => logEvent(`Deselected: ${f.get('name')}`)}
 					>
-						<Overlay.Hover offset={[15, 0]} positioning="center-left">
+						<Overlay.Hover>
 							<TooltipHover name={location.name} type={location.type} />
 						</Overlay.Hover>
 
-						<Overlay.Popup positioning="top-center" offset={[0, -15]} autoPan>
-							<TooltipSelect name={location.name} type={location.type} />
+						<Overlay.Popup>
+							<TooltipSelect {...location} />
 						</Overlay.Popup>
 					</Feature.Point>
 				{/each}

@@ -13,7 +13,7 @@
 	});
 </script>
 
-<div class="h-[60dvh] w-full overflow-hidden rounded-lg border">
+<div class="map-container">
 	<View bind:center={mapCenter} bind:zoom={mapZoom} {projection}>
 		<Map class="h-full w-full">
 			<Layer.Static

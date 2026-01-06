@@ -47,7 +47,7 @@
 		<h3 class="mt-6 mb-2 text-lg font-semibold">{theme.name}</h3>
 		<p class="text-muted-foreground mb-4 text-sm italic">{theme.description}</p>
 
-		<div class="h-100 overflow-hidden rounded-lg border">
+		<div class="map-container">
 			<Map {view}>
 				<Layer.Tile
 					source="xyz"

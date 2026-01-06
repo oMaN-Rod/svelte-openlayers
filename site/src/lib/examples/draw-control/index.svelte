@@ -129,7 +129,7 @@
 	</Card.Root>
 
 	<!-- Map -->
-	<div class="relative h-125 w-full overflow-hidden rounded-lg border">
+	<div class="map-container">
 		<View bind:center bind:zoom>
 			<Map class="h-full w-full">
 				<Layer.Tile

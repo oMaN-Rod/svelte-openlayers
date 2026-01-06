@@ -9,7 +9,7 @@
 	useThemeMapSource(() => tileLayer);
 </script>
 
-<div class="relative h-96 w-full overflow-hidden rounded-lg border">
+<div class="map-container">
 	<View center={DEFAULT_CENTER} zoom={DEFAULT_ZOOM}>
 		<Map class="h-full w-full">
 			<Layer.Tile

@@ -114,7 +114,7 @@
 	</div>
 </div>
 
-<div class="relative h-[500px] w-full overflow-hidden rounded-lg border">
+<div class="map-container">
 	<View bind:center bind:zoom>
 		<Map class="h-full w-full" pointermove={handlePointerMove}>
 			<Layer.Tile

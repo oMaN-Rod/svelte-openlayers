@@ -13,22 +13,6 @@
 	} from '@lucide/svelte';
 
 	let { ...props }: { [key: string]: any } = $props();
-
-	// Known metadata fields for map applications
-	const knownFields = [
-		'geometry',
-		'name',
-		'type',
-		'image',
-		'rating',
-		'reviews',
-		'hours',
-		'address',
-		'phone',
-		'website',
-		'priceLevel',
-		'description'
-	];
 </script>
 
 <Card.Root class="w-64 overflow-hidden rounded-sm py-0 shadow-lg">
@@ -116,13 +100,6 @@
 				</a>
 			</div>
 		{/if}
-
-		{#each Object.entries(props).filter(([key]) => !knownFields.includes(key)) as [key, value]}
-			<div class="text-muted-foreground flex items-center justify-between text-sm">
-				<span class="font-medium">{key}:</span>
-				<span class="truncate">{value}</span>
-			</div>
-		{/each}
 	</Card.Content>
 
 	<Card.Footer class="gap-2 px-3 py-3">

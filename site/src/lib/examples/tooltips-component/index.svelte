@@ -2,16 +2,16 @@
 	import { Feature, Layer, Map, Overlay, View } from 'svelte-openlayers';
 	import { themeMapSource, useThemeMapSource } from '../_shared/data/map-sources.svelte';
 	import { TooltipHover, TooltipSelect } from '../_shared';
-	import { landmarks, DEFAULT_CENTER, DEFAULT_ZOOM } from './data';
 	import { pointStyle, hoverStyle, selectedStyle } from '../_shared/styles';
 	import type TileLayer from 'ol/layer/Tile';
+	import { locationsEU, DEFAULT_CENTER_EU, DEFAULT_ZOOM } from '../_shared/data/locations';
 
 	let tileLayer = $state<TileLayer | null>(null);
 	useThemeMapSource(() => tileLayer);
 </script>
 
-<div class="relative h-105 w-full overflow-hidden rounded-lg border">
-	<View center={DEFAULT_CENTER} zoom={DEFAULT_ZOOM}>
+<div class="map-container">
+	<View center={DEFAULT_CENTER_EU} zoom={DEFAULT_ZOOM}>
 		<Map class="h-full w-full">
 			<Layer.Tile
 				source="xyz"
@@ -21,9 +21,9 @@
 			/>
 
 			<Layer.Vector>
-				{#each landmarks as landmark}
+				{#each locationsEU as landmark}
 					<Feature.Point
-						coordinates={landmark.coordinates}
+						coordinates={landmark.coords}
 						style={pointStyle}
 						{hoverStyle}
 						{selectedStyle}
@@ -38,13 +38,7 @@
 						</Overlay.Hover>
 
 						<Overlay.Popup positioning="center-left">
-							<TooltipSelect
-								name={landmark.name}
-								type={landmark.type}
-								height={landmark.height}
-								built={landmark.built}
-								visitors={landmark.visitors}
-							/>
+							<TooltipSelect {...landmark} />
 						</Overlay.Popup>
 					</Feature.Point>
 				{/each}

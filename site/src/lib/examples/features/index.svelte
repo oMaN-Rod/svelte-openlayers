@@ -4,7 +4,7 @@
 	import { themeMapSource, useThemeMapSource } from '../_shared/data/map-sources.svelte';
 	import { Feature, Layer, Map, Overlay, View } from 'svelte-openlayers';
 	import type TileLayer from 'ol/layer/Tile';
-	import { locations, tourRoute, centralParkBoundary, DEFAULT_CENTER, DEFAULT_ZOOM } from './data';
+	import { tourRoute, centralParkBoundary, DEFAULT_CENTER, DEFAULT_ZOOM } from './data';
 	import {
 		pointStyle,
 		hoverStyle,
@@ -16,6 +16,7 @@
 		polygonHoverStyle,
 		polygonSelectedStyle
 	} from '../_shared/styles';
+	import { locationsUS } from '../_shared/data/locations';
 
 	let center = $state(DEFAULT_CENTER);
 	let zoom = $state(DEFAULT_ZOOM);
@@ -24,7 +25,7 @@
 	useThemeMapSource(() => tileLayer);
 </script>
 
-<div class="h-105 w-full overflow-hidden rounded-lg border">
+<div class="map-container">
 	<View bind:center bind:zoom>
 		<Map class="h-full w-full">
 			<Layer.Tile
@@ -50,10 +51,10 @@
 						console.log('Hovered over tour route');
 					}}
 				>
-					<Overlay.Hover offset={[15, 0]} positioning="center-left">
+					<Overlay.Hover>
 						<TooltipHover name="Tour Route" type="Route" />
 					</Overlay.Hover>
-					<Overlay.Popup positioning="center-left" offset={[0, 10]} autoPan>
+					<Overlay.Popup>
 						<TooltipSelect
 							name="Tour Route"
 							type="Route"
@@ -73,10 +74,10 @@
 						area: '3.4 sq km'
 					}}
 				>
-					<Overlay.Hover offset={[15, 0]} positioning="center-left">
+					<Overlay.Hover>
 						<TooltipHover name="Central Park" type="Park" />
 					</Overlay.Hover>
-					<Overlay.Popup positioning="center-left" offset={[0, 10]} autoPan>
+					<Overlay.Popup>
 						<TooltipSelect
 							name="Central Park"
 							type="Park"
@@ -88,7 +89,7 @@
 
 			<!-- Vector layer with point features -->
 			<Layer.Vector>
-				{#each locations as location}
+				{#each locationsUS as location}
 					<Feature.Point
 						coordinates={location.coords}
 						style={pointStyle}

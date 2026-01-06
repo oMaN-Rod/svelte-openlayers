@@ -76,7 +76,7 @@
 		</div>
 	</div>
 
-	<div class="h-100 overflow-hidden rounded-lg border" bind:this={mapElement}>
+	<div class="map-container" bind:this={mapElement}>
 		<View center={[2, 48]} zoom={5}>
 			<Map class="h-full w-full">
 				<Layer.Tile
@@ -95,7 +95,7 @@
 							selectedStyle={getSelectedStyle(theme)}
 							properties={feature}
 						>
-							<Overlay.Hover offset={[10, 0]} positioning="center-left">
+							<Overlay.Hover>
 								<div
 									class="rounded px-2 py-1 text-sm shadow"
 									style="background: var(--ol-tooltip-bg); color: var(--ol-tooltip-select-accent-color);"
@@ -104,7 +104,7 @@
 								</div>
 							</Overlay.Hover>
 
-							<Overlay.Popup positioning="top-center" offset={[0, -10]} autoPan>
+							<Overlay.Popup>
 								<div
 									class="rounded-lg p-3 shadow-lg"
 									style="background: var(--ol-tooltip-bg); color: var(--ol-tooltip-color);"

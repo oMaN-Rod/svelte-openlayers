@@ -105,7 +105,7 @@
 	</Card.Root>
 
 	<!-- Map -->
-	<div class="h-96 w-full overflow-hidden rounded-lg border">
+	<div class="map-container">
 		<View bind:center bind:zoom>
 			<Map class="h-full w-full">
 				<Layer.Tile

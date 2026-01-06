@@ -73,7 +73,7 @@
 	</div>
 </div>
 
-<div class="h-96 w-full overflow-hidden rounded-lg border">
+<div class="map-container">
 	<View center={DEFAULT_CENTER} zoom={DEFAULT_ZOOM}>
 		<Map class="h-full w-full">
 			<!-- Base Layer -->

@@ -76,7 +76,7 @@
 	</div>
 
 	<!-- Map -->
-	<div class="h-125 overflow-hidden rounded-lg border">
+	<div class="map-container">
 		<View center={DEFAULT_CENTER} zoom={DEFAULT_ZOOM}>
 			<Map class="h-full w-full">
 				<Layer.Tile
