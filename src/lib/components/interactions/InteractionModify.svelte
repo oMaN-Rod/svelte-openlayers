@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getMap } from '$lib/components/map/context.js';
 	import { getLayerContext } from '$lib/components/layers/context.js';
-	import { type InteractionModifyProps } from '$lib/types.js';
+	import { type InteractionModifyProps } from './types.js';
 	import Collection from 'ol/Collection.js';
 	import { Modify } from 'ol/interaction.js';
 	import type { Options } from 'ol/interaction/Modify.js';

@@ -6,6 +6,11 @@
 	import { defaults as defaultInteractions } from 'ol/interaction.js';
 	import { onMount } from 'svelte';
 	import { setMap } from './context.js';
+	import {
+		createHoverCoordinator,
+		setHoverCoordinator,
+		type HoverCoordinator
+	} from './hover-coordinator.js';
 
 	let {
 		class: className = null,
@@ -16,6 +21,7 @@
 		keyboardEventTarget,
 		maxTilesLoading = 16,
 		moveTolerance = 1,
+		exclusiveHover = true,
 		click,
 		dblclick,
 		pointerdrag,
@@ -41,6 +47,7 @@
 	}: MapProps = $props();
 
 	let mapContainer: HTMLDivElement;
+	let hoverCoordinator: HoverCoordinator | null = null;
 
 	onMount(() => {
 		if (mapContainer) {
@@ -81,8 +88,21 @@
 			if (precompose) map.on('precompose', precompose);
 			if (postcompose) map.on('postcompose', postcompose);
 			if (rendercomplete) map.on('rendercomplete', rendercomplete);
+
+			// Set up hover coordinator if exclusiveHover is enabled
+			if (exclusiveHover) {
+				hoverCoordinator = createHoverCoordinator(map);
+				setHoverCoordinator(hoverCoordinator);
+				hoverCoordinator.setup();
+			}
 		}
 		return () => {
+			// Clean up hover coordinator
+			if (hoverCoordinator) {
+				hoverCoordinator.cleanup();
+				hoverCoordinator = null;
+			}
+
 			if (!map) {
 				return;
 			}

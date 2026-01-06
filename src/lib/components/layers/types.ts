@@ -58,6 +58,7 @@ export interface LayerVectorProps {
 	updateWhileAnimating?: boolean;
 	updateWhileInteracting?: boolean;
 	renderBuffer?: number;
+	hitTolerance?: number;
 	layer?: VectorLayer<any> | null;
 	source?: VectorSource | null;
 	children?: Snippet;
@@ -71,6 +72,7 @@ export interface LayerWebGLProps {
 	maxZoom?: number;
 	style?: FlatStyleLike;
 	variables?: StyleVariables;
+	hitTolerance?: number;
 	layer?: WebGLVectorLayer<any> | null;
 	source?: VectorSource | null;
 	children?: Snippet;

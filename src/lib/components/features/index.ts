@@ -3,6 +3,8 @@ import FeatureLineString from './FeatureLineString.svelte';
 import FeaturePolygon from './FeaturePolygon.svelte';
 
 export * from './types.js';
+export * from './event-context.js';
+export * from './feature-context.js';
 
 export const Feature = {
 	Point: FeaturePoint,

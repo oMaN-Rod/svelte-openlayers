@@ -13,6 +13,7 @@ export interface MapProps extends HTMLAttributes<HTMLDivElement> {
 	keyboardEventTarget?: HTMLElement;
 	maxTilesLoading?: number;
 	moveTolerance?: number;
+	exclusiveHover?: boolean;
 	click?: (evt: MapBrowserEvent) => void;
 	dblclick?: (evt: MapBrowserEvent) => void;
 	pointerdrag?: (evt: MapBrowserEvent) => void;
