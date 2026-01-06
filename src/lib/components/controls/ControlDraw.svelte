@@ -324,77 +324,64 @@
 
 <style>
 	.ol-control-draw {
-		top: var(--ol-draw-control-top, auto);
-		right: var(--ol-draw-control-right, auto);
-		bottom: var(--ol-draw-control-bottom, auto);
-		left: var(--ol-draw-control-left, auto);
-		background-color: transparent !important;
-		margin: var(--ol-space-2);
-		pointer-events: none !important;
+		display: flex;
+		flex-direction: column;
+		top: var(--ol-draw-control-top);
+		left: var(--ol-draw-control-left);
+		width: var(--ol-draw-control-width);
+		height: var(--ol-draw-control-height);
+		border-radius: var(--ol-draw-control-border-radius);
+		padding: var(--ol-draw-control-padding);
 	}
 
 	.ol-control-draw-button {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--ol-draw-button-gap);
-		padding: var(--ol-draw-button-padding);
-		border: none;
-		background: var(--ol-draw-button-bg);
-		border-radius: var(--ol-draw-button-border-radius);
 		cursor: pointer;
-		font-size: var(--ol-draw-button-font-size);
-		font-family: var(--ol-draw-button-font-family);
-		font-weight: var(--ol-draw-button-font-weight);
+		font-size: inherit;
+		font-weight: bold;
+		text-decoration: none;
+		text-align: center;
+		box-sizing: border-box;
+		transition: background-color 150ms ease;
+		margin: var(--ol-draw-button-margin);
+		padding: var(--ol-draw-button-padding);
+		border: var(--ol-draw-button-border);
+		background-color: var(--ol-draw-button-bg);
 		color: var(--ol-draw-button-color);
-		transition: all var(--ol-draw-button-transition) ease;
 		width: var(--ol-draw-button-width);
 		height: var(--ol-draw-button-height);
-		min-width: var(--ol-draw-button-min-width);
-		text-align: center;
-		white-space: nowrap;
-		outline: none;
-		position: relative;
-		box-sizing: border-box;
-		pointer-events: auto;
+		line-height: var(--ol-draw-button-line-height);
 	}
 
-	.ol-control-draw-button:hover {
-		background: var(--ol-draw-button-bg-hover);
-		color: var(--ol-draw-button-color-hover);
+	.ol-control-draw-button:first-child {
+		border-radius: var(--ol-draw-button-border-radius-first);
+	}
+
+	.ol-control-draw-button:last-child {
+		border-radius: var(--ol-draw-button-border-radius-last);
+	}
+
+	.ol-control-draw-button:hover,
+	.ol-control-draw-button:focus {
+		text-decoration: none;
+		color: var(--ol-color-foreground);
+		background-color: color-mix(in srgb, var(--ol-draw-button-bg) 90%, black);
 	}
 
 	.ol-control-draw-button.active {
-		background: var(--ol-draw-button-bg-active);
-		color: var(--ol-draw-button-color-active);
+		background-color: var(--ol-color-primary);
+		color: var(--ol-color-surface);
 	}
 
-	.ol-control-draw-button.active:hover {
-		background: var(--ol-draw-button-bg-active);
-		opacity: 0.9;
+	:global(.dark) .ol-control-draw-button.active {
+		color: var(--ol-color-surface-foreground);
 	}
 
-	:global(.ol-control-draw-icon) {
-		font-size: var(--ol-draw-icon-size);
-		font-weight: var(--ol-draw-icon-weight);
-		width: var(--ol-draw-icon-width, 16px);
-		height: var(--ol-draw-icon-height, 16px);
-		text-align: center;
-		flex-shrink: 0;
-		color: inherit;
-	}
-
-	:global(.ol-control-draw-icon svg) {
-		color: inherit;
-		fill: currentColor;
-		stroke: currentColor;
-	}
-
-	@media (max-width: 640px) {
-		.ol-control-draw {
-			--ol-draw-control-padding: var(--ol-space-0-5, 2px);
-			--ol-draw-button-padding: var(--ol-space-1-5, 6px) var(--ol-space-2, 8px);
-			--ol-draw-button-min-width: 36px;
-		}
+	.ol-control-draw-button.active:hover,
+	.ol-control-draw-button.active:focus {
+		background-color: var(--ol-color-primary);
+		outline: 1px solid var(--ol-foreground-color);
 	}
 </style>
