@@ -139,7 +139,6 @@
 			map.setTarget(undefined);
 			map.dispose();
 			map = null;
-			map = null;
 		};
 	});
 	$effect(() => {
