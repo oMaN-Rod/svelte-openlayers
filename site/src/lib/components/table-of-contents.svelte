@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { page } from '$app/stores';
+	import { Badge } from '$lib/components/ui/badge';
 
 	interface TocItem {
 		id: string;
 		text: string;
 		level: number;
+		beta: boolean;
 	}
 
 	let tocItems = $state<TocItem[]>([]);
@@ -39,10 +41,15 @@
 							.replace(/\s+/g, '-') || '';
 				}
 
+				const rawText = element.textContent || '';
+				const isBeta = /\bBeta\b/i.test(rawText);
+				const cleanText = rawText.replace(/\s*Beta\s*/gi, '').trim();
+
 				items.push({
 					id: element.id,
-					text: element.textContent || '',
-					level: parseInt(element.tagName[1])
+					text: cleanText,
+					level: parseInt(element.tagName[1]),
+					beta: isBeta
 				});
 			});
 
@@ -104,7 +111,7 @@
 					<li style="padding-left: {(item.level - 2) * 0.75}rem" class="relative">
 						<button
 							onclick={() => scrollToSection(item.id)}
-							class="hover:bg-muted/50 block w-full rounded-md px-3 py-1.5 text-left transition-colors {activeId ===
+							class="hover:bg-muted/50 flex w-full items-center justify-between gap-2 rounded-md px-3 py-1.5 text-left transition-colors {activeId ===
 							item.id
 								? 'text-primary bg-muted/50 font-medium'
 								: 'text-muted-foreground hover:text-foreground'}"
@@ -114,7 +121,10 @@
 									class="bg-primary absolute top-1/2 left-0 h-4 w-0.5 -translate-y-1/2 rounded-full"
 								></span>
 							{/if}
-							{item.text}
+							<span>{item.text}</span>
+							{#if item.beta}
+								<Badge variant="outline" class="ml-auto text-[10px] px-1.5 py-0">Beta</Badge>
+							{/if}
 						</button>
 					</li>
 				{/each}
