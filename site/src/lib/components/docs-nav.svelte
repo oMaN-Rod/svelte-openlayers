@@ -37,7 +37,8 @@
 				{ title: 'Layers', href: resolve('/docs/components/layers') },
 				{ title: 'Features', href: resolve('/docs/components/features') },
 				{ title: 'Interactions', href: resolve('/docs/components/interactions') },
-				{ title: 'Overlays', href: resolve('/docs/components/overlays') }
+				{ title: 'Overlays', href: resolve('/docs/components/overlays') },
+				{ title: 'Controls', href: resolve('/docs/components/controls') }
 			]
 		},
 		{
