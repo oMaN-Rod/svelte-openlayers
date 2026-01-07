@@ -96,6 +96,7 @@ Displays a single static image as a map layer with a custom projection and exten
 | `preload`      | `number`                 | `0`         | Preload the image                     |
 | `layer`        | `ImageLayer &#124; null` | `null`      | Bindable layer instance (read-only)   |
 | `attributions` | `string &#124; string[]` | `undefined` | Layer attributions                    |
+| `crossOrigin`  | `string &#124; null`     | `undefined` | Cross-origin setting for CORS         |
 
 ### Use Cases {.toc}
 

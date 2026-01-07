@@ -363,9 +363,8 @@ import { createCircleStyle } from 'svelte-openlayers/utils';
 
 const pointStyle = createCircleStyle({
 	radius: 8,
-	fill: '#4338ca',
-	stroke: '#ffffff',
-	strokeWidth: 2,
+	fill: { color: '#4338ca' },
+	stroke: { color: '#ffffff', width: 2 },
 	displacement: [0, 0],
 	scale: 1
 });
@@ -374,9 +373,8 @@ const pointStyle = createCircleStyle({
 **CircleStyleOptions Interface:**
 
 - `radius: number` - Circle radius in pixels
-- `fill?: Color | string` - Fill color (optional)
-- `stroke?: Color | string` - Stroke color (optional)
-- `strokeWidth?: number` - Stroke width in pixels (optional)
+- `fill?: FillStyleOptions` - Fill options object with `color` property (optional)
+- `stroke?: StrokeStyleOptions` - Stroke options object with `color`, `width`, etc. (optional)
 - `displacement?: number[]` - Offset from anchor point (optional)
 - `scale?: number | Size` - Scale factor or size (optional)
 
@@ -497,9 +495,8 @@ const complexStyle = createStyle({
 	stroke: { color: '#4338ca', width: 2 },
 	image: {
 		radius: 6,
-		fill: '#4338ca',
-		stroke: '#ffffff',
-		strokeWidth: 2
+		fill: { color: '#4338ca' },
+		stroke: { color: '#ffffff', width: 2 }
 	},
 	text: {
 		text: 'Label',

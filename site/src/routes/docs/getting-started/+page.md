@@ -51,14 +51,13 @@ Svelte OpenLayers is in active development. Here's what's currently implemented:
 - **Map**: `View`, `Map`
 - **Layers**: `Layer.Tile`, `Layer.Vector`, `Layer.WebGL`, `Layer.Static`
 - **Features**: `Feature.Point`, `Feature.LineString`, `Feature.Polygon`
-- **Interactions**: `Interaction.Select`, `Interaction.Hover`, `Interaction.Draw`
-- **Controls**: `Control.Draw`
-- **Overlays**: `Overlay.Tooltip`, `TooltipManager`
+- **Interactions**: `Interaction.Select`, `Interaction.Hover`, `Interaction.Draw`, `Interaction.Modify`
+- **Controls**: `Control.Draw`, `Control.FeaturePanel`
+- **Overlays**: `Overlay.Tooltip`, `Overlay.TooltipManager`
 
 ### Coming Soon
 
 - Additional layer types (VectorTile, Image, WMS)
-- Modify and Translate interactions
-- Popup overlays and custom markers
+- Translate interactions
 - Additional control components
 - Animation utilities

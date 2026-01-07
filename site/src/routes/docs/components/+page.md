@@ -35,18 +35,22 @@ Handle user interactions with the map:
 - **Interaction.Select** - Feature selection
 - **Interaction.Hover** - Feature hover detection
 - **Interaction.Draw** - Drawing new features
+- **Interaction.Modify** - Modify existing features
 
 ### Control Components {.toc}
 
 Map control UI components:
 
-- **Control.Draw** - Drawing control toolbar
+- **Control.Draw** - Comprehensive drawing control with toolbar and properties panel
+- **Control.FeaturePanel** - Standalone feature properties editor
 
 ### Overlay Components {.toc}
 
 Display HTML content positioned on the map:
 
 - **Overlay.Tooltip** - Tooltips anchored to coordinates
+- **Overlay.Hover** - Auto-positioned hover overlays for features
+- **Overlay.Popup** - Auto-positioned popup overlays for selected features
 - **Overlay.TooltipManager** - Automatic tooltip management for hover/select
 
 ## Component Patterns {.toc}

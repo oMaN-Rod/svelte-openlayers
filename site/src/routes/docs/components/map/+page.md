@@ -142,17 +142,18 @@ The main map container that creates the OpenLayers map instance. It must be plac
 
 ### Props {.toc}
 
-| Prop                  | Type                          | Default     | Description                          |
-| --------------------- | ----------------------------- | ----------- | ------------------------------------ |
-| `class`               | `string`                      | `undefined` | CSS classes for the map container    |
-| `view`                | `View`                        | `undefined` | OpenLayers View instance (optional)  |
-| `controls`            | `ControlOptions`              | `{}`        | Default controls configuration       |
-| `interactions`        | `InteractionOptions`          | `{}`        | Default interactions configuration   |
-| `pixelRatio`          | `number`                      | `undefined` | Device pixel ratio                   |
-| `keyboardEventTarget` | `HTMLElement &#124; Document` | `undefined` | Keyboard event target                |
-| `maxTilesLoading`     | `number`                      | `16`        | Maximum tiles loading simultaneously |
-| `moveTolerance`       | `number`                      | `1`         | Move tolerance in pixels             |
-| `map`                 | `Map &#124; null`             | `null`      | Bindable OpenLayers Map instance     |
+| Prop                  | Type                          | Default     | Description                                                           |
+| --------------------- | ----------------------------- | ----------- | --------------------------------------------------------------------- |
+| `class`               | `string`                      | `undefined` | CSS classes for the map container                                     |
+| `view`                | `View`                        | `undefined` | OpenLayers View instance (optional)                                   |
+| `controls`            | `ControlOptions`              | `{}`        | Default controls configuration                                        |
+| `interactions`        | `InteractionOptions`          | `{}`        | Default interactions configuration                                    |
+| `pixelRatio`          | `number`                      | `undefined` | Device pixel ratio                                                    |
+| `keyboardEventTarget` | `HTMLElement &#124; Document` | `undefined` | Keyboard event target                                                 |
+| `maxTilesLoading`     | `number`                      | `16`        | Maximum tiles loading simultaneously                                  |
+| `moveTolerance`       | `number`                      | `1`         | Move tolerance in pixels                                              |
+| `exclusiveHover`      | `boolean`                     | `true`      | When enabled, only one feature is hovered at a time across all layers |
+| `map`                 | `Map &#124; null`             | `null`      | Bindable OpenLayers Map instance                                      |
 
 ### Events {.toc}
 
@@ -285,40 +286,3 @@ Map includes built-in controls that can be configured via the `controls` prop.
 	</Map>
 </View>
 ```
-
-### Control.Draw {.toc}
-
-A drawing control toolbar for creating features on the map. See the [Interactions documentation](/docs/components/interactions) for the `Interaction.Draw` component.
-
-```svelte
-<script>
-	import { Map, Layer, View, Control } from 'svelte-openlayers';
-	import VectorSource from 'ol/source/Vector.js';
-
-	let drawType = $state('Point');
-	let vectorSource: VectorSource | null = $state(null);
-</script>
-
-<View center={[0, 0]} zoom={2}>
-	<Map>
-		<Layer.Tile source="osm" />
-		<Layer.Vector bind:source={vectorSource}>
-			<Control.Draw
-				bind:type={drawType}
-				source={vectorSource}
-				onDrawEnd={(evt) => console.log('Drew:', evt.feature)}
-			/>
-		</Layer.Vector>
-	</Map>
-</View>
-```
-
-| Prop           | Type                                                           | Default     | Description                      |
-| -------------- | -------------------------------------------------------------- | ----------- | -------------------------------- |
-| `type`         | `'Point' &#124; 'LineString' &#124; 'Polygon' &#124; 'Circle'` | `'Point'`   | Drawing type (bindable)          |
-| `source`       | `VectorSource`                                                 | `null`      | Vector source for drawn features |
-| `style`        | `StyleLike &#124; FlatStyleLike`                               | `undefined` | Style for sketch features        |
-| `onDrawStart`  | `(evt: DrawEvent) => void`                                     | `undefined` | Drawing started callback         |
-| `onDrawEnd`    | `(evt: DrawEvent) => void`                                     | `undefined` | Drawing completed callback       |
-| `onDrawAbort`  | `(evt: DrawEvent) => void`                                     | `undefined` | Drawing aborted callback         |
-| `onTypeChange` | `(type: string) => void`                                       | `undefined` | Type changed callback            |
