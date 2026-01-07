@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { InteractionSelectProps } from '$lib/types.js';
-	import { getMapContext } from '$lib/utils/context.js';
+	import { getMap } from '$lib/components/map/context.js';
+	import type { InteractionSelectProps } from './types.js';
 	import { ReactiveCollection } from '$lib/utils/reactive-collection.js';
+	import Collection from 'ol/Collection.js';
 	import { Select } from 'ol/interaction.js';
 	import type { Options } from 'ol/interaction/Select.js';
-	import Collection from 'ol/Collection.js';
 	import { onMount } from 'svelte';
 
 	let {
@@ -22,7 +22,7 @@
 		reactive = true
 	}: InteractionSelectProps = $props();
 
-	const mapContext = getMapContext();
+	const map = getMap();
 	let selectInteraction: Select | null = null;
 
 	onMount(() => {
@@ -66,14 +66,14 @@
 				onSelect(evt.selected);
 			});
 		}
-		mapContext.addInteraction(selectInteraction);
+		map?.addInteraction(selectInteraction);
 
 		return () => {
 			if (selectInteraction) {
 				if (selectedFeatures instanceof ReactiveCollection) {
 					selectedFeatures.unbindInteraction();
 				}
-				mapContext.removeInteraction(selectInteraction);
+				map?.removeInteraction(selectInteraction);
 				selectInteraction.getFeatures().clear();
 				selectInteraction = null;
 				interaction = null;

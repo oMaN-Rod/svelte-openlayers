@@ -2,6 +2,67 @@
 
 Feature components represent vector geometries that can be displayed, styled, and interacted with on the map. They must be placed inside a `Layer.Vector` component.
 
+## Interactive Features {.toc}
+
+All feature components support built-in interactive event handlers and styling. You can attach event callbacks and define special styles for hover and selection states directly on the feature.
+
+### Event Callbacks {.toc}
+
+| Event        | Type                                                 | Description                            |
+| ------------ | ---------------------------------------------------- | -------------------------------------- |
+| `onHover`    | `(feature: Feature, coordinate: Coordinate) => void` | Fired when pointer hovers over feature |
+| `onHoverEnd` | `(feature: Feature) => void`                         | Fired when pointer leaves feature      |
+| `onClick`    | `(feature: Feature, coordinate: Coordinate) => void` | Fired when feature is clicked          |
+| `onSelect`   | `(feature: Feature) => void`                         | Fired when feature is selected         |
+| `onDeselect` | `(feature: Feature) => void`                         | Fired when feature is deselected       |
+
+### Interactive Styles {.toc}
+
+| Prop            | Type        | Description                    |
+| --------------- | ----------- | ------------------------------ |
+| `hoverStyle`    | `StyleLike` | Style when feature is hovered  |
+| `selectedStyle` | `StyleLike` | Style when feature is selected |
+
+### Example with Events {.toc}
+
+```svelte
+<script>
+	import { Feature, Layer } from 'svelte-openlayers';
+
+	function handleHover(feature, coordinate) {
+		console.log('Hovering over feature');
+	}
+
+	function handleClick(feature, coordinate) {
+		console.log('Clicked feature)}');
+	}
+
+	const baseStyle = {
+		circle: { radius: 8, fill: { color: '#3b82f6' } }
+	};
+
+	const hoverStyle = {
+		circle: { radius: 10, fill: { color: '#10b981' } }
+	};
+
+	const selectedStyle = {
+		circle: { radius: 12, fill: { color: '#ef4444' } }
+	};
+</script>
+
+<Layer.Vector>
+	<Feature.Point
+		coordinates={[-74.0, 40.7]}
+		properties={{ name: 'New York' }}
+		style={baseStyle}
+		{hoverStyle}
+		{selectedStyle}
+		onHover={handleHover}
+		onClick={handleClick}
+	/>
+</Layer.Vector>
+```
+
 ## Feature.Point {.toc}
 
 Displays point locations on the map.
@@ -10,29 +71,42 @@ Displays point locations on the map.
 
 ```svelte
 <script>
-	import { Map, Layer, Feature } from 'svelte-openlayers';
+	import { View, Map, Layer, Feature } from 'svelte-openlayers';
 </script>
 
-<Map.Root>
-	<Map.View center={[0, 0]} zoom={2} />
-	<Layer.Tile source="osm" />
-	<Layer.Vector>
-		<Feature.Point coordinates={[0, 0]} />
-	</Layer.Vector>
-</Map.Root>
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Feature.Point coordinates={[0, 0]} />
+		</Layer.Vector>
+	</Map>
+</View>
 ```
 
 ### Props {.toc}
 
-| Prop          | Type                  | Default     | Description                             |
-| ------------- | --------------------- | ----------- | --------------------------------------- |
-| `coordinates` | `[number, number]`    | `[0, 0]`    | Point coordinates [longitude, latitude] |
-| `projection`  | `string`              | `undefined` | Coordinate projection                   |
-| `style`       | `StyleLike`           | `undefined` | Point styling                           |
-| `properties`  | `Record<string, any>` | `{}`        | Feature properties/attributes           |
-| `feature`     | `Feature &#124; null` | `null`      | Bindable feature instance (read-only)   |
+| Prop            | Type                  | Default     | Description                             |
+| --------------- | --------------------- | ----------- | --------------------------------------- |
+| `coordinates`   | `[number, number]`    | `[0, 0]`    | Point coordinates [longitude, latitude] |
+| `projection`    | `string`              | `undefined` | Coordinate projection                   |
+| `style`         | `StyleLike`           | `undefined` | Point styling                           |
+| `hoverStyle`    | `StyleLike`           | `undefined` | Style when hovered                      |
+| `selectedStyle` | `StyleLike`           | `undefined` | Style when selected                     |
+| `properties`    | `Record<string, any>` | `{}`        | Feature properties/attributes           |
+| `feature`       | `Feature &#124; null` | `null`      | Bindable feature instance (read-only)   |
+| `onHover`       | `Function`            | `undefined` | Hover event callback                    |
+| `onHoverEnd`    | `Function`            | `undefined` | Hover end callback                      |
+| `onClick`       | `Function`            | `undefined` | Click event callback                    |
+| `onSelect`      | `Function`            | `undefined` | Select event callback                   |
+| `onDeselect`    | `Function`            | `undefined` | Deselect event callback                 |
 
-> **Note:** Feature events are not currently implemented. Use interaction components like Interaction.Select and Interaction.Hover for feature interaction handling.
+### Child Components {.toc}
+
+Features can contain overlay components that appear during interactions:
+
+- `Overlay.Hover`: Appears when the feature is hovered
+- `Overlay.Popup`: Appears when the feature is selected
 
 ### Styled Points {.toc}
 
@@ -84,13 +158,20 @@ Displays lines and paths on the map.
 
 ### Props {.toc}
 
-| Prop          | Type                      | Default     | Description                           |
-| ------------- | ------------------------- | ----------- | ------------------------------------- |
-| `coordinates` | `Array<[number, number]>` | `[]`        | Line coordinates                      |
-| `projection`  | `string`                  | `undefined` | Coordinate projection                 |
-| `style`       | `StyleLike`               | `undefined` | Line styling                          |
-| `properties`  | `Record<string, any>`     | `{}`        | Feature properties/attributes         |
-| `feature`     | `Feature &#124; null`     | `null`      | Bindable feature instance (read-only) |
+| Prop            | Type                      | Default     | Description                           |
+| --------------- | ------------------------- | ----------- | ------------------------------------- |
+| `coordinates`   | `Array<[number, number]>` | `[]`        | Line coordinates                      |
+| `projection`    | `string`                  | `undefined` | Coordinate projection                 |
+| `style`         | `StyleLike`               | `undefined` | Line styling                          |
+| `hoverStyle`    | `StyleLike`               | `undefined` | Style when hovered                    |
+| `selectedStyle` | `StyleLike`               | `undefined` | Style when selected                   |
+| `properties`    | `Record<string, any>`     | `{}`        | Feature properties/attributes         |
+| `feature`       | `Feature &#124; null`     | `null`      | Bindable feature instance (read-only) |
+| `onHover`       | `Function`                | `undefined` | Hover event callback                  |
+| `onHoverEnd`    | `Function`                | `undefined` | Hover end callback                    |
+| `onClick`       | `Function`                | `undefined` | Click event callback                  |
+| `onSelect`      | `Function`                | `undefined` | Select event callback                 |
+| `onDeselect`    | `Function`                | `undefined` | Deselect event callback               |
 
 ### Route Example {.toc}
 
@@ -147,13 +228,20 @@ Displays areas and boundaries on the map.
 
 ### Props {.toc}
 
-| Prop          | Type                             | Default     | Description                                 |
-| ------------- | -------------------------------- | ----------- | ------------------------------------------- |
-| `coordinates` | `Array<Array<[number, number]>>` | `[]`        | Polygon coordinates (exterior ring + holes) |
-| `projection`  | `string`                         | `undefined` | Coordinate projection                       |
-| `style`       | `StyleLike`                      | `undefined` | Polygon styling                             |
-| `properties`  | `Record<string, any>`            | `{}`        | Feature properties/attributes               |
-| `feature`     | `Feature &#124; null`            | `null`      | Bindable feature instance (read-only)       |
+| Prop            | Type                             | Default     | Description                                 |
+| --------------- | -------------------------------- | ----------- | ------------------------------------------- |
+| `coordinates`   | `Array<Array<[number, number]>>` | `[]`        | Polygon coordinates (exterior ring + holes) |
+| `projection`    | `string`                         | `undefined` | Coordinate projection                       |
+| `style`         | `StyleLike`                      | `undefined` | Polygon styling                             |
+| `hoverStyle`    | `StyleLike`                      | `undefined` | Style when hovered                          |
+| `selectedStyle` | `StyleLike`                      | `undefined` | Style when selected                         |
+| `properties`    | `Record<string, any>`            | `{}`        | Feature properties/attributes               |
+| `feature`       | `Feature &#124; null`            | `null`      | Bindable feature instance (read-only)       |
+| `onHover`       | `Function`                       | `undefined` | Hover event callback                        |
+| `onHoverEnd`    | `Function`                       | `undefined` | Hover end callback                          |
+| `onClick`       | `Function`                       | `undefined` | Click event callback                        |
+| `onSelect`      | `Function`                       | `undefined` | Select event callback                       |
+| `onDeselect`    | `Function`                       | `undefined` | Deselect event callback                     |
 
 ### Polygon with Hole {.toc}
 

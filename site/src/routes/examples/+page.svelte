@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { base, resolve } from '$app/paths';
+	import { resolve } from '$app/paths';
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Badge } from '$lib/components/ui/badge/index.js';
-	import { getSortedCategoriesWithExamples } from '$lib/examples/sources';
+	import { getSortedCategoriesWithExamples } from '$lib/examples/registry';
+	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 
 	const categoriesWithExamples = getSortedCategoriesWithExamples();
 	const allExamples = categoriesWithExamples.flatMap((cat) => cat.examples);
@@ -37,49 +38,47 @@
 		</p>
 	</div>
 
-	<div class="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+	<div class="mb-12 flex flex-col gap-4">
 		{#each allExamples as example}
 			{@const Icon = example.icon}
-			<Card.Root class="transition-shadow hover:shadow-lg">
-				<Card.Header>
-					<div class="flex items-start justify-between">
-						<div class="flex items-center gap-3">
-							<div class="bg-primary/10 rounded-lg p-2">
-								<Icon class="h-5 w-5" />
-							</div>
-							<div>
-								<Card.Title class="mb-1 text-xl">{example.title}</Card.Title>
-								<div class="mb-2 flex gap-2">
-									{#each example.tags as tag}
-										<Badge variant="secondary" class={tagColors[tag] || ''}>
-											{tag}
-										</Badge>
-									{/each}
-								</div>
-							</div>
+			<Card.Root class="group hover:border-primary/20 bg-card/50 transition-all hover:shadow-lg">
+				<div class="flex flex-col gap-2 p-2 sm:flex-row sm:items-center sm:justify-between">
+					<div class="flex flex-1 items-start gap-4">
+						<div class="bg-primary/10 group-hover:bg-primary/20 rounded-xl p-2 transition-colors">
+							<Icon class="text-primary h-6 w-6" />
 						</div>
-					</div>
-					<Card.Description class="text-base">
-						{example.description}
-					</Card.Description>
-				</Card.Header>
-				<Card.Content>
-					<div class="space-y-4">
-						<div>
-							<h4 class="text-muted-foreground mb-2 text-sm font-semibold">Key Concepts:</h4>
-							<div class="flex flex-wrap gap-1">
+						<div class="flex-1 space-y-2">
+							<div class="flex flex-wrap items-center gap-2">
+								<h3 class="text-lg font-semibold">{example.title}</h3>
+								{#each example.tags as tag}
+									<Badge variant="secondary" class={tagColors[tag] || ''}>
+										{tag}
+									</Badge>
+								{/each}
+							</div>
+							<p class="text-muted-foreground text-sm">
+								{example.description}
+							</p>
+							<div class="flex flex-wrap gap-1.5 pt-1">
 								{#each example.concepts as concept}
-									<code class="bg-muted rounded px-2 py-1 text-xs">
+									<code class="bg-muted rounded-md px-2 py-0.5 text-xs font-medium">
 										{concept}
 									</code>
 								{/each}
 							</div>
 						</div>
-						<Button href={`${resolve('/examples')}/${example.id}`} class="w-full">
+					</div>
+					<div class="sm:ml-4">
+						<Button
+							href={`${resolve('/examples')}/${example.id}`}
+							variant="outline"
+							class="group/btn gap-2"
+						>
 							View Example
+							<ArrowRight class="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" />
 						</Button>
 					</div>
-				</Card.Content>
+				</div>
 			</Card.Root>
 		{/each}
 	</div>

@@ -3,29 +3,27 @@
 // Style utilities
 export {
 	createCircleStyle,
-	createStrokeStyle,
-	createFillStyle,
-	createTextStyle,
+	createFeatureStyleFunction,
+	createFill,
 	createIconStyle,
+	createStroke,
 	createStyle,
-	type CircleStyleOptions,
-	type StrokeStyleOptions,
-	type FillStyleOptions,
-	type TextStyleOptions,
-	type IconStyleOptions
+	createStyleFromFeature,
+	createTextStyle,
+	isCircleStyleOptions,
+	isIconStyleOptions,
+	isRegularShapeOptions,
+	setDefaultStyleProperties
 } from './styles.js';
-
-// Context utilities
-export { setMapContext, getMapContext, setLayerContext, getLayerContext } from './context.js';
 
 // CSS utilities
 export {
 	getCSSVariable,
-	setCSSVariable,
 	getCSSVariables,
+	getOpenLayersTheme,
 	getThemePrimaryColor,
 	hasCSSVariable,
-	getOpenLayersTheme
+	setCSSVariable
 } from './css.js';
 
 // Collection utilities

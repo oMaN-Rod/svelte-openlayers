@@ -2,7 +2,7 @@
 	import DocsNav from '$lib/components/docs-nav.svelte';
 	import TableOfContents from '$lib/components/table-of-contents.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { Menu } from 'lucide-svelte';
+	import { Menu } from '@lucide/svelte';
 
 	let { children } = $props();
 	let mobileNavOpen = $state(false);
@@ -49,7 +49,7 @@
 	{/if}
 
 	<!-- Main content area -->
-	<div class="flex flex-1 overflow-x-hidden">
+	<div class="relative flex flex-1 overflow-x-hidden">
 		<!-- Content -->
 		<main class="mx-auto w-full max-w-6xl min-w-0 flex-1 px-4 py-8 sm:px-6 lg:px-10">
 			<div class="prose dark:prose-invert max-w-none overflow-x-hidden">
@@ -59,7 +59,7 @@
 
 		<!-- Right sidebar - Table of Contents -->
 		<aside class="hidden w-64 shrink-0 xl:block">
-			<div class="sticky top-16 overflow-y-auto p-6">
+			<div class="fixed top-16 h-[calc(100vh-4rem)] w-64 overflow-y-auto p-6">
 				<TableOfContents />
 			</div>
 		</aside>

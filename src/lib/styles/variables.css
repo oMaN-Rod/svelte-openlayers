@@ -43,6 +43,8 @@
 	--ol-space-8: 2rem; /* 32px */
 	--ol-space-10: 2.5rem; /* 40px */
 	--ol-space-12: 3rem; /* 48px */
+	--ol-space-16: 4rem; /* 64px */
+	--ol-space-20: 5rem; /* 80px */
 
 	/* === Typography === */
 	--ol-font-size-xs: 0.75rem; /* 12px */
@@ -125,25 +127,30 @@
 
 /* === Manual Dark Mode Class Support === */
 .dark {
+	/* Brand */
 	--ol-color-primary: #6366f1;
 	--ol-color-primary-foreground: #ffffff;
-	--ol-color-secondary: #6b7280;
+
+	--ol-color-secondary: #7b7b7b;
 	--ol-color-secondary-foreground: #ffffff;
 
 	/* Surface Colors */
-	--ol-color-background: #111827;
-	--ol-color-foreground: #f9fafb;
-	--ol-color-surface: #1f2937;
-	--ol-color-surface-foreground: #e5e7eb;
+	--ol-color-background: #181818;
+	--ol-color-foreground: #f5f5f5;
+
+	--ol-color-surface: #242424;
+	--ol-color-surface-foreground: #e6e6e6;
 
 	/* Semantic Colors */
-	--ol-color-muted: #374151;
-	--ol-color-muted-foreground: #9ca3af;
-	--ol-color-accent: #4b5563;
-	--ol-color-accent-foreground: #f9fafb;
+	--ol-color-muted: #2f2f2f;
+	--ol-color-muted-foreground: #a1a1a1;
+
+	--ol-color-accent: #3a3a3a;
+	--ol-color-accent-foreground: #fafafa;
 
 	/* Border & Input */
-	--ol-color-border: #4b5563;
-	--ol-color-input: #374151;
-	--ol-color-ring: #6b7280;
+	--ol-color-border: #3f3f3f;
+	--ol-color-input: #2a2a2a;
+
+	--ol-color-ring: #818cf8;
 }

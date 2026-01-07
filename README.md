@@ -18,16 +18,17 @@ bun add svelte-openlayers ol
 
 ```svelte
 <script>
-	import { Map, Layer, Feature } from 'svelte-openlayers';
+	import { Map, Layer, View } from 'svelte-openlayers';
 
 	let center = $state([-74.006, 40.7128]); // New York City
 	let zoom = $state(12);
 </script>
 
-<Map.Root class="map-container">
-	<Map.View bind:center bind:zoom />
-	<Layer.Tile source="osm" />
-</Map.Root>
+<View bind:center bind:zoom>
+	<Map class="map-container">
+		<Layer.Tile source="osm" />
+	</Map>
+</View>
 
 <style>
 	.map-container {

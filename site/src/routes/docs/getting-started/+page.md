@@ -23,13 +23,14 @@ Here's a simple example to get you started:
 
 ```svelte
 <script>
-	import { Map, Layer } from 'svelte-openlayers';
+	import { Map, Layer, View } from 'svelte-openlayers';
 </script>
 
-<Map.Root class="h-96 w-full">
-	<Map.View center={[-74.0, 40.7]} zoom={10} />
-	<Layer.Tile source="osm" />
-</Map.Root>
+<View center={[-74.0, 40.7]} zoom={10}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+	</Map>
+</View>
 ```
 
 This creates a basic map centered on New York City with an OpenStreetMap tile layer.
@@ -46,15 +47,17 @@ This creates a basic map centered on New York City with an OpenStreetMap tile la
 Svelte OpenLayers is in active development. Here's what's currently implemented:
 
 ### Components
-- **Map**: `Map.Root`, `Map.View`
-- **Layers**: `Layer.Tile`, `Layer.Vector`
+
+- **Map**: `View`, `Map`
+- **Layers**: `Layer.Tile`, `Layer.Vector`, `Layer.WebGL`, `Layer.Static`
 - **Features**: `Feature.Point`, `Feature.LineString`, `Feature.Polygon`
-- **Interactions**: `Interaction.Select`, `Interaction.Hover`
-- **Overlays**: `Overlay.Tooltip`, `TooltipManager`
+- **Interactions**: `Interaction.Select`, `Interaction.Hover`, `Interaction.Draw`, `Interaction.Modify`
+- **Controls**: `Control.Draw`, `Control.FeaturePanel`
+- **Overlays**: `Overlay.Tooltip`, `Overlay.TooltipManager`
 
 ### Coming Soon
+
 - Additional layer types (VectorTile, Image, WMS)
-- Drawing and editing interactions
-- Popup overlays and custom markers
-- Control components
+- Translate interactions
+- Additional control components
 - Animation utilities

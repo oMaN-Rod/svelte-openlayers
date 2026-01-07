@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
-	import { ArrowRight, BookOpen, Code2, Layers, Zap } from 'lucide-svelte';
+	import { ArrowRight, BookOpen, Code2, Layers, Zap } from '@lucide/svelte';
 </script>
 
 <div class="space-y-8">

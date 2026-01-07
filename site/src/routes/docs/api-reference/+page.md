@@ -4,80 +4,23 @@ Complete API documentation for all Svelte OpenLayers components.
 
 ## Map Components {.toc}
 
-### Map.Root {.toc}
+### View {.toc}
 
-Main map container component that creates the OpenLayers Map instance and provides context for child components.
-
-```typescript
-interface MapRootProps extends MapProps {
-	// Basic styling
-	class?: string;
-	style?: string;
-
-	// OpenLayers map options
-	target?: HTMLElement;
-	pixelRatio?: number;
-	keyboardEventTarget?: HTMLElement | Document;
-	maxTilesLoading?: number;
-	moveTolerance?: number;
-
-	// Built-in controls (boolean toggles)
-	zoomControl?: boolean; // default: true
-	attributionControl?: boolean; // default: true
-	rotateControl?: boolean; // default: false
-	mousePositionControl?: boolean; // default: false
-
-	// Bindable instances (read-only)
-	map?: Map | null; // bindable
-	view?: View | null; // bindable
-
-	// MapBrowserEvent handlers
-	onSingleclick?: (evt: MapBrowserEvent) => void;
-	onClick?: (evt: MapBrowserEvent) => void;
-	onDblclick?: (evt: MapBrowserEvent) => void;
-	onPointerdrag?: (evt: MapBrowserEvent) => void;
-	onPointermove?: (evt: MapBrowserEvent) => void;
-	onPointerdown?: (evt: MapBrowserEvent) => void;
-	onPointerup?: (evt: MapBrowserEvent) => void;
-	onPointerover?: (evt: MapBrowserEvent) => void;
-	onPointerout?: (evt: MapBrowserEvent) => void;
-	onPointerenter?: (evt: MapBrowserEvent) => void;
-	onPointerleave?: (evt: MapBrowserEvent) => void;
-	onPointercancel?: (evt: MapBrowserEvent) => void;
-
-	// MapEvent handlers
-	onPostrender?: (evt: MapEvent) => void;
-	onMovestart?: (evt: MapEvent) => void;
-	onMoveend?: (evt: MapEvent) => void;
-	onLoadstart?: (evt: MapEvent) => void;
-	onLoadend?: (evt: MapEvent) => void;
-
-	// RenderEvent handlers
-	onPrecompose?: (evt: RenderEvent) => void;
-	onPostcompose?: (evt: RenderEvent) => void;
-	onRendercomplete?: (evt: RenderEvent) => void;
-
-	// Children
-	children?: Snippet;
-}
-```
-
-### Map.View {.toc}
-
-Controls the map viewport including center, zoom, rotation, and projection.
+The top-level component that provides the OpenLayers View context to all child components. Wraps the Map component and configures projection, center, zoom, rotation, and extent.
 
 ```typescript
-interface MapViewProps extends ViewProps {
+interface ViewProps {
 	// View positioning
 	center?: Coordinate; // bindable, default: [0, 0]
-	zoom?: number; // bindable, default: 2
+	zoom?: number; // bindable, default: 5
 	rotation?: number; // bindable, default: 0
+	bbox?: Extent | null; // bindable, current view extent
 
 	// View constraints
 	projection?: ProjectionLike; // default: 'EPSG:3857'
 	minZoom?: number; // default: 0
 	maxZoom?: number; // default: 28
-	extent?: number[];
+	extent?: Extent; // constraining extent
 	constrainRotation?: boolean | number; // default: true
 	enableRotation?: boolean; // default: true
 
@@ -86,7 +29,82 @@ interface MapViewProps extends ViewProps {
 	onZoomChange?: (zoom: number | undefined) => void;
 	onRotationChange?: (rotation: number) => void;
 	onMoveEnd?: (evt: any) => void;
+
+	// Bindable instance (read-only)
+	view?: View | null; // bindable
+
+	// Children
+	children?: Snippet;
 }
+```
+
+### Map {.toc}
+
+The map container component that renders the OpenLayers map and provides map context to child components. Can be placed inside a `View` component (receives view from context) or separately with the `view` prop passed explicitly.
+
+```typescript
+interface MapProps extends HTMLAttributes<HTMLDivElement> {
+	// Basic styling (inherited from HTMLAttributes)
+	class?: string;
+	style?: string;
+
+	// View configuration
+	view?: View | null; // Optional external view (uses context if not provided)
+
+	// Controls and interactions (OpenLayers DefaultsOptions)
+	controls?: ControlOptions; // default: {} (uses OpenLayers defaults)
+	interactions?: InteractionOptions; // default: {} (uses OpenLayers defaults)
+
+	// OpenLayers map options
+	pixelRatio?: number;
+	keyboardEventTarget?: HTMLElement | Document;
+	maxTilesLoading?: number; // default: 16
+	moveTolerance?: number; // default: 1
+	exclusiveHover?: boolean; // default: true - only one feature hovered at a time across all layers
+
+	// Bindable instances (read-only)
+	map?: Map | null; // bindable
+
+	// Map events (use lowercase, no 'on' prefix)
+	click?: (evt: MapBrowserEvent) => void;
+	dblclick?: (evt: MapBrowserEvent) => void;
+	pointerdrag?: (evt: MapBrowserEvent) => void;
+	pointermove?: (evt: MapBrowserEvent) => void;
+	pointerdown?: (evt: MapBrowserEvent) => void;
+	pointerup?: (evt: MapBrowserEvent) => void;
+	pointerover?: (evt: MapBrowserEvent) => void;
+	pointerout?: (evt: MapBrowserEvent) => void;
+	pointerenter?: (evt: MapBrowserEvent) => void;
+	pointerleave?: (evt: MapBrowserEvent) => void;
+	pointercancel?: (evt: MapBrowserEvent) => void;
+
+	// MapEvent handlers
+	postrender?: (evt: MapEvent) => void;
+	movestart?: (evt: MapEvent) => void;
+	moveend?: (evt: MapEvent) => void;
+	loadstart?: (evt: MapEvent) => void;
+	loadend?: (evt: MapEvent) => void;
+
+	// RenderEvent handlers
+	precompose?: (evt: RenderEvent) => void;
+	postcompose?: (evt: RenderEvent) => void;
+	rendercomplete?: (evt: RenderEvent) => void;
+
+	// Children
+	children?: Snippet;
+}
+```
+
+**Controls and Interactions Configuration**:
+
+The `controls` and `interactions` props accept OpenLayers `DefaultsOptions` objects to configure which default controls/interactions to include:
+
+```typescript
+// ControlOptions example
+<Map controls={{ zoom: true, rotate: false, attribution: true }}>
+
+// InteractionOptions example
+<Map interactions={{ doubleClickZoom: false, dragPan: true }}>
 ```
 
 ## Layer Components {.toc}
@@ -163,7 +181,7 @@ interface LayerStaticProps {
 
 ```svelte
 <script>
-	import { Map, Layer } from 'svelte-openlayers';
+	import { View, Map, Layer } from 'svelte-openlayers';
 	import { Projection } from 'ol/proj.js';
 
 	const extent = [0, 0, 1024, 768];
@@ -174,10 +192,11 @@ interface LayerStaticProps {
 	});
 </script>
 
-<Map.Root>
-	<Map.View center={[512, 384]} zoom={2} {projection} {extent} />
-	<Layer.Static url="/path/to/image.png" {extent} attributions="© Attribution" />
-</Map.Root>
+<View center={[512, 384]} zoom={2} {projection} {extent}>
+	<Map class="h-96 w-full">
+		<Layer.Static url="/path/to/image.png" {extent} attributions="© Attribution" />
+	</Map>
+</View>
 ```
 
 **Key Points**:
@@ -262,28 +281,18 @@ LayerWebGL uses OpenLayers' flat style expressions for dynamic styling:
 // Example style with expressions
 const webglStyle: FlatStyleLike = {
 	// Data-driven circle radius
-	'circle-radius': [
-		'interpolate',
-		['linear'],
-		['get', 'population'],
-		0, 4,
-		1000000, 20
-	],
+	'circle-radius': ['interpolate', ['linear'], ['get', 'population'], 0, 4, 1000000, 20],
 	// Conditional fill color
 	'circle-fill-color': [
 		'case',
-		['>', ['get', 'temperature'], 25], '#ff4444',
-		['>', ['get', 'temperature'], 15], '#ffaa00',
+		['>', ['get', 'temperature'], 25],
+		'#ff4444',
+		['>', ['get', 'temperature'], 15],
+		'#ffaa00',
 		'#4444ff'
 	],
 	// Zoom-based opacity
-	'circle-opacity': [
-		'interpolate',
-		['linear'],
-		['zoom'],
-		5, 0.3,
-		15, 0.9
-	]
+	'circle-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.3, 15, 0.9]
 };
 ```
 
@@ -303,7 +312,27 @@ The following layer types are planned for future releases:
 
 ## Feature Components {.toc}
 
-All feature components must be placed inside a `Layer.Vector` component.
+All feature components must be placed inside a `Layer.Vector` component. Features support interactive event handlers and specialized styles for hover and selection states.
+
+### Interactive Feature Props {.toc}
+
+All feature components share these interactive properties:
+
+```typescript
+// Event callbacks
+onHover?: (feature: Feature, coordinate: Coordinate) => void;
+onHoverEnd?: (feature: Feature) => void;
+onClick?: (feature: Feature, coordinate: Coordinate) => void;
+onSelect?: (feature: Feature) => void;
+onDeselect?: (feature: Feature) => void;
+
+// Interactive styles
+hoverStyle?: StyleLike; // Style applied when feature is hovered
+selectedStyle?: StyleLike; // Style applied when feature is selected
+
+// Child components
+children?: Snippet; // Can contain Overlay.Hover and Overlay.Popup
+```
 
 ### Feature.Point {.toc}
 
@@ -317,12 +346,24 @@ interface FeaturePointProps {
 
 	// Styling
 	style?: StyleLike;
+	hoverStyle?: StyleLike; // NEW: Style when hovered
+	selectedStyle?: StyleLike; // NEW: Style when selected
 
 	// Data
 	properties?: Record<string, any>; // Feature attributes
 
+	// Interactive events NEW
+	onHover?: (feature: Feature, coordinate: Coordinate) => void;
+	onHoverEnd?: (feature: Feature) => void;
+	onClick?: (feature: Feature, coordinate: Coordinate) => void;
+	onSelect?: (feature: Feature) => void;
+	onDeselect?: (feature: Feature) => void;
+
 	// Bindable instance (read-only)
 	feature?: Feature | null; // bindable
+
+	// Child components NEW
+	children?: Snippet; // Can contain Overlay.Hover and Overlay.Popup
 }
 ```
 
@@ -338,12 +379,24 @@ interface FeatureLineStringProps {
 
 	// Styling
 	style?: StyleLike;
+	hoverStyle?: StyleLike; // NEW: Style when hovered
+	selectedStyle?: StyleLike; // NEW: Style when selected
 
 	// Data
 	properties?: Record<string, any>; // Feature attributes
 
+	// Interactive events NEW
+	onHover?: (feature: Feature, coordinate: Coordinate) => void;
+	onHoverEnd?: (feature: Feature) => void;
+	onClick?: (feature: Feature, coordinate: Coordinate) => void;
+	onSelect?: (feature: Feature) => void;
+	onDeselect?: (feature: Feature) => void;
+
 	// Bindable instance (read-only)
 	feature?: Feature | null; // bindable
+
+	// Child components NEW
+	children?: Snippet; // Can contain Overlay.Hover and Overlay.Popup
 }
 ```
 
@@ -359,16 +412,28 @@ interface FeaturePolygonProps {
 
 	// Styling
 	style?: StyleLike;
+	hoverStyle?: StyleLike; // NEW: Style when hovered
+	selectedStyle?: StyleLike; // NEW: Style when selected
 
 	// Data
 	properties?: Record<string, any>; // Feature attributes
 
+	// Interactive events NEW
+	onHover?: (feature: Feature, coordinate: Coordinate) => void;
+	onHoverEnd?: (feature: Feature) => void;
+	onClick?: (feature: Feature, coordinate: Coordinate) => void;
+	onSelect?: (feature: Feature) => void;
+	onDeselect?: (feature: Feature) => void;
+
 	// Bindable instance (read-only)
 	feature?: Feature | null; // bindable
+
+	// Child components NEW
+	children?: Snippet; // Can contain Overlay.Hover and Overlay.Popup
 }
 ```
 
-**Important**: Feature events (onClick, onPointerEnter, etc.) are **not implemented**. Use `Interaction.Select` and `Interaction.Hover` components for feature interaction.
+**Important**: Feature event handlers and interactive styles are automatically managed by the layer. For advanced selection workflows, you can also use `Interaction.Select` and `Interaction.Hover` components separately.
 
 ### More Feature types Coming Soon {.toc}
 
@@ -424,12 +489,129 @@ interface InteractionHoverProps {
 }
 ```
 
+### Interaction.Draw {.toc}
+
+Enables drawing of vector features (points, lines, polygons, and circles) on the map.
+
+```typescript
+interface InteractionDrawProps {
+	// Geometry type
+	type?: 'Point' | 'LineString' | 'Polygon' | 'Circle'; // bindable, default: 'Point'
+
+	// Source configuration
+	source?: VectorSource | null; // bindable, uses layer context if not provided
+
+	// Feature collection
+	features?: Collection<Feature> | null; // bindable
+
+	// Drawing behavior
+	clickTolerance?: number; // default: 6
+	snapTolerance?: number; // default: 12
+	stopClick?: boolean; // default: false
+	maxPoints?: number; // Max points before auto-finish
+	minPoints?: number; // Min points required (default: 3 for polygons, 2 for lines)
+
+	// Drawing conditions
+	finishCondition?: Condition; // Custom finish condition
+	condition?: Condition; // Event handling condition
+
+	// Freehand drawing
+	freehand?: boolean; // default: false
+	freehandCondition?: Condition; // Condition for freehand mode
+
+	// Tracing
+	trace?: boolean | Condition; // default: false
+	traceSource?: VectorSource; // Source for trace features
+
+	// Geometry configuration
+	geometryFunction?: GeometryFunction; // Custom geometry creation
+	geometryName?: string; // Property name for geometry
+	geometryLayout?: 'XY' | 'XYZ' | 'XYM' | 'XYZM'; // default: 'XY'
+
+	// Display options
+	style?: StyleLike | FlatStyleLike; // Style for drawing preview
+	wrapX?: boolean; // default: false
+
+	// Event callbacks
+	onDrawStart?: (evt: DrawEvent) => void;
+	onDrawEnd?: (evt: DrawEvent) => void;
+	onDrawAbort?: (evt: DrawEvent) => void;
+
+	// Bindable instance (read-only)
+	interaction?: Draw | null; // bindable
+}
+```
+
+**Drawing Types**:
+
+- **Point**: Single click to place
+- **LineString**: Click to start, continue clicking, double-click to finish
+- **Polygon**: Click to start, continue clicking, double-click to close
+- **Circle**: Click and drag to create
+
+**DrawEvent Properties**:
+
+```typescript
+interface DrawEvent {
+	type: 'drawstart' | 'drawend' | 'drawabort';
+	feature: Feature; // The drawn feature
+	target: Draw; // The draw interaction instance
+}
+```
+
+### Interaction.Modify <sup class="text-xs font-medium text-amber-600 dark:text-amber-400">Beta</sup> {.toc}
+
+Enables modification of existing vector features by dragging vertices and segments.
+
+```typescript
+interface InteractionModifyProps {
+	// Features to modify
+	features?: Collection<Feature> | Feature[] | null; // bindable, features to edit
+	source?: VectorSource | null; // bindable, uses layer context if not provided
+
+	// Styling
+	style?: StyleLike; // Style for features while modifying
+
+	// Interaction behavior
+	pixelTolerance?: number; // default: 10, hit detection tolerance
+	hitDetection?: boolean | Layer[]; // Enable hit detection on layers
+
+	// Conditions (OpenLayers condition functions)
+	condition?: Condition; // Condition for modification
+	deleteCondition?: Condition; // Condition for deleting vertices (default: Alt+Click)
+	insertVertexCondition?: Condition; // Condition for inserting vertices
+
+	// Event callbacks
+	onModifyStart?: (evt: ModifyEvent) => void;
+	onModifyEnd?: (evt: ModifyEvent) => void;
+
+	// Bindable instance (read-only)
+	interaction?: Modify | null; // bindable
+}
+```
+
+**ModifyEvent Properties**:
+
+```typescript
+interface ModifyEvent {
+	type: 'modifystart' | 'modifyend';
+	features: Collection<Feature>; // Modified features
+	mapBrowserEvent: MapBrowserEvent; // Original browser event
+	target: Modify; // The modify interaction instance
+}
+```
+
+**Modification Actions**:
+
+- **Move vertex**: Click and drag a vertex
+- **Delete vertex**: Alt+Click on a vertex (or custom `deleteCondition`)
+- **Add vertex**: Click and drag a line segment
+- **Undo**: Ctrl+Z while modifying
+
 ### Coming Soon {.toc}
 
 The following interaction types are planned for future releases:
 
-- `Interaction.Draw` - Drawing new features
-- `Interaction.Modify` - Editing existing features
 - `Interaction.Translate` - Moving features by dragging
 - `Interaction.Snap` - Snapping while drawing/editing
 
@@ -464,7 +646,7 @@ interface OverlayTooltipProps {
 }
 ```
 
-### TooltipManager {.toc}
+### Overlay.TooltipManager {.toc}
 
 High-level component that automatically manages tooltips for hover and select interactions.
 
@@ -496,6 +678,196 @@ interface TooltipManagerProps {
 	// Children
 	children?: Snippet;
 }
+```
+
+### Overlay.Hover {.toc}
+
+Auto-positioned overlay that appears when a parent Feature component is hovered.
+
+```typescript
+interface OverlayHoverProps {
+	// Positioning (relative to hover coordinate)
+	offset?: [number, number]; // default: [0, -10]
+	positioning?: OverlayPositioning; // default: 'bottom-center'
+
+	// Styling
+	class?: string; // CSS class name
+
+	// Behavior
+	autoPan?: boolean; // default: false
+
+	// Children
+	children?: Snippet; // Content to display
+}
+```
+
+**Usage**:
+
+Must be placed inside a Feature component. Automatically appears at the hover coordinate when the feature is hovered.
+
+```svelte
+<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York' }}>
+	<Overlay.Hover>
+		<div class="tooltip">New York</div>
+	</Overlay.Hover>
+</Feature.Point>
+```
+
+### Overlay.Popup {.toc}
+
+Auto-positioned overlay that appears when a parent Feature component is selected.
+
+```typescript
+interface OverlayPopupProps {
+	// Positioning (relative to click coordinate)
+	offset?: [number, number]; // default: [0, -15]
+	positioning?: OverlayPositioning; // default: 'bottom-center'
+
+	// Styling
+	class?: string; // CSS class name
+
+	// Behavior
+	autoPan?: boolean; // default: true
+
+	// Children
+	children?: Snippet; // Content to display
+}
+```
+
+**Usage**:
+
+Must be placed inside a Feature component. Automatically appears at the click coordinate when the feature is selected.
+
+```svelte
+<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York' }}>
+	<Overlay.Popup>
+		<div class="popup">
+			<h3>New York</h3>
+			<p>Population: 8M</p>
+		</div>
+	</Overlay.Popup>
+</Feature.Point>
+```
+
+## Control Components {.toc}
+
+### Control.Draw <sup class="text-xs font-medium text-amber-600 dark:text-amber-400">Beta</sup> {.toc}
+
+A comprehensive drawing control toolbar with support for drawing, selecting, and editing features. Optionally includes a feature properties panel.
+
+```typescript
+interface ControlDrawProps {
+	// Drawing mode
+	type?: 'Point' | 'LineString' | 'Polygon' | 'Circle' | 'Select' | null; // bindable
+
+	// Source configuration
+	source?: VectorSource | null; // bindable, vector source for drawn features
+
+	// Styling
+	style?: StyleLike | FlatStyleLike; // Style for drawn features
+	selectStyle?: StyleLike; // Style for selected features
+
+	// Feature panel
+	showPropertiesPanel?: boolean; // default: false
+	propertiesPanelPosition?: 'left' | 'right'; // default: 'right'
+	selectedFeature?: Feature<Geometry> | null; // bindable
+
+	// Event callbacks
+	onDrawStart?: (evt: DrawEvent) => void;
+	onDrawEnd?: (evt: DrawEvent) => void;
+	onDrawAbort?: (evt: DrawEvent) => void;
+	onTypeChange?: (type: DrawType) => void;
+	onFeatureSelect?: (feature: Feature<Geometry> | null) => void;
+	onFeatureModified?: (feature: Feature<Geometry>) => void;
+	onFeatureDelete?: (feature: Feature<Geometry>) => void;
+
+	// Bindable instance (read-only)
+	control?: Control | null; // bindable
+}
+```
+
+**Drawing Modes**:
+
+- **Point, LineString, Polygon, Circle**: Standard drawing modes
+- **Select**: Select and modify existing features
+- **null**: No active mode
+
+**Usage**:
+
+```svelte
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Control.Draw
+				type="Point"
+				showPropertiesPanel
+				onDrawEnd={(evt) => console.log('Drew:', evt.feature)}
+				onFeatureModified={(feature) => console.log('Modified:', feature)}
+			/>
+		</Layer.Vector>
+	</Map>
+</View>
+```
+
+### Control.FeaturePanel <sup class="text-xs font-medium text-amber-600 dark:text-amber-400">Beta</sup> {.toc}
+
+A standalone feature properties editor panel for editing styles and custom properties.
+
+```typescript
+interface ControlFeaturePanelProps {
+	// Panel configuration
+	title?: string; // default: 'Feature Properties'
+	feature?: Feature<Geometry> | null; // bindable, feature to edit
+	visible?: boolean; // bindable, panel visibility
+	position?: 'left' | 'right'; // default: 'right'
+
+	// Event callbacks
+	onStyleChange?: (feature: Feature, style: any) => void;
+	onPropertyChange?: (feature: Feature, key: string, value: any) => void;
+	onDelete?: (feature: Feature) => void;
+	onClose?: () => void;
+
+	// Bindable instance (read-only)
+	control?: Control | null; // bindable
+}
+```
+
+**Features**:
+
+- Interactive style editor (fill, stroke, point radius, dash patterns)
+- Custom property editor (add, edit, delete properties)
+- Delete feature button
+- Real-time preview of changes
+
+**Usage**:
+
+```svelte
+<script>
+	let selectedFeature = $state(null);
+	let panelVisible = $state(false);
+</script>
+
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<Feature.Point coordinates={[0, 0]} />
+			<Interaction.Select onSelect={(f) => {
+				selectedFeature = f;
+				panelVisible = !!f;
+			}} />
+		</Layer.Vector>
+
+		<Control.FeaturePanel
+			bind:feature={selectedFeature}
+			bind:visible={panelVisible}
+			position="right"
+			onStyleChange={(f, style) => console.log('Style changed:', style)}
+			onDelete={() => panelVisible = false}
+		/>
+	</Map>
+</View>
 ```
 
 ## Type Definitions {.toc}
@@ -569,23 +941,45 @@ type StyleFunction = (feature: Feature, resolution: number) => Style | Style[];
 
 ## Context API {.toc}
 
-Components communicate through Svelte's context system:
+Components communicate through Svelte's context system. The library uses internal context functions for map and view access that are automatically managed by the component hierarchy.
+
+### How Context Works {.toc}
+
+When you nest components inside `View` and `Map`, they automatically receive access to the OpenLayers instances:
+
+```svelte
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96">
+		<!-- All child components have access to map and view context -->
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			<!-- Feature components access layer context -->
+			<Feature.Point coordinates={[0, 0]} />
+		</Layer.Vector>
+	</Map>
+</View>
+```
+
+For direct access to OpenLayers instances, use bindable props:
+
+```svelte
+<script>
+	import type { Map, View } from 'ol';
+
+	let map: Map | null = $state(null);
+	let view: View | null = $state(null);
+</script>
+
+<View bind:view>
+	<Map bind:map>
+		<!-- ... -->
+	</Map>
+</View>
+```
+
+### Layer Context {.toc}
 
 ```typescript
-// Map context (available to all child components)
-type MapContext = {
-	getMap: () => Map | null;
-	getView: () => View | null;
-	addLayer: (layer: Layer) => void;
-	removeLayer: (layer: Layer) => void;
-	addInteraction: (interaction: Interaction) => void;
-	removeInteraction: (interaction: Interaction) => void;
-	addControl: (control: Control) => void;
-	removeControl: (control: Control) => void;
-	addOverlay: (overlay: Overlay) => void;
-	removeOverlay: (overlay: Overlay) => void;
-};
-
 // Layer context (available to feature components)
 interface LayerContext {
 	getSource: () => VectorSource | null;
@@ -602,13 +996,15 @@ Many component properties are reactive and bindable:
 
 ```svelte
 <script>
-	import { Map, Layer, Feature } from 'svelte-openlayers';
+	import { View, Map, Layer, Feature } from 'svelte-openlayers';
+
+	// Bindable view properties
+	let viewInstance = null;
+	let center = $state([0, 0]);
+	let zoom = $state(2);
 
 	// Bindable map properties
 	let mapInstance = null;
-	let viewInstance = null;
-	let center = [0, 0];
-	let zoom = 2;
 
 	// Bindable layer properties
 	let tileLayer = null;
@@ -623,19 +1019,19 @@ Many component properties are reactive and bindable:
 	$inspect('Zoom level:', zoom);
 </script>
 
-<Map.Root bind:map={mapInstance} bind:view={viewInstance}>
-	<Map.View bind:center bind:zoom />
+<View bind:view={viewInstance} bind:center bind:zoom>
+	<Map bind:map={mapInstance} class="h-96 w-full">
+		<Layer.Tile bind:layer={tileLayer} source="osm" />
 
-	<Layer.Tile bind:layer={tileLayer} source="osm" />
-
-	<Layer.Vector bind:layer={vectorLayer} bind:source={vectorSource}>
-		<Feature.Point
-			bind:feature={pointFeature}
-			coordinates={center}
-			properties={{ name: 'Map Center' }}
-		/>
-	</Layer.Vector>
-</Map.Root>
+		<Layer.Vector bind:layer={vectorLayer} bind:source={vectorSource}>
+			<Feature.Point
+				bind:feature={pointFeature}
+				coordinates={center}
+				properties={{ name: 'Map Center' }}
+			/>
+		</Layer.Vector>
+	</Map>
+</View>
 ```
 
 ## Utility Functions {.toc}

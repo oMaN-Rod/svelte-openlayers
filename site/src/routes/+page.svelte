@@ -4,19 +4,20 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
-	import { ArrowRight, Code2, Layers, MapPin, Sparkles, Type, Zap } from 'lucide-svelte';
+	import { ArrowRight, Code2, Layers, MapPin, Sparkles, Type, Zap } from '@lucide/svelte';
 
 	const quickStartCode = `<script>
-  import { Map, Layer, Feature } from 'svelte-openlayers';
+  import { View, Map, Layer, Feature } from 'svelte-openlayers';
 <\/script>
 
-<Map.Root>
-  <Map.View center={[longitude, latitude]} zoom={10}/>
-  <Layer.Tile source="osm" />
-  <Layer.Vector>
-    <Feature.Point coordinates={[0, 0]} />
-  </Layer.Vector>
-</Map.Root>`;
+<View center={[longitude, latitude]} zoom={10}>
+  <Map class="h-96 w-full">
+    <Layer.Tile source="osm" />
+    <Layer.Vector>
+      <Feature.Point coordinates={[0, 0]} />
+    </Layer.Vector>
+  </Map>
+</View>`;
 
 	const features = [
 		{

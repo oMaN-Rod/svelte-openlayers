@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { LayerStaticProps } from '$lib/types.js';
-	import { getMapContext } from '$lib/utils/context.js';
+	import type { LayerStaticProps } from './types.js';
 	import { onMount } from 'svelte';
 	import Static from 'ol/source/ImageStatic.js';
 	import ImageLayer from 'ol/layer/Image.js';
+	import { getMap } from '$lib/components/map/context.js';
 
 	let {
 		url,
@@ -16,18 +16,24 @@
 		layer = $bindable(null),
 		attributions,
 		extent,
-		projection
+		projection,
+		crossOrigin
 	}: LayerStaticProps = $props();
 
-	const mapContext = getMapContext();
+	const map = getMap();
 	let isDestroyed = false;
 
 	onMount(() => {
-		const layerOptions: any = {
+		const sourceOptions: any = {
 			attributions,
 			url,
 			projection,
 			imageExtent: extent,
+			crossOrigin
+		};
+
+		const layerOptions: any = {
+			source: new Static(sourceOptions),
 			opacity,
 			visible,
 			preload
@@ -37,16 +43,14 @@
 		if (minZoom !== undefined) layerOptions.minZoom = minZoom;
 		if (maxZoom !== undefined) layerOptions.maxZoom = maxZoom;
 
-		layer = new ImageLayer({
-			source: new Static(layerOptions)
-		});
+		layer = new ImageLayer(layerOptions);
 
-		mapContext.addLayer(layer);
+		map?.addLayer(layer);
 
 		return () => {
 			isDestroyed = true;
 			if (layer) {
-				mapContext.removeLayer(layer);
+				map?.removeLayer(layer);
 				layer.dispose();
 				layer = null;
 			}

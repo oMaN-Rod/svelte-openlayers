@@ -1,4 +1,10 @@
-export { Map, MapRoot, MapView } from './components/map/index.js';
+import Map from './components/map/Map.svelte';
+import View from './components/view/View.svelte';
+export { Map, View };
+
+export type { MapProps, MapViewProps } from './components/map/types.js';
+export type { ViewProps } from './components/view/types.js';
+
 export {
 	Layer,
 	LayerTile,
@@ -6,38 +12,41 @@ export {
 	LayerWebGL,
 	LayerStatic
 } from './components/layers/index.js';
+export type {
+	LayerContext,
+	LayerTileProps,
+	LayerStaticProps,
+	LayerVectorProps,
+	LayerWebGLProps
+} from './components/layers/index.js';
+
 export {
 	Feature,
 	FeaturePoint,
 	FeatureLineString,
 	FeaturePolygon
 } from './components/features/index.js';
+export type {
+	FeaturePointProps,
+	FeatureLineStringProps,
+	FeaturePolygonProps
+} from './components/features/index.js';
+
 export {
 	Interaction,
 	InteractionSelect,
-	InteractionHover
+	InteractionHover,
+	InteractionDraw
 } from './components/interactions/index.js';
-export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/index.js';
+export type {
+	InteractionSelectProps,
+	InteractionHoverProps,
+	InteractionDrawProps
+} from './components/interactions/index.js';
 
-export {
-	MAP_CONTEXT_KEY,
-	LAYER_CONTEXT_KEY,
-	type MapContext,
-	type ViewProps,
-	type MapProps,
-	type LayerContext,
-	// Component Props Types
-	type MapRootProps,
-	type MapViewProps,
-	type LayerTileProps,
-	type LayerStaticProps,
-	type LayerVectorProps,
-	type LayerWebGLProps,
-	type FeaturePointProps,
-	type FeatureLineStringProps,
-	type FeaturePolygonProps,
-	type InteractionSelectProps,
-	type InteractionHoverProps,
-	type OverlayTooltipProps,
-	type TooltipManagerProps
-} from './types.js';
+export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/index.js';
+export type { OverlayTooltipProps, TooltipManagerProps } from './components/overlays/index.js';
+
+export { Control, ControlDraw } from './components/controls/index.js';
+export type { ControlDrawProps, ControlDrawType } from './components/controls/index.js';
+export * from './styles/types.js';

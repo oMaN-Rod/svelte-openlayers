@@ -21,9 +21,8 @@
 	/* Zoom Controls */
 	--ol-zoom-button-width: 1.5rem;
 	--ol-zoom-button-height: 1.5rem;
-	--ol-zoom-button-bg: var(--ol-color-primary);
-	--ol-zoom-button-color: var(--ol-color-primary-foreground);
-	--ol-zoom-button-border: none;
+	--ol-zoom-button-bg: var(--ol-color-background);
+	--ol-zoom-button-color: var(--ol-color-foreground);
 	--ol-zoom-button-radius: var(--ol-radius);
 	--ol-zoom-button-margin: var(--ol-space-0-5) 0;
 	--ol-zoom-button-font-size: var(--ol-font-size-sm);
@@ -39,15 +38,78 @@
 	--ol-mouse-position-shadow: var(--ol-shadow-sm);
 	--ol-mouse-position-z-index: var(--ol-z-1000);
 
+	/* Draw Controls */
+	--ol-draw-control-top: var(--ol-space-20);
+	--ol-draw-control-right: var(--ol-space-2);
+	--ol-draw-control-width: fit-content;
+	--ol-draw-control-height: fit-content;
+	--ol-draw-control-bottom: var(--ol-space-2);
+	--ol-draw-control-left: var(--ol-space-4);
+	--ol-draw-control-bg: var(--ol-color-surface);
+	--ol-draw-control-border: var(--ol-control-border);
+	--ol-draw-control-border-radius: var(--ol-control-border-radius);
+	--ol-draw-control-shadow: var(--ol-control-shadow);
+	--ol-draw-control-padding: var(--ol-space-0);
+	--ol-draw-control-z-index: var(--ol-control-z-index);
+
+	/* Draw Buttons */
+	--ol-draw-button-bg: var(--ol-color-background);
+	--ol-draw-button-bg-hover: var(--ol-color-accent);
+	--ol-draw-button-bg-active: var(--ol-color-primary);
+	--ol-draw-button-color: var(--ol-color-foreground);
+	--ol-draw-button-color-hover: var(--ol-color-foreground);
+	--ol-draw-button-color-active: var(--ol-color-primary-foreground);
+	--ol-draw-button-border: none;
+	--ol-draw-button-border-radius-first: var(--ol-control-border-radius)
+		var(--ol-control-border-radius) 0 0;
+	--ol-draw-button-border-radius-last: 0 0 var(--ol-control-border-radius)
+		var(--ol-control-border-radius);
+	--ol-draw-button-padding: var(--ol-space-0);
+	--ol-draw-button-margin: var(--ol-space-px);
+	--ol-draw-button-gap: var(--ol-space-2);
+	--ol-draw-button-font-size: var(--ol-font-size-sm);
+	--ol-draw-button-font-weight: var(--ol-font-weight-medium);
+	--ol-draw-button-font-family: var(--ol-font-family-sans);
+	--ol-draw-button-transition: var(--ol-transition-duration-fast);
+	--ol-draw-button-min-width: 1.375rem;
+	--ol-draw-button-width: 1.375rem;
+	--ol-draw-button-height: 1.375rem;
+	--ol-draw-button-line-height: 0.4rem;
+
+	/* Draw Icons and Labels */
+	--ol-draw-icon-size: var(--ol-font-size-base);
+	--ol-draw-icon-weight: var(--ol-font-weight-bold);
+	--ol-draw-icon-width: 1rem;
+	--ol-draw-label-font-size: var(--ol-font-size-xs);
+	--ol-draw-label-font-weight: var(--ol-font-weight-medium);
+
+	/* Properties Panel */
+	--ol-properties-panel-width: 400px;
+	--ol-properties-panel-bg: var(--ol-color-background);
+	--ol-properties-panel-border: var(--ol-color-border);
+	--ol-properties-panel-shadow: var(--ol-shadow-lg);
+	--ol-properties-panel-padding: var(--ol-space-4);
+	--ol-properties-panel-z-index: 200;
+
+	/* Properties Panel Inputs */
+	--ol-properties-input-height: 32px;
+	--ol-properties-input-bg: var(--ol-color-background);
+	--ol-properties-input-border: var(--ol-color-border);
+	--ol-properties-input-border-radius: var(--ol-radius-sm);
+
+	/* Properties Panel Delete Button */
+	--ol-properties-delete-bg: var(--ol-color-destructive);
+	--ol-properties-delete-color: var(--ol-color-destructive-foreground);
+
 	/* Attribution */
-	--ol-attribution-bg: rgba(255, 255, 255, 0.7);
+	--ol-attribution-bg: var(--ol-color-background);
 	--ol-attribution-color: var(--ol-color-muted-foreground);
 	--ol-attribution-font-size: var(--ol-font-size-xs);
 	--ol-attribution-padding: var(--ol-space-1) var(--ol-space-2);
 
 	/* === Tooltips === */
-	--ol-tooltip-bg: rgba(255, 255, 255, 0.85);
-	--ol-tooltip-color: #181818;
+	--ol-tooltip-bg: var(--ol-color-background);
+	--ol-tooltip-color: var(--ol-color-foreground);
 	--ol-tooltip-padding: var(--ol-space-2) var(--ol-space-3);
 	--ol-tooltip-border-radius: var(--ol-radius);
 	--ol-tooltip-font-size: var(--ol-font-size-sm);
@@ -65,13 +127,13 @@
 	--ol-tooltip-transition-timing: var(--ol-transition-timing-ease-in-out);
 
 	/* Hover Tooltips */
-	--ol-tooltip-hover-bg: rgba(255, 255, 255, 0.85);
-	--ol-tooltip-hover-color: #181818;
+	--ol-tooltip-hover-bg: var(--ol-color-background);
+	--ol-tooltip-hover-color: var(--ol-color-foreground);
 	--ol-tooltip-hover-font-size: var(--ol-font-size-xs);
 	--ol-tooltip-hover-padding: var(--ol-space-1-5) var(--ol-space-2-5);
 
 	/* Select Tooltips */
-	--ol-tooltip-select-bg: rgba(255, 255, 255, 0.96);
+	--ol-tooltip-select-bg: var(--ol-color-background);
 	--ol-tooltip-select-color: var(--ol-color-foreground);
 	--ol-tooltip-select-border: 1px solid var(--ol-color-border);
 	--ol-tooltip-select-font-size: var(--ol-font-size-sm);
@@ -96,20 +158,6 @@
 	--ol-feature-point-fill: var(--ol-color-primary);
 	--ol-feature-point-stroke: var(--ol-color-primary-foreground);
 	--ol-feature-point-stroke-width: 2;
-}
-
-.dark {
-	/* Controls */
-	--ol-control-bg: rgba(31, 41, 55, 0.9);
-	--ol-mouse-position-bg: rgba(31, 41, 55, 0.95);
-	--ol-mouse-position-color: var(--ol-color-foreground);
-	--ol-attribution-bg: rgba(17, 24, 39, 0.8);
-	--ol-attribution-color: var(--ol-color-muted-foreground);
-
-	/* Select Tooltips in Dark Mode */
-	--ol-tooltip-select-bg: rgba(31, 41, 55, 0.96);
-	--ol-tooltip-select-color: var(--ol-color-foreground);
-	--ol-tooltip-select-border: 1px solid var(--ol-color-border);
 }
 
 /* === Component Base Styles === */

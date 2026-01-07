@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { InteractionHoverProps } from '$lib/types.js';
-	import { getMapContext } from '$lib/utils/context.js';
+	import { getMap } from '$lib/components/map/context.js';
 	import type { MapBrowserEvent } from 'ol';
 	import { Feature } from 'ol';
 	import type Layer from 'ol/layer/Layer.js';
 	import { onMount } from 'svelte';
+	import type { InteractionHoverProps } from './types.js';
 
 	let {
 		onHover,
@@ -14,13 +14,12 @@
 		interaction = $bindable(null)
 	}: InteractionHoverProps = $props();
 
-	const mapContext = getMapContext();
+	const map = getMap();
 	let isDestroyed = false;
 	let currentFeature: Feature | null = null;
 	let moveHandler: ((evt: MapBrowserEvent<PointerEvent>) => void) | null = null;
 
 	onMount(() => {
-		const map = mapContext.getMap();
 		if (!map) return;
 
 		moveHandler = (evt: MapBrowserEvent<PointerEvent>) => {
