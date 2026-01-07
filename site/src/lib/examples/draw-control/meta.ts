@@ -7,7 +7,7 @@ const meta: ExampleMeta = {
 	description: 'Control for drawing points, lines, polygons, and circles',
 	category: 'control',
 	icon: Pencil,
-	tags: ['Control', 'Drawing', 'Geometry'],
+	tags: ['Control', 'Drawing', 'Geometry', 'Beta'],
 	concepts: [
 		'Control.Draw',
 		'Drawing types',
