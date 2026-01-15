@@ -3,28 +3,15 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Sun, Moon, Menu } from '@lucide/svelte';
 	import GitHub from '$lib/components/icons/github.svg?raw';
+	import { setMode, mode } from 'mode-watcher';
 
-	let isDarkMode = $state(false);
 	let mobileMenuOpen = $state(false);
 
-	$effect(() => {
-		if (typeof document !== 'undefined') {
-			isDarkMode = document.documentElement.classList.contains('dark');
-		}
-	});
-
 	function toggleTheme() {
-		if (typeof document !== 'undefined') {
-			const html = document.documentElement;
-			const isDark = html.classList.contains('dark');
-			if (isDark) {
-				html.classList.remove('dark');
-				localStorage.setItem('theme', 'light');
-			} else {
-				html.classList.add('dark');
-				localStorage.setItem('theme', 'dark');
-			}
-			isDarkMode = !isDark;
+		if (mode.current === 'dark') {
+			setMode('light');
+		} else {
+			setMode('dark');
 		}
 	}
 
@@ -70,7 +57,7 @@
 			<div class="w-full flex-1 md:w-auto md:flex-none"></div>
 			<nav class="flex items-center">
 				<Button variant="ghost" size="icon" onclick={toggleTheme}>
-					{#if isDarkMode}
+					{#if mode.current === 'dark'}
 						<Sun class="h-5 w-5" />
 					{:else}
 						<Moon class="h-5 w-5" />
