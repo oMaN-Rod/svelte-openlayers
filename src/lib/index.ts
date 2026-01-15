@@ -44,8 +44,17 @@ export type {
 	InteractionDrawProps
 } from './components/interactions/index.js';
 
-export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/index.js';
-export type { OverlayTooltipProps, TooltipManagerProps } from './components/overlays/index.js';
+export {
+	Overlay,
+	OverlayTooltip,
+	OverlayMarker,
+	TooltipManager
+} from './components/overlays/index.js';
+export type {
+	OverlayTooltipProps,
+	OverlayMarkerProps,
+	TooltipManagerProps
+} from './components/overlays/index.js';
 
 export { Control, ControlDraw } from './components/controls/index.js';
 export type { ControlDrawProps, ControlDrawType } from './components/controls/index.js';
