@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getMap } from '$lib/components/map/context.js';
 	import type { MapBrowserEvent } from 'ol';
-	import { Feature } from 'ol';
+	import type { FeatureLike } from 'ol/Feature.js';
 	import type Layer from 'ol/layer/Layer.js';
 	import { onMount } from 'svelte';
 	import type { InteractionHoverProps } from './types.js';
@@ -16,7 +16,7 @@
 
 	const map = getMap();
 	let isDestroyed = false;
-	let currentFeature: Feature | null = null;
+	let currentFeature: FeatureLike | null = null;
 	let moveHandler: ((evt: MapBrowserEvent<PointerEvent>) => void) | null = null;
 
 	onMount(() => {
@@ -28,7 +28,7 @@
 			const pixel = evt.pixel;
 			const coordinate = evt.coordinate;
 
-			const features: Feature[] = [];
+			const features: FeatureLike[] = [];
 			const opts: any = {
 				hitTolerance
 			};
@@ -40,9 +40,7 @@
 			map.forEachFeatureAtPixel(
 				pixel,
 				(feature) => {
-					if (feature instanceof Feature) {
-						features.push(feature);
-					}
+					features.push(feature);
 					return false;
 				},
 				opts

@@ -1,4 +1,5 @@
 import type { Feature, Collection } from 'ol';
+import type { FeatureLike } from 'ol/Feature.js';
 import type { Coordinate } from 'ol/coordinate.js';
 import type { Geometry } from 'ol/geom.js';
 import type { Interaction } from 'ol/interaction.js';
@@ -24,7 +25,7 @@ export interface InteractionSelectProps {
 }
 
 export interface InteractionHoverProps {
-	onHover?: (feature: Feature | null, coordinate?: Coordinate) => void;
+	onHover?: (feature: FeatureLike | null, coordinate?: Coordinate) => void;
 	onHoverEnd?: () => void;
 	layers?: Layer[];
 	hitTolerance?: number;
