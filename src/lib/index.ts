@@ -59,3 +59,43 @@ export type {
 export { Control, ControlDraw } from './components/controls/index.js';
 export type { ControlDrawProps, ControlDrawType } from './components/controls/index.js';
 export * from './styles/types.js';
+
+export {
+	// Traditional style utilities
+	createCircleStyle,
+	createFeatureStyleFunction,
+	createFill,
+	createIconStyle,
+	createStroke,
+	createStyle,
+	createStyleFromFeature,
+	createTextStyle,
+	// WebGL style utilities
+	createStyleRule,
+	createStyleRules,
+	get,
+	variable,
+	time,
+	zoom,
+	interpolate,
+	between,
+	compare,
+	match,
+	math,
+	array,
+	animationCycle,
+	pulseEffect,
+	animatedColor,
+	sizeByProperty,
+	sizeByZoom
+} from './utils/index.js';
+
+// WebGL style types
+export type {
+	FlatStyleLike,
+	FlatStyle,
+	Rule,
+	StyleVariables,
+	Expression,
+	FilteredStyleOptions
+} from './utils/index.js';
