@@ -12,6 +12,7 @@ export interface ExampleMeta {
 	concepts: string[];
 	order: number;
 	additionalFiles?: string[];
+	beta?: boolean;
 }
 
 export interface ExampleFile {

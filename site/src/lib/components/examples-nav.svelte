@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
 	import { getSortedCategoriesWithExamples } from '$lib/examples/registry';
+	import { Badge } from './ui/badge';
 
 	const categoriesWithExamples = getSortedCategoriesWithExamples();
 	let currentPath = $derived(page.url.pathname);
@@ -52,7 +53,12 @@
 								<Icon class="mt-0.5 h-4 w-4 shrink-0 opacity-70" />
 							{/if}
 							<div class="flex flex-col gap-0.5">
-								<span class="font-medium">{example.title}</span>
+								<div class="flex items-center justify-between">
+									<span class="font-medium">{example.title}</span>
+									{#if example.beta}
+										<Badge variant="outline" class="text-xs">Beta</Badge>
+									{/if}
+								</div>
 								<span class="line-clamp-2 text-xs opacity-70">{example.description}</span>
 							</div>
 						</a>
