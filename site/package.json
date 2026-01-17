@@ -16,6 +16,7 @@
 	"dependencies": {
 		"bits-ui": "^2.8.6",
 		"lucide-svelte": "^0.542.0",
+		"mode-watcher": "^1.1.0",
 		"ol": "^10.6.1",
 		"svelte-openlayers": "file:.."
 	},
