@@ -100,8 +100,13 @@ interface MapProps extends HTMLAttributes<HTMLDivElement> {
 The `controls` and `interactions` props accept OpenLayers `DefaultsOptions` objects to configure which default controls/interactions to include:
 
 ```typescript
+// ControlOptions extends OpenLayers DefaultsOptions with additional options
+interface ControlOptions extends OLControlOptions {
+	fullscreen?: boolean; // Enable fullscreen control (default: false)
+}
+
 // ControlOptions example
-<Map controls={{ zoom: true, rotate: false, attribution: true }}>
+<Map controls={{ zoom: true, rotate: false, attribution: true, fullscreen: true }}>
 
 // InteractionOptions example
 <Map interactions={{ doubleClickZoom: false, dragPan: true }}>
@@ -303,12 +308,149 @@ const webglStyle: FlatStyleLike = {
 - Shape: `shape-points`, `shape-radius`, `shape-fill-color`, `shape-rotation`
 - Common: `filter`, `z-index`
 
-### Coming Soon {.toc}
+### Layer.VectorTile {.toc}
 
-The following layer types are planned for future releases:
+Displays vector tile data using Canvas rendering. Combines the benefits of vector data (styling flexibility, interaction) with tile-based loading (efficiency, scalability).
 
-- `Layer.VectorTile` - High-performance vector tiles
-- `Layer.WMS` - Web Map Service layers
+```typescript
+interface LayerVectorTileProps {
+	// Source configuration
+	url?: string; // URL template for vector tiles
+	urls?: string[]; // Array of URL templates for load balancing
+
+	// Layer properties
+	opacity?: number; // default: 1 (0-1 range)
+	visible?: boolean; // default: true
+	zIndex?: number;
+	minZoom?: number;
+	maxZoom?: number;
+
+	// Styling
+	style?: StyleLike | FlatStyleLike; // Feature styling
+	declutter?: boolean | string | number; // default: false
+	background?: string; // Layer background color
+
+	// Rendering
+	renderMode?: 'hybrid' | 'vector'; // default: 'hybrid'
+	preload?: number; // default: 0
+	renderBuffer?: number; // default: 100
+	updateWhileAnimating?: boolean; // default: false
+	updateWhileInteracting?: boolean; // default: false
+
+	// Source options
+	format?: FeatureFormat; // default: MVT
+	projection?: ProjectionLike;
+	tileGrid?: TileGrid;
+	tileSize?: number | Size;
+	sourceMaxZoom?: number;
+	sourceMinZoom?: number;
+	overlaps?: boolean;
+	attributions?: string | string[];
+	wrapX?: boolean;
+	transition?: number; // Tile opacity transition (ms)
+
+	// Bindable instances (read-only)
+	layer?: VectorTileLayer | null; // bindable
+	source?: VectorTileSource | null; // bindable
+}
+```
+
+### Layer.WebGLTile {.toc}
+
+WebGL-accelerated tile layer for high-performance raster tile rendering with color manipulation capabilities.
+
+```typescript
+interface LayerWebGLTileProps {
+	// Source configuration
+	source?: 'osm' | 'xyz' | Source; // default: 'osm'
+	url?: string; // URL for XYZ source
+	urls?: string[]; // Array of URLs for load balancing
+
+	// Layer properties
+	opacity?: number; // default: 1 (0-1 range)
+	visible?: boolean; // default: true
+	zIndex?: number;
+	minZoom?: number;
+	maxZoom?: number;
+
+	// WebGL options
+	preload?: number; // default: 0
+	style?: WebGLTileStyle; // WebGL style for color manipulation
+	cacheSize?: number; // default: 512
+
+	// Attribution and CORS
+	attributions?: string | string[];
+	crossOrigin?: string | null;
+
+	// Bindable instance (read-only)
+	layer?: WebGLTileLayer | null; // bindable
+}
+```
+
+### Layer.WebGLVectorTile {.toc}
+
+WebGL-accelerated vector tile layer for maximum performance rendering of vector tile data. Ideal for large-scale visualizations with data-driven styling.
+
+> **Note:** Hit detection (hover/click) is not yet implemented for WebGLVectorTileLayer in OpenLayers. For interactive features, use the regular `Layer.VectorTile` component instead.
+
+```typescript
+interface LayerWebGLVectorTileProps {
+	// Source configuration
+	url?: string; // URL template for vector tiles
+	urls?: string[]; // Array of URL templates for load balancing
+
+	// Layer properties
+	opacity?: number; // default: 1 (0-1 range)
+	visible?: boolean; // default: true
+	zIndex?: number;
+	minZoom?: number;
+	maxZoom?: number;
+
+	// WebGL styling (required)
+	style?: FlatStyleLike; // WebGL-compatible style
+	variables?: StyleVariables; // Variables for dynamic styling
+	background?: string; // Layer background color
+
+	// Rendering
+	preload?: number; // default: 0
+	disableHitDetection?: boolean; // default: false
+
+	// Source options
+	format?: FeatureFormat; // default: MVT
+	projection?: ProjectionLike;
+	tileGrid?: TileGrid;
+	tileSize?: number | Size;
+	sourceMaxZoom?: number;
+	sourceMinZoom?: number;
+	overlaps?: boolean;
+	attributions?: string | string[];
+	wrapX?: boolean;
+	transition?: number; // Tile opacity transition (ms)
+
+	// Bindable instances (read-only)
+	layer?: WebGLVectorTileLayer | null; // bindable
+	source?: VectorTileSource | null; // bindable
+}
+```
+
+**Dynamic Styling with Variables**:
+
+Use style variables to create interactive, data-driven visualizations without re-rendering:
+
+```typescript
+const style = {
+	filter: [
+		'all',
+		['>=', ['get', 'year'], ['var', 'minYear']],
+		['<=', ['get', 'year'], ['var', 'maxYear']]
+	],
+	'circle-radius': 6,
+	'circle-fill-color': '#ff6600'
+};
+
+// Update variables reactively
+const variables = $derived({ minYear, maxYear });
+```
 
 ## Feature Components {.toc}
 
@@ -748,6 +890,48 @@ Must be placed inside a Feature component. Automatically appears at the click co
 	</Overlay.Popup>
 </Feature.Point>
 ```
+
+### Overlay.Marker {.toc}
+
+Always-visible HTML marker overlay positioned at a feature's location. Ideal for custom HTML/CSS markers, animated indicators, and rich content.
+
+```typescript
+interface OverlayMarkerProps {
+	// Positioning
+	offset?: [number, number]; // default: [0, 0]
+	positioning?: OverlayPositioning; // default: 'center-center'
+
+	// Styling
+	class?: string; // CSS class name
+
+	// Behavior
+	autoPan?: boolean; // default: false
+	stopEvent?: boolean; // default: true
+
+	// Bindable instance (read-only)
+	overlay?: Overlay | null; // bindable
+
+	// Children
+	children?: Snippet; // HTML content for the marker
+}
+```
+
+**Usage**:
+
+Must be placed inside a Feature component. The marker is always visible and positioned at the feature's coordinate.
+
+```svelte
+<Feature.Point coordinates={[-74.0, 40.7]}>
+	<Overlay.Marker>
+		<div class="custom-marker">📍</div>
+	</Overlay.Marker>
+</Feature.Point>
+```
+
+**Performance Considerations**:
+
+- Best for small datasets (DOM element created per marker)
+- For large datasets, use `Layer.Vector` or `Layer.WebGL` with styled features instead
 
 ## Control Components {.toc}
 

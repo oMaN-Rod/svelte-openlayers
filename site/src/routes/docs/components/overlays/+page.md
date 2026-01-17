@@ -161,20 +161,87 @@ An overlay component designed to be used as a child of Feature components. It au
 
 > **Note:** `Overlay.Popup` must be placed inside a Feature component with selection event handling enabled.
 
+## Overlay.Marker {.toc}
+
+An overlay component that renders custom HTML content as a marker at a feature's position. Unlike `Overlay.Hover` and `Overlay.Popup`, markers are always visible and provide a way to display custom HTML/CSS as the visual representation of a feature.
+
+### Basic Usage {.toc}
+
+```svelte
+<script>
+	import { View, Map, Layer, Feature, Overlay } from 'svelte-openlayers';
+
+	const locations = [
+		{ name: 'New York', coords: [-74.0, 40.7], color: '#ef4444' },
+		{ name: 'Los Angeles', coords: [-118.2, 34.0], color: '#3b82f6' }
+	];
+</script>
+
+<View center={[-96, 38]} zoom={4}>
+	<Map class="h-96 w-full">
+		<Layer.Tile source="osm" />
+		<Layer.Vector>
+			{#each locations as location}
+				<Feature.Point coordinates={location.coords} properties={location}>
+					<Overlay.Marker>
+						<div class="marker" style="background-color: {location.color}">
+							{location.name}
+						</div>
+					</Overlay.Marker>
+				</Feature.Point>
+			{/each}
+		</Layer.Vector>
+	</Map>
+</View>
+
+<style>
+	.marker {
+		padding: 4px 8px;
+		border-radius: 4px;
+		color: white;
+		font-size: 12px;
+		white-space: nowrap;
+	}
+</style>
+```
+
+### Props {.toc}
+
+| Prop          | Type                                                                                                                                                                                    | Default           | Description                                      |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------ |
+| `offset`      | `[number, number]`                                                                                                                                                                      | `[0, 0]`          | Offset from feature coordinate in pixels         |
+| `positioning` | `'bottom-left' &#124; 'bottom-center' &#124; 'bottom-right' &#124; 'center-left' &#124; 'center-center' &#124; 'center-right' &#124; 'top-left' &#124; 'top-center' &#124; 'top-right'` | `'center-center'` | How the overlay is positioned relative to coord  |
+| `class`       | `string`                                                                                                                                                                                | `undefined`       | Additional CSS classes for the marker container  |
+| `autoPan`     | `boolean`                                                                                                                                                                               | `false`           | Auto-pan map to show marker when added           |
+| `stopEvent`   | `boolean`                                                                                                                                                                               | `true`            | Whether to stop event propagation                |
+| `overlay`     | `Overlay &#124; null`                                                                                                                                                                   | `null`            | Bindable OpenLayers Overlay instance (read-only) |
+| `children`    | `Snippet`                                                                                                                                                                               | `undefined`       | HTML content for the marker                      |
+
+> **Note:** `Overlay.Marker` must be placed inside a Feature component (`Feature.Point`, `Feature.LineString`, or `Feature.Polygon`).
+
+### Performance Considerations {.toc}
+
+`Overlay.Marker` creates a DOM element for each marker, which has performance implications:
+
+- **Best for small datasets**: Ideal when you have a limited number of features
+- **DOM overhead**: Each marker adds a DOM element that must be managed by the browser and repositioned during map interactions
+
+**When to use Overlay.Marker:**
+
+- Rich HTML content (custom fonts, images, SVG icons, text labels)
+- Interactive elements (buttons, links)
+- CSS animations (pulsing indicators, transitions)
+- Small number of features
+
 ### Combining Hover and Popup {.toc}
 
 You can use both hover and popup overlays on the same feature:
 
 ```svelte
-<Feature.Point
-	coordinates={[-74.0, 40.7]}
-	properties={{ name: 'New York', population: '8M' }}
->
+<Feature.Point coordinates={[-74.0, 40.7]} properties={{ name: 'New York', population: '8M' }}>
 	<!-- Shows on hover -->
 	<Overlay.Hover>
-		<div class="rounded bg-gray-800 px-2 py-1 text-xs text-white">
-			New York
-		</div>
+		<div class="rounded bg-gray-800 px-2 py-1 text-xs text-white">New York</div>
 	</Overlay.Hover>
 
 	<!-- Shows when selected -->

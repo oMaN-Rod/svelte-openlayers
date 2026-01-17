@@ -286,3 +286,26 @@ Map includes built-in controls that can be configured via the `controls` prop.
 	</Map>
 </View>
 ```
+
+### Control Options {.toc}
+
+| Option        | Type      | Default | Description                                                   |
+| ------------- | --------- | ------- | ------------------------------------------------------------- |
+| `zoom`        | `boolean` | `true`  | Enable zoom controls                                          |
+| `attribution` | `boolean` | `true`  | Enable attribution control                                    |
+| `rotate`      | `boolean` | `true`  | Enable rotation control                                       |
+| `fullscreen`  | `boolean` | `false` | Enable fullscreen control (allows map to enter fullscreen mode) |
+
+### Fullscreen Control {.toc}
+
+Enable fullscreen mode for your map by setting the `fullscreen` option:
+
+```svelte
+<View center={[0, 0]} zoom={2}>
+	<Map controls={{ fullscreen: true }}>
+		<Layer.Tile source="osm" />
+	</Map>
+</View>
+```
+
+When enabled, a fullscreen button appears in the map controls that allows users to expand the map to fill the entire screen.
