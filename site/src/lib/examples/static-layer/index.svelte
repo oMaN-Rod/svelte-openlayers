@@ -15,7 +15,7 @@
 
 <div class="map-container">
 	<View bind:center={mapCenter} bind:zoom={mapZoom} {projection}>
-		<Map class="h-full w-full">
+		<Map class="h-full w-full" controls={{ fullscreen: true }}>
 			<Layer.Static
 				attributions="© <a href='https://xkcd.com/license.html'>xkcd</a>"
 				url="https://imgs.xkcd.com/comics/online_communities.png"

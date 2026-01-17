@@ -12,7 +12,7 @@
 
 <div class="map-container">
 	<View center={DEFAULT_CENTER_EU} zoom={DEFAULT_ZOOM}>
-		<Map class="h-full w-full">
+		<Map class="h-full w-full" controls={{ fullscreen: true }}>
 			<Layer.Tile
 				source="xyz"
 				url={themeMapSource.current.url}

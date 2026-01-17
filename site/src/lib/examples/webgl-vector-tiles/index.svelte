@@ -31,7 +31,7 @@
 		</div>
 	{/if}
 	<View bind:zoom center={[0, 0]} maxZoom={8}>
-		<Map>
+		<Map controls={{ fullscreen: true }}>
 			<Layer.WebGLVectorTile
 				source={vectorTileSource}
 				style={countryStyle}

@@ -75,7 +75,7 @@
 		</div>
 	{/if}
 	<View bind:zoom center={[0, 0]} maxZoom={5}>
-		<Map bind:map={mapInstance} click={handleMapClick}>
+		<Map bind:map={mapInstance} click={handleMapClick} controls={{ fullscreen: true }}>
 			<Layer.VectorTile source={vectorTileSource} style={countryStyle} bind:layer={mainLayer} />
 
 			<Layer.VectorTile
