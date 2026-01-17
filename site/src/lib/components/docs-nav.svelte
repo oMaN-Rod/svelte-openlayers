@@ -50,29 +50,27 @@
 	let currentPath = $derived(page.url.pathname);
 </script>
 
-<div class="h-full overflow-auto py-6 pr-6 pl-8 lg:py-8">
-	<div class="space-y-6">
-		{#each navigation as section}
-			<div>
-				<h4 class="mb-2 text-sm font-semibold">{section.title}</h4>
-				{#if section.items}
-					<nav class="grid gap-1">
-						{#each section.items as item}
-							<a
-								href={item.href}
-								class={cn(
-									'group hover:bg-accent hover:text-accent-foreground flex w-full items-center rounded-md px-2 py-1.5 text-sm',
-									currentPath === item.href
-										? 'bg-accent text-accent-foreground font-medium'
-										: 'text-muted-foreground'
-								)}
-							>
-								{item.title}
-							</a>
-						{/each}
-					</nav>
-				{/if}
-			</div>
-		{/each}
-	</div>
+<div class="space-y-6">
+	{#each navigation as section}
+		<div>
+			<h4 class="mb-2 text-sm font-semibold">{section.title}</h4>
+			{#if section.items}
+				<nav class="grid gap-1">
+					{#each section.items as item}
+						<a
+							href={item.href}
+							class={cn(
+								'group hover:bg-accent hover:text-accent-foreground flex w-full items-center rounded-md px-2 py-1.5 text-sm',
+								currentPath === item.href
+									? 'bg-accent text-accent-foreground font-medium'
+									: 'text-muted-foreground'
+							)}
+						>
+							{item.title}
+						</a>
+					{/each}
+				</nav>
+			{/if}
+		</div>
+	{/each}
 </div>
