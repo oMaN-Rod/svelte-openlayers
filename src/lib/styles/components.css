@@ -237,6 +237,25 @@
 	z-index: var(--ol-mouse-position-z-index);
 }
 
+.ol-full-screen {
+	cursor: pointer;
+}
+
+.ol-full-screen-false {
+	background-color: var(--ol-zoom-button-bg) !important;
+	border-radius: var(--ol-zoom-button-radius);
+	color: var(--ol-zoom-button-color) !important;
+	transition: background-color var(--ol-transition-duration-fast, 150ms)
+		var(--ol-transition-timing-ease, ease);
+}
+
+.ol-full-screen-true {
+	background-color: var(--ol-zoom-button-bg) !important;
+	color: var(--ol-zoom-button-color) !important;
+	transition: background-color var(--ol-transition-duration-fast, 150ms)
+		var(--ol-transition-timing-ease, ease);
+}
+
 /* Tooltip Base */
 .ol-tooltip-base,
 .tooltip-container {
