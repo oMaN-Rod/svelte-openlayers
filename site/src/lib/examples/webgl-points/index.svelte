@@ -116,7 +116,7 @@
 
 <div class="map-container">
 	<View bind:center bind:zoom>
-		<Map class="h-full w-full" pointermove={handlePointerMove}>
+		<Map class="h-full w-full" pointermove={handlePointerMove} controls={{ fullscreen: true }}>
 			<Layer.Tile
 				source="xyz"
 				url={themeMapSource.current.url}

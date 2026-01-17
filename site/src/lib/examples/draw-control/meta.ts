@@ -17,7 +17,8 @@ const meta: ExampleMeta = {
 		'Geometry styling'
 	],
 	order: 7,
-	additionalFiles: ['_shared/data/map-sources.ts', '_shared/styles.ts']
+	additionalFiles: ['_shared/data/map-sources.ts', '_shared/styles.ts'],
+	beta: true
 };
 
 export default meta;

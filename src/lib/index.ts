@@ -7,46 +7,98 @@ export type { ViewProps } from './components/view/types.js';
 
 export {
 	Layer,
+	LayerStatic,
 	LayerTile,
 	LayerVector,
+	LayerVectorTile,
 	LayerWebGL,
-	LayerStatic
+	LayerWebGLTile,
+	LayerWebGLVectorTile
 } from './components/layers/index.js';
 export type {
 	LayerContext,
-	LayerTileProps,
 	LayerStaticProps,
+	LayerTileProps,
 	LayerVectorProps,
 	LayerWebGLProps
 } from './components/layers/index.js';
 
 export {
 	Feature,
-	FeaturePoint,
 	FeatureLineString,
+	FeaturePoint,
 	FeaturePolygon
 } from './components/features/index.js';
 export type {
-	FeaturePointProps,
 	FeatureLineStringProps,
+	FeaturePointProps,
 	FeaturePolygonProps
 } from './components/features/index.js';
 
 export {
 	Interaction,
-	InteractionSelect,
+	InteractionDraw,
 	InteractionHover,
-	InteractionDraw
+	InteractionSelect
 } from './components/interactions/index.js';
 export type {
-	InteractionSelectProps,
+	InteractionDrawProps,
 	InteractionHoverProps,
-	InteractionDrawProps
+	InteractionSelectProps
 } from './components/interactions/index.js';
 
-export { Overlay, OverlayTooltip, TooltipManager } from './components/overlays/index.js';
-export type { OverlayTooltipProps, TooltipManagerProps } from './components/overlays/index.js';
+export {
+	Overlay,
+	OverlayMarker,
+	OverlayTooltip,
+	TooltipManager
+} from './components/overlays/index.js';
+export type {
+	OverlayMarkerProps,
+	OverlayTooltipProps,
+	TooltipManagerProps
+} from './components/overlays/index.js';
 
 export { Control, ControlDraw } from './components/controls/index.js';
 export type { ControlDrawProps, ControlDrawType } from './components/controls/index.js';
 export * from './styles/types.js';
+
+export {
+	animatedColor,
+	animationCycle,
+	array,
+	between,
+	compare,
+	// Traditional style utilities
+	createCircleStyle,
+	createFeatureStyleFunction,
+	createFill,
+	createIconStyle,
+	createStroke,
+	createStyle,
+	createStyleFromFeature,
+	// WebGL style utilities
+	createStyleRule,
+	createStyleRules,
+	createTextStyle,
+	get,
+	interpolate,
+	match,
+	math,
+	pulseEffect,
+	sizeByProperty,
+	sizeByZoom,
+	time,
+	variable,
+	zoom
+} from './utils/index.js';
+
+// WebGL style types
+export type {
+	Expression,
+	FilteredStyleOptions,
+	FlatStyle,
+	FlatStyleLike,
+	Rule,
+	StyleVariables
+} from './utils/index.js';

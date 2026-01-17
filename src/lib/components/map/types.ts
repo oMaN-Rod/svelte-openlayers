@@ -1,10 +1,14 @@
 import type { Map, MapBrowserEvent, MapEvent, View } from 'ol';
-import type { DefaultsOptions as ControlOptions } from 'ol/control/defaults.js';
+import type { DefaultsOptions as OLControlOptions } from 'ol/control/defaults.js';
 import type { DefaultsOptions as InteractionOptions } from 'ol/interaction/defaults.js';
 import type RenderEvent from 'ol/render/Event.js';
 import type { Snippet } from 'svelte';
 import type { HTMLAttributes } from 'svelte/elements';
 import type { ViewProps } from '$lib/components/view/types.js';
+
+export interface ControlOptions extends OLControlOptions {
+	fullscreen?: boolean;
+}
 
 export interface MapProps extends HTMLAttributes<HTMLDivElement> {
 	controls?: ControlOptions;

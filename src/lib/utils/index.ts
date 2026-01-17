@@ -26,6 +26,48 @@ export {
 	setCSSVariable
 } from './css.js';
 
+export {
+	// Rule builders
+	createStyleRule,
+	createStyleRules,
+	// Expression builders
+	get,
+	variable,
+	time,
+	zoom,
+	interpolate,
+	between,
+	compare,
+	match,
+	math,
+	array,
+	// Animation helpers
+	animationCycle,
+	pulseEffect,
+	animatedColor,
+	// Common patterns
+	sizeByProperty,
+	sizeByZoom
+} from './expressions.js';
+
+// WebGL style types
+export type {
+	FlatStyleLike,
+	FlatStyle,
+	Rule,
+	StyleVariables,
+	FlatCircle,
+	FlatFill,
+	FlatStroke,
+	FlatIcon,
+	FlatShape,
+	FlatText,
+	EncodedExpression,
+	LiteralValue,
+	Expression,
+	FilteredStyleOptions
+} from './expressions.js';
+
 // Collection utilities
 export { createReactiveCollection } from './collections.js';
 export { ReactiveCollection, type ReactiveCollectionOptions } from './reactive-collection.js';

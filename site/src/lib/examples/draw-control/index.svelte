@@ -131,7 +131,7 @@
 	<!-- Map -->
 	<div class="map-container">
 		<View bind:center bind:zoom>
-			<Map class="h-full w-full">
+			<Map class="h-full w-full" controls={{ fullscreen: true }}>
 				<Layer.Tile
 					source="xyz"
 					url={themeMapSource.current.url}

@@ -324,4 +324,242 @@ WebGL layers support time-based animations:
 | `time`        | Current time for animations | `['time']`                                |
 | `*`, `+`, `-` | Mathematical operations     | `['*', ['get', 'size'], 2]`               |
 
-> **Coming Soon:** Additional layer types including `Layer.VectorTile` and `Layer.WMS` are planned for future releases.
+## Layer.VectorTile {.toc}
+
+Displays vector tile data using Canvas rendering. Vector tiles are an efficient format that delivers pre-tiled vector data, combining the benefits of vector data (styling flexibility, interaction) with tile-based loading (efficiency, scalability).
+
+### Basic Usage {.toc}
+
+```svelte
+<script>
+	import { View, Map, Layer } from 'svelte-openlayers';
+</script>
+
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.VectorTile
+			url="https://example.com/tiles/{z}/{x}/{y}.pbf"
+			style={{
+				'fill-color': '#eee',
+				'stroke-color': '#666',
+				'stroke-width': 1
+			}}
+		/>
+	</Map>
+</View>
+```
+
+### Props {.toc}
+
+| Prop                     | Type                                   | Default     | Description                                  |
+| ------------------------ | -------------------------------------- | ----------- | -------------------------------------------- |
+| `url`                    | `string`                               | `undefined` | URL template for vector tiles                |
+| `urls`                   | `string[]`                             | `undefined` | Array of URL templates for load balancing    |
+| `opacity`                | `number`                               | `1`         | Layer opacity (0-1)                          |
+| `visible`                | `boolean`                              | `true`      | Layer visibility                             |
+| `zIndex`                 | `number`                               | `undefined` | Layer stacking order                         |
+| `minZoom`                | `number`                               | `undefined` | Minimum zoom level                           |
+| `maxZoom`                | `number`                               | `undefined` | Maximum zoom level                           |
+| `style`                  | `StyleLike &#124; FlatStyleLike`       | `undefined` | Feature styling                              |
+| `declutter`              | `boolean &#124; string &#124; number`  | `false`     | Declutter text and icons                     |
+| `renderMode`             | `'hybrid' &#124; 'vector'`             | `'hybrid'`  | Rendering mode                               |
+| `preload`                | `number`                               | `0`         | Number of zoom levels to preload             |
+| `renderBuffer`           | `number`                               | `100`       | Render buffer in pixels                      |
+| `updateWhileAnimating`   | `boolean`                              | `false`     | Update during animations                     |
+| `updateWhileInteracting` | `boolean`                              | `false`     | Update during interactions                   |
+| `background`             | `string`                               | `undefined` | Layer background color                       |
+| `format`                 | `FeatureFormat`                        | `MVT`       | Tile format (defaults to MapBox Vector Tile) |
+| `projection`             | `ProjectionLike`                       | `undefined` | Source projection                            |
+| `tileGrid`               | `TileGrid`                             | `undefined` | Custom tile grid                             |
+| `tileSize`               | `number &#124; Size`                   | `undefined` | Tile size                                    |
+| `sourceMaxZoom`          | `number`                               | `undefined` | Maximum source zoom level                    |
+| `sourceMinZoom`          | `number`                               | `undefined` | Minimum source zoom level                    |
+| `overlaps`               | `boolean`                              | `undefined` | Whether geometries may overlap               |
+| `attributions`           | `string &#124; string[]`               | `undefined` | Layer attributions                           |
+| `wrapX`                  | `boolean`                              | `undefined` | Wrap world horizontally                      |
+| `transition`             | `number`                               | `undefined` | Tile opacity transition duration (ms)        |
+| `layer`                  | `VectorTileLayer &#124; null`          | `null`      | Bindable layer instance                      |
+| `source`                 | `VectorTileSource &#124; null`         | `null`      | Bindable source instance                     |
+
+### Styling Vector Tiles {.toc}
+
+Vector tiles support both traditional OpenLayers styles and flat style syntax:
+
+```svelte
+<script>
+	// Flat style for countries layer
+	const countryStyle = {
+		'fill-color': ['match', ['get', 'continent'],
+			'Europe', '#4338ca',
+			'Asia', '#dc2626',
+			'Africa', '#16a34a',
+			'#gray'
+		],
+		'stroke-color': '#333',
+		'stroke-width': 1
+	};
+</script>
+
+<Layer.VectorTile url={tilesUrl} style={countryStyle} />
+```
+
+## Layer.WebGLTile {.toc}
+
+WebGL-accelerated tile layer for high-performance raster tile rendering with color manipulation capabilities.
+
+### Basic Usage {.toc}
+
+```svelte
+<script>
+	import { View, Map, Layer } from 'svelte-openlayers';
+</script>
+
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.WebGLTile source="osm" />
+	</Map>
+</View>
+```
+
+### Props {.toc}
+
+| Prop           | Type                               | Default     | Description                                 |
+| -------------- | ---------------------------------- | ----------- | ------------------------------------------- |
+| `source`       | `'osm' &#124; 'xyz' &#124; Source` | `'osm'`     | Tile source configuration                   |
+| `url`          | `string`                           | `undefined` | URL for XYZ source                          |
+| `urls`         | `string[]`                         | `undefined` | Array of URLs for load balancing            |
+| `opacity`      | `number`                           | `1`         | Layer opacity (0-1)                         |
+| `visible`      | `boolean`                          | `true`      | Layer visibility                            |
+| `zIndex`       | `number`                           | `undefined` | Layer stacking order                        |
+| `minZoom`      | `number`                           | `undefined` | Minimum zoom level                          |
+| `maxZoom`      | `number`                           | `undefined` | Maximum zoom level                          |
+| `preload`      | `number`                           | `0`         | Number of zoom levels to preload            |
+| `style`        | `WebGLTileStyle`                   | `undefined` | WebGL style for color manipulation          |
+| `cacheSize`    | `number`                           | `512`       | Internal texture cache size                 |
+| `layer`        | `WebGLTileLayer &#124; null`       | `null`      | Bindable layer instance                     |
+| `attributions` | `string &#124; string[]`           | `undefined` | Layer attributions                          |
+| `crossOrigin`  | `string &#124; null`               | `undefined` | Cross-origin setting                        |
+
+### WebGL Tile Styling {.toc}
+
+Apply color manipulation to tiles using WebGL expressions:
+
+```svelte
+<Layer.WebGLTile
+	source="osm"
+	style={{
+		color: [
+			'color',
+			['band', 1],  // Red channel
+			['band', 2],  // Green channel
+			['band', 3],  // Blue channel
+			['band', 4]   // Alpha channel
+		],
+		brightness: 0.1,
+		contrast: 1.2,
+		saturation: 0.8
+	}}
+/>
+```
+
+## Layer.WebGLVectorTile {.toc}
+
+WebGL-accelerated vector tile layer for maximum performance rendering of vector tile data. Ideal for large-scale visualizations with data-driven styling.
+
+> <strong>Note:</strong> Hit detection (hover/click) is not yet implemented for WebGLVectorTileLayer in OpenLayers. For interactive features, use the regular <code>Layer.VectorTile</code> component instead.
+
+### Basic Usage {.toc}
+
+```svelte
+<script>
+	import { View, Map, Layer } from 'svelte-openlayers';
+
+	const style = {
+		'fill-color': ['interpolate', ['linear'], ['get', 'population'],
+			0, '#ffffcc',
+			1000000, '#ff0000'
+		],
+		'stroke-color': '#333',
+		'stroke-width': 0.5
+	};
+</script>
+
+<View center={[0, 0]} zoom={2}>
+	<Map class="h-96 w-full">
+		<Layer.WebGLVectorTile
+			url="https://example.com/tiles/{z}/{x}/{y}.pbf"
+			{style}
+		/>
+	</Map>
+</View>
+```
+
+### Props {.toc}
+
+| Prop                  | Type                           | Default     | Description                                  |
+| --------------------- | ------------------------------ | ----------- | -------------------------------------------- |
+| `url`                 | `string`                       | `undefined` | URL template for vector tiles                |
+| `urls`                | `string[]`                     | `undefined` | Array of URL templates for load balancing    |
+| `opacity`             | `number`                       | `1`         | Layer opacity (0-1)                          |
+| `visible`             | `boolean`                      | `true`      | Layer visibility                             |
+| `zIndex`              | `number`                       | `undefined` | Layer stacking order                         |
+| `minZoom`             | `number`                       | `undefined` | Minimum zoom level                           |
+| `maxZoom`             | `number`                       | `undefined` | Maximum zoom level                           |
+| `style`               | `FlatStyleLike`                | `undefined` | WebGL-compatible style (required)            |
+| `variables`           | `StyleVariables`               | `undefined` | Variables for dynamic styling                |
+| `preload`             | `number`                       | `0`         | Number of zoom levels to preload             |
+| `background`          | `string`                       | `undefined` | Layer background color                       |
+| `format`              | `FeatureFormat`                | `MVT`       | Tile format (defaults to MapBox Vector Tile) |
+| `projection`          | `ProjectionLike`               | `undefined` | Source projection                            |
+| `tileGrid`            | `TileGrid`                     | `undefined` | Custom tile grid                             |
+| `tileSize`            | `number &#124; Size`           | `undefined` | Tile size                                    |
+| `sourceMaxZoom`       | `number`                       | `undefined` | Maximum source zoom level                    |
+| `sourceMinZoom`       | `number`                       | `undefined` | Minimum source zoom level                    |
+| `overlaps`            | `boolean`                      | `undefined` | Whether geometries may overlap               |
+| `attributions`        | `string &#124; string[]`       | `undefined` | Layer attributions                           |
+| `wrapX`               | `boolean`                      | `undefined` | Wrap world horizontally                      |
+| `transition`          | `number`                       | `undefined` | Tile opacity transition duration (ms)        |
+| `disableHitDetection` | `boolean`                      | `false`     | Disable hit detection for performance        |
+| `layer`               | `WebGLVectorTileLayer &#124; null` | `null`  | Bindable layer instance                      |
+| `source`              | `VectorTileSource &#124; null` | `null`      | Bindable source instance                     |
+
+### Dynamic Styling with Variables {.toc}
+
+Use style variables to create interactive, data-driven visualizations:
+
+```svelte
+<script>
+	let minYear = $state(1900);
+	let maxYear = $state(2000);
+
+	const style = {
+		filter: ['all',
+			['>=', ['get', 'year'], ['var', 'minYear']],
+			['<=', ['get', 'year'], ['var', 'maxYear']]
+		],
+		'circle-radius': 6,
+		'circle-fill-color': '#ff6600'
+	};
+
+	const variables = $derived({
+		minYear,
+		maxYear
+	});
+</script>
+
+<Layer.WebGLVectorTile
+	url={tilesUrl}
+	{style}
+	{variables}
+/>
+
+<input type="range" bind:value={minYear} min={1800} max={2024} />
+<input type="range" bind:value={maxYear} min={1800} max={2024} />
+```
+
+### Performance Considerations {.toc}
+
+- **Use for large datasets**: WebGL vector tiles excel with millions of features
+- **Style variables**: Use `variables` prop for dynamic filtering without re-rendering
+- **Hit detection**: Disable with `disableHitDetection={true}` for purely visual layers
+- **Preloading**: Use `preload` to load surrounding tiles for smoother panning

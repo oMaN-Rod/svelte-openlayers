@@ -4,6 +4,7 @@
 	import OverlayTooltip from '$lib/components/overlays/OverlayTooltip.svelte';
 	import type { TooltipManagerProps } from './types.js';
 	import type { Feature } from 'ol';
+	import type { FeatureLike } from 'ol/Feature.js';
 	import type { Coordinate } from 'ol/coordinate.js';
 	import { getCenter } from 'ol/extent.js';
 
@@ -32,12 +33,12 @@
 	let hoverPosition: Coordinate | undefined = $state();
 	let hoverVisible = $state(false);
 	let hoverText = $state('');
-	let hoverFeature: Feature | null = $state(null);
+	let hoverFeature: FeatureLike | null = $state(null);
 
 	let selectPosition: Coordinate | undefined = $state();
 	let selectVisible = $state(false);
 	let selectText = $state('');
-	let selectFeature: Feature | null = $state(null);
+	let selectFeature: FeatureLike | null = $state(null);
 
 	function formatProperties(properties: any): string {
 		if (!properties) return '';
@@ -50,7 +51,7 @@
 		return items || 'No properties';
 	}
 
-	function handleHover(feature: Feature | null, coordinate?: Coordinate) {
+	function handleHover(feature: FeatureLike | null, coordinate?: Coordinate) {
 		if (!feature || !hoverTooltip) {
 			hoverVisible = false;
 			hoverFeature = null;

@@ -11,6 +11,7 @@
 		setHoverCoordinator,
 		type HoverCoordinator
 	} from './hover-coordinator.js';
+	import FullScreen from 'ol/control/FullScreen.js';
 
 	let {
 		class: className = null,
@@ -51,11 +52,15 @@
 
 	onMount(() => {
 		if (mapContainer) {
+			const { fullscreen, ...controlOptions } = controls;
+			const controlsInit = defaultControls(controlOptions);
+			if (fullscreen) controlsInit.push(new FullScreen());
+
 			map = setMap(
 				new Map({
 					target: mapContainer,
-					view: view ? view : getView(),
-					controls: defaultControls(controls),
+					view: view ?? getView(),
+					controls: controlsInit,
 					interactions: defaultInteractions(interactions),
 					pixelRatio,
 					keyboardEventTarget,

@@ -36,12 +36,12 @@
 				onclick={() => (mobileNavOpen = false)}
 				aria-label="Close mobile navigation"
 			></button>
-			<aside class="bg-background fixed top-0 left-0 h-full w-80 border-r">
-				<div class="flex items-center justify-between border-b p-4">
+			<aside class="bg-background fixed top-0 left-0 flex h-full w-80 flex-col border-r">
+				<div class="flex shrink-0 items-center justify-between border-b p-4">
 					<h2 class="text-lg font-semibold">Documentation</h2>
 					<Button variant="ghost" size="icon" onclick={() => (mobileNavOpen = false)}>×</Button>
 				</div>
-				<div class="mt-4 p-4">
+				<div class="flex-1 overflow-y-auto p-4">
 					<DocsNav />
 				</div>
 			</aside>

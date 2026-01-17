@@ -6,7 +6,7 @@
 		"site"
 	],
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "concurrently \"bun run build:watch\" \"bun run dev:site\"",
 		"dev:site": "cd site && bun run dev",
 		"build": "svelte-kit sync && svelte-package",
 		"build:watch": "svelte-kit sync && svelte-package --watch",
@@ -83,6 +83,7 @@
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/svelte": "^5.2.4",
+		"concurrently": "^9.2.1",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.0.0",
@@ -90,6 +91,7 @@
 		"jsdom": "^26.0.0",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
+		"prettier-plugin-tailwindcss": "^0.7.2",
 		"publint": "^0.3.2",
 		"rollup-plugin-analyzer": "^4.0.0",
 		"semantic-release": "^24.2.7",

@@ -7,7 +7,11 @@ import type { Options as OLTextStyleOptions } from 'ol/style/Text.js';
 
 export type FillStyleOptions = OLFillStyleOptions;
 export type StrokeStyleOptions = OLStrokeStyleOptions;
-export type TextStyleOptions = OLTextStyleOptions;
+
+export interface TextStyleOptions extends Omit<OLTextStyleOptions, 'fill' | 'stroke'> {
+	fill?: FillStyleOptions;
+	stroke?: StrokeStyleOptions;
+}
 
 export interface CircleStyleOptions extends Omit<OLCircleStyleOptions, 'fill' | 'stroke'> {
 	fill?: FillStyleOptions;

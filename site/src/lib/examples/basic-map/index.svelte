@@ -10,7 +10,7 @@
 
 <div class="map-container">
 	<View bind:center bind:zoom>
-		<Map>
+		<Map controls={{ fullscreen: true }}>
 			<Layer.Tile source="osm" />
 		</Map>
 	</View>
